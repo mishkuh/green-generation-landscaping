@@ -1,0 +1,122 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Novecento+Sans:wght@400;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  @apply antialiased;
+}
+
+@layer base {
+  * {
+    @apply border-stone-200;
+  }
+  
+  body {
+    @apply bg-stone-50 text-stone-900;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Novecento Sans', sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Wave Animation Keyframes */
+@keyframes wave-flow {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-50px);
+  }
+}
+
+@keyframes wave-flow-reverse {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(50px);
+  }
+}
+
+@keyframes wave-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Smooth transitions throughout */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Z-index layering for wave components */
+.wave-background {
+  z-index: 1;
+}
+
+.wave-divider {
+  z-index: 10;
+}
+
+.wave-footer {
+  z-index: 5;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced green color utilities */
+.text-green-primary {
+  color: #22c55e;
+}
+
+.bg-green-primary {
+  background-color: #22c55e;
+}
+
+.border-green-primary {
+  border-color: #22c55e;
+}
+
+/* Wave animation utilities */
+.animate-wave-slow {
+  animation: wave-flow 25s linear infinite;
+}
+
+.animate-wave-medium {
+  animation: wave-flow 20s linear infinite;
+}
+
+.animate-wave-fast {
+  animation: wave-flow 15s linear infinite;
+}
+
+.animate-wave-reverse {
+  animation: wave-flow-reverse 20s linear infinite;
+}
+
+.animate-wave-float {
+  animation: wave-float 8s ease-in-out infinite;
+}
+
+/* Ensure proper stacking context */
+section {
+  position: relative;
+  isolation: isolate;
+}

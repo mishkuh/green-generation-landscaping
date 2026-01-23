@@ -30,6 +30,7 @@ pids
 # Environment variables
 .env
 .env.test
+.env.local
 
 # Build artifacts
 .cache
@@ -49,3 +50,5 @@ out/
 coverage
 *.lcov
 .nyc_output
+.vercel
+.env*.local

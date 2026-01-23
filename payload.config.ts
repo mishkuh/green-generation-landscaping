@@ -7,15 +7,9 @@ import Media from './collections/Media'
 import Tags from './collections/Tags'
 import PortfolioProjects from './collections/PortfolioProjects'
 
-// Database connection config
 const isProduction = process.env.NODE_ENV === 'production';
-const isVercelPreview = process.env.VERCEL_ENV === 'preview';
-const isVercelProduction = process.env.VERCEL_ENV === 'production';
-
+const isVercel = process.env.VERCEL_ENV === 'production' || process.env.VERCEL_ENV === 'preview'
 const pushConfig = isProduction ? false : true;
-const sslConfig = isProduction || isVercelPreview || isVercelProduction
-    ? { rejectUnauthorized: false }  // In production: use proper SSL (rejectUnauthorized defaults to true)
-    : false; // In dev: allow self-signed certs
 
 export default buildConfig({
     // If you'd like to use Rich Text, pass your editor here
@@ -36,7 +30,7 @@ export default buildConfig({
         push: pushConfig,
         pool: {
             connectionString: process.env.POSTGRES_URL,
-            ssl: sslConfig,
+            ssl: isVercel ? { ca: process.env.SUPABASE_CERT, rejectUnauthorized: true } : false,
         },
     }),
 

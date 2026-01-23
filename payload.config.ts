@@ -9,10 +9,12 @@ import PortfolioProjects from './collections/PortfolioProjects'
 
 // Database connection config
 const isProduction = process.env.NODE_ENV === 'production';
+const isVercelPreview = process.env.VERCEL_ENV === 'preview';
+const isVercelProduction = process.env.VERCEL_ENV === 'production';
 
 const pushConfig = isProduction ? false : true;
-const sslConfig = isProduction
-    ? true  // In production: use proper SSL (rejectUnauthorized defaults to true)
+const sslConfig = isProduction || isVercelPreview || isVercelProduction
+    ? { rejectUnauthorized: false }  // In production: use proper SSL (rejectUnauthorized defaults to true)
     : false; // In dev: allow self-signed certs
 
 export default buildConfig({

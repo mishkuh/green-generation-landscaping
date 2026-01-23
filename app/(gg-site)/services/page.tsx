@@ -1,7 +1,8 @@
+export const dynamic = 'force-dynamic';
+
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@radix-ui/themes';
-
 import Image from 'next/image';
 import { getPayload } from 'payload'
 import config from '@/payload.config'

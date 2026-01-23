@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import React from 'react';
 import Link from 'next/link';
 import * as motion from 'motion/react-client'
@@ -8,8 +10,6 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { notFound } from 'next/navigation';
 import { Media } from '@/payload-types';
-
-export const dynamic = 'force-dynamic'
 
 const ProjectDetail = async (
     { params }: { params: Promise<{ id: string }> }

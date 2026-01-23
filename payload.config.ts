@@ -11,6 +11,14 @@ const isProduction = process.env.NODE_ENV === 'production';
 const isVercel = process.env.VERCEL_ENV === 'production' || process.env.VERCEL_ENV === 'preview'
 const pushConfig = isProduction ? false : true;
 
+const cert = process.env.SUPABASE_CERT_BASE64
+    ? Buffer.from(process.env.SUPABASE_CERT_BASE64, 'base64').toString('utf-8')
+    : 'NOT_FOUND';
+
+console.log('--- DEBUG SSL CERT START ---');
+console.log(cert);
+console.log('--- DEBUG SSL CERT END ---');
+
 export default buildConfig({
     // If you'd like to use Rich Text, pass your editor here
     editor: lexicalEditor(),
@@ -30,7 +38,12 @@ export default buildConfig({
         push: pushConfig,
         pool: {
             connectionString: process.env.POSTGRES_URL,
-            ssl: isVercel ? { ca: process.env.SUPABASE_CERT, rejectUnauthorized: true } : false,
+            ssl: isVercel
+                ? {
+                    ca: cert,
+                    rejectUnauthorized: true
+                }
+                : false,
         },
     }),
 

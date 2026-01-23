@@ -13,7 +13,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const pushConfig = isProduction ? false : true;
 const sslConfig = isProduction
     ? true  // In production: use proper SSL (rejectUnauthorized defaults to true)
-    : { rejectUnauthorized: false }; // In dev: allow self-signed certs
+    : false; // In dev: allow self-signed certs
 
 export default buildConfig({
     // If you'd like to use Rich Text, pass your editor here
@@ -28,7 +28,7 @@ export default buildConfig({
     ],
 
     // Your Payload secret - should be a complex and secure string, unguessable
-    secret: process.env.PAYLOAD_SECRET_KEY || '',
+    secret: process.env.PAYLOAD_SECRET || '',
     db: postgresAdapter({
         // Set to true if you want to push your database schema to the database. This is not recommended for production
         push: pushConfig,

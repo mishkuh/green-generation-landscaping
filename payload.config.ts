@@ -7,6 +7,13 @@ import Media from './collections/Media'
 import Tags from './collections/Tags'
 import PortfolioProjects from './collections/PortfolioProjects'
 
+// Database connection config
+const isProduction = process.env.NODE_ENV === 'production';
+
+const sslConfig = isProduction
+    ? true  // In production: use proper SSL (rejectUnauthorized defaults to true)
+    : { rejectUnauthorized: false }; // In dev: allow self-signed certs
+
 export default buildConfig({
     // If you'd like to use Rich Text, pass your editor here
     editor: lexicalEditor(),
@@ -26,9 +33,7 @@ export default buildConfig({
         push: false,
         pool: {
             connectionString: process.env.POSTGRES_URL,
-            ssl: {
-                rejectUnauthorized: true,
-            },
+            ssl: sslConfig,
         },
     }),
 

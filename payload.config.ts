@@ -6,9 +6,12 @@ import Services from './collections/Services'
 import Media from './collections/Media'
 import Tags from './collections/Tags'
 import PortfolioProjects from './collections/PortfolioProjects'
+import { s3Storage } from '@payloadcms/storage-s3'
 
-const isProduction = process.env.NODE_ENV === 'production';
-const pushConfig = isProduction ? false : true;
+const isVercelEnv = process.env.VERCEL_ENV === 'production' || process.env.VERCEL_ENV === "preview";
+const dbCert = process.env.DB_CERT_BASE64
+    ? Buffer.from(process.env.DB_CERT_BASE64, 'base64').toString('utf8')
+    : undefined;
 
 export default buildConfig({
     // If you'd like to use Rich Text, pass your editor here
@@ -26,14 +29,34 @@ export default buildConfig({
     secret: process.env.PAYLOAD_SECRET || '',
     db: postgresAdapter({
         // Set to true if you want to push your database schema to the database. This is not recommended for production
-        push: pushConfig,
+        push: isVercelEnv ? false : true,
         pool: {
             connectionString: process.env.POSTGRES_URL,
-            ssl: isProduction ? {
-                rejectUnauthorized: true
+            ssl: dbCert ? {
+                ca: dbCert,
+                rejectUnauthorized: true,
             } : false,
         },
     }),
+
+    plugins: [
+        s3Storage({
+            collections: {
+                media: {
+                    prefix: 'media',
+                }
+            },
+            bucket: process.env.S3_BUCKET!,
+            config: {
+                forcePathStyle: true,
+                credentials: {
+                    accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+                    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+                },
+                endpoint: process.env.S3_ENDPOINT,
+            }
+        }),
+    ],
 
     sharp
 })

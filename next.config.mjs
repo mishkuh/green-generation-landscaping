@@ -1,7 +1,19 @@
+import { withPayload } from '@payloadcms/next/withPayload'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // output: 'export', // Removed for SSR
-    // distDir: './dist', // Removed standard build
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'xsccfbkilvspngsihxwg.supabase.co',
+                port: '',
+                pathname: '/storage/v1/object/public/**',
+            },
+        ],
+    }
 }
 
-export default nextConfig
+// Make sure you wrap your `nextConfig`
+// with the `withPayload` plugin
+export default withPayload(nextConfig) 

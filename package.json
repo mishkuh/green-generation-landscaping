@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "payload": "payload",
-    "ci": "payload migrate && pnpm build"
+    "ci": "payload migrate && next build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

@@ -25,10 +25,7 @@ export default buildConfig({
         // Set to true if you want to push your database schema to the database. This is not recommended for production
         push: false,
         pool: {
-            connectionString: process.env.POSTGRES_URL,
-            ssl: {
-                rejectUnauthorized: true,
-            },
+            connectionString: process.env.POSTGRES_URL + "?sslmode=verify-full",
         },
     }),
 

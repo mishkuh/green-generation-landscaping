@@ -8,12 +8,7 @@ import Tags from './collections/Tags'
 import PortfolioProjects from './collections/PortfolioProjects'
 
 const isProduction = process.env.NODE_ENV === 'production';
-const isVercel = process.env.VERCEL_ENV === 'production' || process.env.VERCEL_ENV === 'preview'
 const pushConfig = isProduction ? false : true;
-
-const cert = process.env.SUPABASE_CERT_BASE64
-    ? Buffer.from(process.env.SUPABASE_CERT_BASE64, 'base64').toString('utf-8')
-    : undefined;
 
 export default buildConfig({
     // If you'd like to use Rich Text, pass your editor here
@@ -34,9 +29,8 @@ export default buildConfig({
         push: pushConfig,
         pool: {
             connectionString: process.env.POSTGRES_URL,
-            ssl: cert ? {
-                rejectUnauthorized: false,
-                ca: cert,
+            ssl: isProduction ? {
+                rejectUnauthorized: true
             } : false,
         },
     }),

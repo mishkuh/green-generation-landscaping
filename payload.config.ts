@@ -10,6 +10,7 @@ import PortfolioProjects from './collections/PortfolioProjects'
 // Database connection config
 const isProduction = process.env.NODE_ENV === 'production';
 
+const pushConfig = isProduction ? false : true;
 const sslConfig = isProduction
     ? true  // In production: use proper SSL (rejectUnauthorized defaults to true)
     : { rejectUnauthorized: false }; // In dev: allow self-signed certs
@@ -30,7 +31,7 @@ export default buildConfig({
     secret: process.env.PAYLOAD_SECRET_KEY || '',
     db: postgresAdapter({
         // Set to true if you want to push your database schema to the database. This is not recommended for production
-        push: false,
+        push: pushConfig,
         pool: {
             connectionString: process.env.POSTGRES_URL,
             ssl: sslConfig,

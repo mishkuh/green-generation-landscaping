@@ -13,11 +13,7 @@ const pushConfig = isProduction ? false : true;
 
 const cert = process.env.SUPABASE_CERT_BASE64
     ? Buffer.from(process.env.SUPABASE_CERT_BASE64, 'base64').toString('utf-8')
-    : 'NOT_FOUND';
-
-console.log('--- DEBUG SSL CERT START ---');
-console.log(cert);
-console.log('--- DEBUG SSL CERT END ---');
+    : undefined;
 
 export default buildConfig({
     // If you'd like to use Rich Text, pass your editor here
@@ -38,12 +34,10 @@ export default buildConfig({
         push: pushConfig,
         pool: {
             connectionString: process.env.POSTGRES_URL,
-            ssl: isVercel
-                ? {
-                    ca: cert,
-                    rejectUnauthorized: true
-                }
-                : false,
+            ssl: cert ? {
+                rejectUnauthorized: false,
+                ca: cert,
+            } : false,
         },
     }),
 

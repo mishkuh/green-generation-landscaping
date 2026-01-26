@@ -17,9 +17,16 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={`min-h-screen bg-stone-50 antialiased`}>
+            <body>
                 <Header />
-                <Theme accentColor="green">{children}</Theme>
+                <Theme
+                    accentColor="grass"
+                    grayColor="gray"
+                    panelBackground="solid"
+                    radius="medium"
+                    scaling="100%"
+                    appearance="light"
+                >{children}</Theme>
                 <Footer />
             </body>
         </html>

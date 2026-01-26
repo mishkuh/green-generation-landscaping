@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic';
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Check, Clock, DollarSign } from 'lucide-react';
-import { Button } from '@radix-ui/themes';
+import { Button, Box, Section, Container, Grid, Flex, Heading, Text, Card, Avatar, Separator } from '@radix-ui/themes';
 import Image from 'next/image';
 import config from '@/payload.config'
 import { notFound } from 'next/navigation';
@@ -30,134 +30,143 @@ const ServiceDetail = async (
     if (!service) return notFound()
 
     return (
-        <div className="pt-20">
+        <Box>
             {/* Hero Section */}
-            <section className="relative h-[400px]">
-                <div className="absolute inset-0">
+            <Section p="0" className="relative h-[50vh] overflow-hidden">
+                <Flex className="relative h-full w-full">
+                    {/* Banner Image */}
                     <Image
                         alt={service.title}
-                        className="w-full h-full object-cover"
                         src={(service.bannerImage as Media).url || ''}
+                        objectFit='cover'
                         fill
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent" />
-                </div>
-                <div className="container mx-auto px-4 h-full flex items-end pb-12 relative z-10">
-                    <div>
-                        <Link href="/services" className="inline-flex items-center text-white mb-4 hover:text-green-300 transition-colors">
-                            <ArrowLeft className="w-5 h-5 mr-2" />
-                            Back to Services
-                        </Link>
-                        <h1
-                            className="text-4xl md:text-5xl font-bold text-white mb-2 font-novecento-sans"
-                        >
-                            {service.title}
-                        </h1>
-                        <p
-                            className="text-xl text-green-50"
-                        >
-                            {service.subtitle}
-                        </p>
-                    </div>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0">
+                    {/* Background overlay */}
+                    <Box className='absolute inset-0 bg-gradient-to-t from-[var(--gray-12)]/60 via-[var(--gray-12)]/0 to-[var(--gray-12)]/0' />
 
-                </div>
-            </section>
+                    {/* Service Title */}
+                    <Container size="2" className="h-full relative">
+                        <Box px="6" py="3" mr="4" className='absolute bottom-6 left-6 z-20 backdrop-blur-md bg-gradient-to-b from-[var(--gray-1)]/10 to-[var(--gray-10)]/10 rounded-xl shadow-xl border-[1px] border-[var(--gray-10)]/70'>
+                            <Flex direction="column" align="start">
+                                <Button asChild variant="ghost" highContrast>
+                                    <Link href="/services">
+                                        <ArrowLeft className="w-5 h-5 mr-2" />
+                                        Back to Services
+                                    </Link>
+                                </Button>
+                                <Heading
+                                    size="8"
+                                    className="text-[var(--grass-1)] font-novecento-sans pt-2"
+                                >
+                                    {service.title}
+                                </Heading>
+                                <Text
+                                    size="4"
+                                    className="text-[var(--grass-1)]"
+                                >
+                                    {service.subtitle}
+                                </Text>
+                            </Flex>
+                        </Box>
+                    </Container>
+                </Flex>
+            </Section>
 
             {/* Service Overview */}
-            <section className="py-20 bg-stone-50">
-                <div className="container mx-auto px-4 max-w-6xl">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                        <div className="lg:col-span-2 space-y-12">
-                            <div>
-                                <h2 className="text-3xl font-bold text-stone-900 mb-4 font-novecento-sans">Service Overview</h2>
-                                <p className="text-lg text-stone-700 leading-relaxed">{service.description}</p>
-                            </div>
+            <Section size="3" className="bg-[var(--gray-2)]">
+                <Container size="3" px="4">
+                    <Grid columns={{ initial: '1', lg: '3' }} gap="9">
+                        <Flex direction="column" gap="9" className="lg:col-span-2">
+                            <Flex direction="column" gap="2">
+                                <Heading size="6" className="text-[var(--grass-11)] font-novecento-sans">Service Overview</Heading>
+                                <Text size="4" className="text-[var(--gray-12)]">{service.description}</Text>
+                            </Flex>
 
-                            <div>
-                                <h3 className="text-2xl font-bold text-stone-900 mb-6 font-novecento-sans">Our Process</h3>
-                                <div className="space-y-4">
+                            <Flex direction="column" gap="2">
+                                <Heading size="5" className="text-[var(--grass-11)] font-novecento-sans">Our Process</Heading>
+                                <Flex direction="column" gap="4">
                                     {service.processList?.map((item, index) => (
-                                        <div key={index} className="flex gap-4 bg-white p-4 rounded-lg shadow">
-                                            <div className="flex-shrink-0 w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold">
-                                                {index + 1}
-                                            </div>
-                                            <div>
-                                                <h4 className="font-bold text-stone-900 mb-1 font-novecento-sans">{item.stepTitle}</h4>
-                                                <p className="text-stone-600">{item.stepDescription}</p>
-                                            </div>
-                                        </div>
+                                        <Card key={index} size="2">
+                                            <Flex gap="4">
+                                                <Flex justify="center" align="center" className="w-8 h-8 bg-[var(--grass-9)] text-white rounded-full font-bold shrink-0">
+                                                    {index + 1}
+                                                </Flex>
+                                                <Box>
+                                                    <Heading as="h4" size="3" weight="bold" className="text-[var(--gray-12)] mb-1 font-novecento-sans">{item.stepTitle}</Heading>
+                                                    <Text size="2" className="text-[var(--gray-11)]">{item.stepDescription}</Text>
+                                                </Box>
+                                            </Flex>
+                                        </Card>
                                     ))}
-                                </div>
-                            </div>
+                                </Flex>
+                            </Flex>
 
-                            <div>
-                                <h3 className="text-2xl font-bold text-stone-900 mb-6 font-novecento-sans">Gallery</h3>
+                            <Flex direction="column" gap="2">
+                                <Heading size="5" className="text-[var(--grass-11)] mb-4 font-novecento-sans">Gallery</Heading>
                                 {service.imageGallery?.length > 0 ? (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <Grid columns={{ initial: '1', md: '2' }} gap="4">
                                         {service.imageGallery?.map((imageData) => (
-                                            <div key={imageData.id} className="relative h-64 rounded-lg overflow-hidden group">
+                                            <Box key={imageData.id} className="relative h-64 rounded-lg overflow-hidden group">
                                                 <Image
                                                     src={(imageData.image as Media).url || ''}
-                                                    alt={(imageData.image as Media).alt}
+                                                    alt={(imageData.image as Media).alt || 'Gallery Image'}
                                                     fill
                                                     className="object-cover transition-transform duration-300 group-hover:scale-110"
                                                 />
-                                            </div>
+                                            </Box>
                                         ))}
-                                    </div>
+                                    </Grid>
                                 ) : (
-                                    <p className="text-stone-500 italic">No images available for this service.</p>
+                                    <Text className="text-[var(--gray-11)] italic">No images available for this service.</Text>
                                 )}
-                            </div>
-                        </div>
+                            </Flex>
+                        </Flex>
 
-                        <div className="lg:col-span-1">
-                            <div className="bg-white rounded-2xl p-6 shadow-lg sticky top-24">
-                                <div>
-                                    <h3 className="text-xl font-bold text-stone-900 mb-4 font-novecento-sans">Service Benefits</h3>
-                                    <ul className="space-y-3 mb-6">
-                                        {service.benefitList.map((benefit, index) => (
-                                            <li key={index} className="flex items-start gap-2">
-                                                <Check className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
-                                                <span className="text-stone-700">{benefit.benefit}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
+                        <Flex p="4" direction="column" className="relative rounded-lg sticky top-40 self-start shadow-lg lg:col-span-1">
+                            <Heading size="4" className="text-[var(--grass-11)] font-novecento-sans">Service Benefits</Heading>
+                            <Flex pt="4" direction="column" gap="3">
+                                {service.benefitList.map((benefit, index) => (
+                                    <Flex direction="row" key={index} gap="2" align="center">
+                                        <Check className="w-5 h-5 text-[var(--grass-9)] shrink-0" />
+                                        <Text className="text-[var(--gray-12)]">{benefit.benefit}</Text>
+                                    </Flex>
+                                ))}
+                            </Flex>
 
-                                <div className="pt-6 border-t border-stone-200 space-y-4">
-                                    <div className="flex items-start gap-3">
-                                        <DollarSign className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
-                                        <div>
-                                            <p className="font-semibold text-stone-900 mb-1 font-novecento-sans">Pricing</p>
-                                            <p className="text-sm text-stone-600">{service.pricing}</p>
-                                        </div>
-                                    </div>
+                            <Flex direction="column" gap="4" pt="4">
+                                <Flex gap="3" align="start">
+                                    <DollarSign className="w-5 h-5 text-[var(--grass-9)] shrink-0 mt-0.5" />
+                                    <Box>
+                                        <Text weight="bold" className="text-[var(--gray-12)] mb-1 block font-novecento-sans">Pricing</Text>
+                                        <Text size="2" className="text-[var(--gray-11)]">{service.pricing}</Text>
+                                    </Box>
+                                </Flex>
 
-                                    <div className="flex items-start gap-3 mb-6">
-                                        <Clock className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
-                                        <div>
-                                            <p className="font-semibold text-stone-900 mb-1 font-novecento-sans">Timeline</p>
-                                            <p className="text-sm text-stone-600">{service.timeline}</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                <Flex gap="3" align="start" mb="2">
+                                    <Clock className="w-5 h-5 text-[var(--grass-9)] shrink-0 mt-0.5" />
+                                    <Box>
+                                        <Text weight="bold" className="text-[var(--gray-12)] mb-1 block font-novecento-sans">Timeline</Text>
+                                        <Text size="2" className="text-[var(--gray-11)]">{service.timeline}</Text>
+                                    </Box>
+                                </Flex>
+                            </Flex>
 
-                                <div className="pt-6 border-t border-stone-200">
+                            <Flex direction="column" align="center" gap="2" px="6">
+                                <Separator size="4" my="5" />
+                                <Text size="2" className="text-[var(--gray-12)]">
+                                    Ready to get started?
+                                </Text>
+                                <Button asChild size="3" variant="solid" color="green">
                                     <Link href="/contact">
-                                        <Button className="w-full bg-green-600 hover:bg-green-700">
-                                            Request a Quote
-                                        </Button>
+                                        Request a Quote
                                     </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+                                </Button>
+                            </Flex>
+                        </Flex>
+                    </Grid>
+                </Container>
+            </Section>
+        </Box>
     );
 };
 

@@ -2,6 +2,7 @@ import React from 'react';
 import * as motion from 'motion/react-client'
 import { Award, Users, User, Leaf, Heart } from 'lucide-react';
 import Image from 'next/image';
+import { Box, Container, Section, Grid, Flex, Heading, Text, Card, Avatar } from '@radix-ui/themes';
 
 const About = () => {
     const values = [
@@ -46,47 +47,47 @@ const About = () => {
     ];
 
     return (
-        <div className="pt-20">
+        <Box pt="9" className="bg-transparent">
             {/* Hero Section */}
-            <section className="relative py-20 bg-gradient-to-br from-green-800 to-green-600 overflow-hidden">
-                <div className="container mx-auto px-4 relative z-10">
+            <Section size="3" className="bg-[var(--grass-12)]">
+                <Container size="3">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="text-center text-white max-w-3xl mx-auto"
                     >
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6 font-novecento-sans">About Green Generation Landscaping</h1>
-                        <p className="text-xl text-green-50">
-                            Creating beautiful, sustainable landscapes for over 20 years
-                        </p>
+                        <Flex direction="column" align="center" className="text-center text-[var(--gray-1)] max-w-3xl mx-auto">
+                            <Heading size="8" mb="6" className="font-novecento-sans text-[var(--gray-1)]">About Green Generation Landscaping</Heading>
+                            <Text size="5" className="text-green-50 block">
+                                Creating beautiful, sustainable landscapes for over 20 years
+                            </Text>
+                        </Flex>
                     </motion.div>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0">
-
-                </div>
-            </section>
+                </Container>
+            </Section>
 
             {/* Story Section */}
-            <section className="py-20 bg-stone-50 relative overflow-hidden">
-                <div className="container mx-auto px-4 max-w-4xl relative z-10">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <Section size="3" className="bg-[var(--gray-2)]">
+                <Container size="4" px="4">
+                    <Grid columns={{ initial: '1', md: '2' }} gap="9" align="center">
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
                             viewport={{ once: true }}
                         >
-                            <h2 className="text-4xl font-bold text-stone-900 mb-6 font-novecento-sans">Our Story</h2>
-                            <div className="space-y-4 text-stone-700 leading-relaxed">
-                                <p>We have 20 years of experience in the industry. We're known for being punctual, reliable, and taking our work seriously to ensure high-quality results and full client satisfaction. Rain or shine, we show up and pay close attention to detail to deliver clean, beautiful work every time.</p>
-                                <p>
+                            <Heading size="8" className="text-[var(--gray-12)] mb-6 font-novecento-sans">Our Story</Heading>
+                            <Flex direction="column" gap="4">
+                                <Text as="p" size="3" className="text-[var(--gray-12)] leading-relaxed">
+                                    We have 20 years of experience in the industry. We're known for being punctual, reliable, and taking our work seriously to ensure high-quality results and full client satisfaction. Rain or shine, we show up and pay close attention to detail to deliver clean, beautiful work every time.
+                                </Text>
+                                <Text as="p" size="3" className="text-[var(--gray-12)] leading-relaxed">
                                     What started as a small operation with just a handful of clients has grown into a trusted name in Greater Seattle landscaping. Our success is built on a foundation of quality work and genuine care for our clients.
-                                </p>
-                                <p>
+                                </Text>
+                                <Text as="p" size="3" className="text-[var(--gray-12)] leading-relaxed">
                                     Today, we're proud to serve both residential and commercial clients throughout the region, bringing the same dedication to excellence that has defined us from day one.
-                                </p>
-                            </div>
+                                </Text>
+                            </Flex>
                         </motion.div>
 
                         <motion.div
@@ -94,40 +95,37 @@ const About = () => {
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
                             viewport={{ once: true }}
-                            className="rounded-2xl overflow-hidden shadow-2xl"
                         >
-                            <Image
-                                alt="Green Generation Landscaping team working on landscape project"
-                                className="w-full h-96 object-cover"
-                                src="/hero-bg.jpg"
-                                fill
-                            />
+                            <Box className="rounded-2xl overflow-hidden shadow-2xl h-96 relative">
+                                <Image
+                                    alt="Green Generation Landscaping team working on landscape project"
+                                    className="object-cover"
+                                    src="/hero-bg.jpg"
+                                    fill
+                                />
+                            </Box>
                         </motion.div>
-                    </div>
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0">
-
-                </div>
-            </section>
+                    </Grid>
+                </Container>
+            </Section>
 
             {/* Values Section */}
-            <section className="relative py-20 bg-green-700 overflow-hidden">
-                <div className="container mx-auto px-4 relative z-10">
+            <Section size="3" className="bg-[var(--grass-12)]">
+                <Container size="4" px="4">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="text-center text-white mb-12"
+                        className="text-center text-[var(--gray-1)] mb-12"
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold mb-4 font-novecento-sans">Our Values</h2>
-                        <p className="text-xl text-green-50 max-w-2xl mx-auto">
+                        <Heading size="8" mb="4" className="text-[var(--gray-1)] font-novecento-sans">Our Values</Heading>
+                        <Text size="5" className="text-[var(--gray-1)]/90 max-w-2xl mx-auto">
                             These core principles guide everything we do
-                        </p>
+                        </Text>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    <Grid columns={{ initial: '1', md: '2', lg: '4' }} gap="6" className="max-w-6xl mx-auto">
                         {values.map((value, index) => {
                             const Icon = value.icon;
                             return (
@@ -137,27 +135,26 @@ const About = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6, delay: index * 0.1 }}
                                     viewport={{ once: true }}
-                                    className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center hover:bg-white/20 transition-colors"
                                 >
-                                    <div className="bg-green-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <Icon className="w-8 h-8 text-white" />
-                                    </div>
-                                    <h3 className="text-xl font-bold text-white mb-2 font-novecento-sans">{value.title}</h3>
-                                    <p className="text-green-50">{value.description}</p>
+                                    <Box className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center hover:bg-white/20 transition-colors h-full">
+                                        <Flex justify="center" mb="4">
+                                            <Flex justify="center" align="center" className="bg-[var(--grass-9)] w-16 h-16 rounded-full">
+                                                <Icon className="w-8 h-8 text-[var(--gray-1)]" />
+                                            </Flex>
+                                        </Flex>
+                                        <Heading size="4" weight="bold" className="text-[var(--gray-1)] mb-2 font-novecento-sans">{value.title}</Heading>
+                                        <Text size="2" className="text-green-50 block">{value.description}</Text>
+                                    </Box>
                                 </motion.div>
                             );
                         })}
-                    </div>
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0">
-
-                </div>
-            </section>
+                    </Grid>
+                </Container>
+            </Section>
 
             {/* Team Section */}
-            <section className="py-20 bg-stone-50 relative overflow-hidden">
-                <div className="container mx-auto px-4 relative z-10">
+            <Section size="3" className="bg-[var(--gray-2)]">
+                <Container size="4" px="4">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -165,13 +162,13 @@ const About = () => {
                         viewport={{ once: true }}
                         className="text-center mb-16"
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold text-stone-900 mb-4 font-novecento-sans">Meet Our Team</h2>
-                        <p className="text-xl text-stone-600 max-w-2xl mx-auto">
+                        <Heading size="8" className="text-[var(--gray-12)] mb-4 font-novecento-sans">Meet Our Team</Heading>
+                        <Text size="5" className="text-[var(--gray-11)] max-w-2xl mx-auto">
                             The experienced professionals behind every beautiful landscape
-                        </p>
+                        </Text>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <Grid columns={{ initial: '1', md: '3' }} gap="8" className="max-w-5xl mx-auto">
                         {team.map((member, index) => (
                             <motion.div
                                 key={index}
@@ -179,30 +176,27 @@ const About = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: index * 0.1 }}
                                 viewport={{ once: true }}
-                                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow"
                             >
-                                <div className="h-64 overflow-hidden flex items-center justify-center bg-stone-200">
-                                    <User className="w-24 h-24 text-stone-400" />
-                                </div>
-                                <div className="p-6">
-                                    <h3 className="text-2xl font-bold text-stone-900 mb-1 font-novecento-sans">{member.name}</h3>
-                                    <p className="text-green-600 font-semibold mb-3">{member.role}</p>
-                                    <p className="text-stone-600 leading-relaxed">{member.bio}</p>
-                                </div>
+                                <Card className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow h-full" size="2">
+                                    <Flex justify="center" align="center" className="h-64 bg-[var(--gray-3)]">
+                                        <User className="w-24 h-24 text-[var(--gray-8)]" />
+                                    </Flex>
+                                    <Box p="4">
+                                        <Heading size="5" className="text-[var(--gray-12)] mb-1 font-novecento-sans">{member.name}</Heading>
+                                        <Text size="2" weight="bold" className="text-[var(--grass-9)] mb-3 block">{member.role}</Text>
+                                        <Text size="2" className="text-[var(--gray-11)] leading-relaxed block">{member.bio}</Text>
+                                    </Box>
+                                </Card>
                             </motion.div>
                         ))}
-                    </div>
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0">
-
-                </div>
-            </section>
+                    </Grid>
+                </Container>
+            </Section>
 
             {/* Stats Section */}
-            <section className="py-20 bg-white relative overflow-hidden">
-                <div className="container mx-auto px-4 relative z-10">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            <Section size="3" className="bg-[var(--gray-1)]">
+                <Container size="4" px="4">
+                    <Grid columns={{ initial: '2', md: '4' }} gap="8" className="max-w-4xl mx-auto">
                         {[
                             { number: '20+', label: 'Years Experience' },
                             { number: '500+', label: 'Projects Completed' },
@@ -217,16 +211,16 @@ const About = () => {
                                 viewport={{ once: true }}
                                 className="text-center"
                             >
-                                <div className="text-4xl md:text-5xl font-bold text-green-600 mb-2 font-novecento-sans">
+                                <Text size="8" weight="bold" className="text-[var(--grass-9)] mb-2 block font-novecento-sans">
                                     {stat.number}
-                                </div>
-                                <div className="text-stone-600 font-medium">{stat.label}</div>
+                                </Text>
+                                <Text size="3" weight="medium" className="text-[var(--gray-11)] block">{stat.label}</Text>
                             </motion.div>
                         ))}
-                    </div>
-                </div>
-            </section>
-        </div>
+                    </Grid>
+                </Container>
+            </Section>
+        </Box>
     );
 };
 

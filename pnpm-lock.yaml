@@ -38,6 +38,9 @@ importers:
       '@payloadcms/ui':
         specifier: 3.72.0
         version: 3.72.0(@types/react@18.3.27)(monaco-editor@0.55.1)(next@16.1.4(@babel/core@7.28.6)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.72.0(bufferutil@4.1.0)(graphql@16.12.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
+      '@radix-ui/colors':
+        specifier: ^3.0.0
+        version: 3.0.0
       '@radix-ui/react-alert-dialog':
         specifier: ^1.1.4
         version: 1.1.15(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)

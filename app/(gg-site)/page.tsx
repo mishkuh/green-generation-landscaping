@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import * as motion from 'motion/react-client'
 import { ArrowRight, CheckCircle, Star } from 'lucide-react';
-import { Button } from '@radix-ui/themes';
+import { Button, Flex, Box, Heading, Text, Grid, Container, Section, Em, Card } from '@radix-ui/themes';
 import Image from 'next/image';
+import ShowCardGrid from './ui/components/ShowCardGrid';
 
 const Home = async () => {
     const featuredServices = [
@@ -33,7 +34,7 @@ const Home = async () => {
     ];
 
     const benefitsList = [
-        'Licensed & Insured Professionals',
+        'Licensed & Insured',
         'Eco-Friendly Practices',
         'Free Consultations',
         'Satisfaction Guaranteed',
@@ -42,129 +43,126 @@ const Home = async () => {
     ];
 
     return (
-        <div className="pt-20">
+        <Box>
             {/* Hero Section with Animated Background */}
-            <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-green-900 to-green-700">
+            <Section className='min-h-screen relative pt-[9em]'>
+                <Container size="2" className='h-[calc(100vh-9rem)]'>
+                    <Flex
+                        align="center"
+                        justify="center"
+                        className='h-[calc(100vh-9rem)]'
+                    >
+                        {/* Background Image */}
+                        <Image
+                            alt="Lush green landscape with beautiful garden"
+                            src="/hero-bg.jpg"
+                            objectFit='cover'
+                            fill
+                        />
 
-                <div className="absolute inset-0 opacity-20 z-10">
-                    <Image
-                        alt="Lush green landscape with beautiful garden"
-                        className="w-full h-full object-cover"
-                        src="/hero-bg.jpg"
-                        fill
-                    />
-                </div>
+                        {/* Background overlay */}
+                        <Box className='absolute inset-0 bg-[var(--grass-12)] opacity-80' />
 
-                <div className="container mx-auto px-4 py-20 relative z-20">
-                    <div className="max-w-4xl mx-auto text-center">
-                        <motion.h1
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight font-novecento-sans"
-                        >
-                            Transform Your Outdoor Space Into Paradise
-                        </motion.h1>
-                        <motion.p
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            className="text-2xl md:text-3xl text-green-50 mb-10 font-light"
-                        >
-                            Professional landscaping services that bring your vision to life
-                        </motion.p>
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.4 }}
-                            className="flex flex-wrap justify-center gap-4"
-                        >
-                            <Link href="/contact">
-                                <Button>
-                                    Get Free Consultation
-                                    <ArrowRight className="ml-2 w-6 h-6" />
-                                </Button>
-                            </Link>
-                            <Link href="/portfolio">
-                                <Button>
-                                    View Our Work
-                                </Button>
-                            </Link>
-                        </motion.div>
-                    </div>
-                </div>
-            </section>
+                        <Box p="8" className='z-20 backdrop-blur-md bg-gradient-to-b from-[var(--gray-1)]/10 to-[var(--gray-10)]/10 rounded-xl shadow-xl border-[1px] border-[var(--gray-10)]/70'>
+                            {/* Hero Content */}
+                            <Flex
+                                align="center"
+                                justify="center"
+                            >
+                                <Flex gap="4" direction="column" justify="center">
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 30 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.6 }}
+                                    >
+                                        <Heading
+                                            size="9"
+                                            style={{ color: 'var(--gray-2)' }}
+                                        >
+                                            Transform Your Outdoor Space Into Paradise
+                                        </Heading>
+                                    </motion.div>
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 30 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.6, delay: 0.2 }}
+                                    >
+                                        <Text
+                                            size="6"
+                                            style={{ color: 'var(--gray-2)' }}
+                                        >
+                                            Professional landscaping services that bring your vision to life
+                                        </Text>
+                                    </motion.div>
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 30 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.6, delay: 0.4 }}
+                                    >
+                                        <Flex gap="4" direction={{ initial: 'column', sm: 'row' }}>
+                                            <Button asChild size="4" variant="solid">
+                                                <Link href="/contact">
+                                                    Get Free Consultation
+                                                    <ArrowRight />
+                                                </Link>
+                                            </Button>
+                                            <Button asChild size="4" variant="outline">
+                                                <Link href="/portfolio">
+                                                    View Our Work
+                                                </Link>
+                                            </Button>
+                                        </Flex>
+                                    </motion.div>
+                                </Flex>
+                            </Flex>
+                        </Box>
+                    </Flex>
+                </Container>
+            </Section>
 
             {/* Services Section */}
-            <section className="relative py-20 bg-stone-50 overflow-hidden">
-                <div className="container mx-auto px-4 relative z-10">
+            <Section size="3">
+                <Container size="3" px="4" mb="6">
+                    {/* Heading and text */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="text-center mb-16"
+                        className="text-[var(--grass-12)]"
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold text-stone-900 mb-4 font-novecento-sans">Featured Services</h2>
-                        <p className="text-xl text-stone-600 max-w-2xl mx-auto">
+                        <Heading size="8">Featured Services</Heading>
+                        <Text size="5">
                             Comprehensive landscaping solutions for residential and commercial properties
-                        </p>
+                        </Text>
                     </motion.div>
+                </Container>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {featuredServices.map((service, index) => (
-                            <Link href={service.link} key={index} className="block h-full">
-                                <motion.div
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                                    viewport={{ once: true }}
-                                    className={`bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group`}
-                                >
-                                    <div className="relative h-48 overflow-hidden">
-                                        <Image
-                                            alt={service.title}
-                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                                            src={service.image}
-                                            fill
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-green-900/60 to-transparent" />
-                                    </div>
-                                    <div className="p-6">
-                                        <h3 className="text-xl font-bold text-stone-900 mb-2 font-novecento-sans">{service.title}</h3>
-                                        <p className="text-stone-600 mb-4">{service.description}</p>
-                                        <span
-                                            className="text-green-600 font-semibold inline-flex items-center hover:gap-2 transition-all"
-                                        >
-                                            Learn More
-                                            <ArrowRight className="ml-1 w-4 h-4" />
-                                        </span>
-                                    </div>
-                                </motion.div>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-            </section>
+                {/* Grid of services */}
+                <Container size="4" px="6">
+                    <ShowCardGrid showCards={featuredServices} />
+                </Container>
+            </Section>
 
             {/* Why Choose Us Section */}
-            <section className="relative py-20 bg-green-700 overflow-hidden">
-
-                <div className="container mx-auto px-4 relative z-10">
+            <Section size="3" className="bg-[var(--grass-12)]">
+                <Container px="4" size="3" mb="6">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="text-center mb-12"
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 font-novecento-sans">Why Choose Green Generation Landscaping?</h2>
-                        <p className="text-xl text-green-50 max-w-2xl mx-auto">
-                            We're committed to excellence in every project we undertake
-                        </p>
+                        <Flex gap="4" direction="column">
+                            <Heading size="8" className='text-[var(--grass-1)]'>Why Choose Green Generation Landscaping?</Heading>
+                            <Text size="5" className='text-[var(--grass-2)]'>
+                                We're committed to excellence in every project we undertake
+                            </Text>
+                        </Flex>
                     </motion.div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                </Container>
+                <Container p="3" size="3">
+                    <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="4">
                         {benefitsList.map((benefit, index) => (
                             <motion.div
                                 key={index}
@@ -172,93 +170,102 @@ const Home = async () => {
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.4, delay: index * 0.1 }}
                                 viewport={{ once: true }}
-                                className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg p-4 hover:bg-white/20 transition-colors"
                             >
-                                <CheckCircle className="w-6 h-6 text-green-300 shrink-0" />
-                                <span className="text-white font-medium">{benefit}</span>
+                                <Flex justify="center" className="bg-[var(--grass-1)]/90 h-[100%] p-2 rounded-lg">
+                                    <Flex direction="row" align="center" gap="2">
+                                        <CheckCircle className='text-[var(--grass-10)]' />
+                                        <Text>{benefit}</Text>
+                                    </Flex>
+                                </Flex>
                             </motion.div>
                         ))}
-                    </div>
-                </div>
-            </section>
+                    </Grid>
+                </Container>
+            </Section >
 
             {/* Testimonials Section */}
-            <section className="py-20 bg-stone-50 relative overflow-hidden">
-                <div className="container mx-auto px-4 relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-16"
-                    >
-                        <h2 className="text-4xl md:text-5xl font-bold text-stone-900 mb-4 font-novecento-sans">What Our Clients Say</h2>
-                    </motion.div>
+            < Section size="3" >
+                <Container size="3" px="4">
+                    <Flex gap="4" direction="column" justify="center" align="center">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                            viewport={{ once: true }}
+                        >
+                            <Heading size="8">What Our Clients Say</Heading>
+                        </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                        {[
-                            {
-                                name: 'Kirk Golub',
-                                text: 'Green Generation Landscaping continues to be my go-to landscaping company. The attention to detail is incredible!',
-                                rating: 5
-                            },
-                            {
-                                name: 'Michael Wiens',
-                                text: 'Professional and reliable. They exceeded our expectations on our residential landscaping.',
-                                rating: 5
-                            },
-                            {
-                                name: 'John Doe',
-                                text: 'Best landscaping company we\'ve worked with. They maintain our property beautifully and are always responsive.',
-                                rating: 5
-                            }
-                        ].map((testimonial, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6, delay: index * 0.1 }}
-                                viewport={{ once: true }}
-                                className="bg-white rounded-2xl p-8 shadow-lg"
-                            >
-                                <div className="flex gap-1 mb-4">
-                                    {[...Array(testimonial.rating)].map((_, i) => (
-                                        <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                                    ))}
-                                </div>
-                                <p className="text-stone-600 mb-4 italic">"{testimonial.text}"</p>
-                                <p className="text-stone-900 font-semibold">{testimonial.name}</p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+                        <Grid columns={{ initial: '1', sm: '3', md: '3' }} gap="6">
+                            {[
+                                {
+                                    name: 'Kirk Golub',
+                                    text: 'Green Generation Landscaping continues to be my go-to landscaping company. The attention to detail is incredible!',
+                                    rating: 5
+                                },
+                                {
+                                    name: 'Michael Wiens',
+                                    text: 'Professional and reliable. They exceeded our expectations on our residential landscaping.',
+                                    rating: 5
+                                },
+                                {
+                                    name: 'John Doe',
+                                    text: 'Best landscaping company we\'ve worked with. They maintain our property beautifully and are always responsive.',
+                                    rating: 5
+                                }
+                            ].map((testimonial, index) => (
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                                    viewport={{ once: true }}
+                                >
+                                    <Card size="3" variant="surface">
+                                        <Flex direction="column" gap="4">
+                                            <Flex gap="1">
+                                                {[...Array(testimonial.rating)].map((_, i) => (
+                                                    <Star color="var(--yellow-6)" fill="var(--yellow-6)" key={i} />
+                                                ))}
+                                            </Flex>
+                                            <Text as="p" mb="4"><Em>"{testimonial.text}"</Em></Text>
+                                            <Text weight="bold">{testimonial.name}</Text>
+                                        </Flex>
+                                    </Card>
+                                </motion.div>
+                            ))}
+                        </Grid>
+                    </Flex>
+                </Container>
+            </Section >
 
             {/* CTA Section */}
-            <section className="relative py-20 bg-gradient-to-br from-green-800 to-green-600 overflow-hidden">
-                <div className="container mx-auto px-4 text-center relative z-10">
+            < Section size="3" style={{ backgroundColor: 'var(--grass-12)' }}>
+                <Container size="3" px="4">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-novecento-sans">
-                            Ready to Transform Your Landscape?
-                        </h2>
-                        <p className="text-xl text-green-50 mb-8 max-w-2xl mx-auto">
-                            Get started with a free consultation and let us bring your outdoor vision to life
-                        </p>
-                        <Link href="/contact" className="cursor-pointer">
-                            <Button>
-                                Schedule Free Consultation
-                                <ArrowRight className="ml-2 w-5 h-5" />
+                        <Flex direction="column" gap="4" justify="center" align="center">
+                            <Heading size="8" style={{ color: 'var(--gray-1)' }}>
+                                Ready to Transform Your Landscape?
+                            </Heading>
+                            <Text size="5" style={{ color: 'var(--gray-2)' }}>
+                                Get started with a free consultation and let us bring your outdoor vision to life
+                            </Text>
+                            <Button asChild size="4">
+                                <Link href="/contact">
+                                    Schedule Free Consultation
+                                    <ArrowRight />
+                                </Link>
                             </Button>
-                        </Link>
+                        </Flex>
                     </motion.div>
-                </div>
-            </section>
-        </div >
+                </Container>
+            </Section >
+        </Box >
     );
 };
 

@@ -48,6 +48,7 @@ export default buildConfig({
             },
             bucket: process.env.S3_BUCKET!,
             config: {
+                region: process.env.AWS_REGION || "us-east-1",
                 forcePathStyle: true,
                 credentials: {
                     accessKeyId: process.env.S3_ACCESS_KEY_ID!,

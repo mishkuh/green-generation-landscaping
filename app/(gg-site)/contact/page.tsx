@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import * as motion from 'motion/react-client'
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
-import { Button } from '@radix-ui/themes';
+import { Button, Box, Section, Container, Grid, Flex, Heading, Text, Card, TextField, TextArea, Select } from '@radix-ui/themes';
 import { sendEmail } from '@/app/(gg-site)/actions/sendEmail';
 
 const Contact = () => {
@@ -18,7 +18,7 @@ const Contact = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const { email, phone, location, details, source } = formData;
+        const { email, phone, location, details } = formData;
 
         if (!email || !phone || !location || !details) {
             return;
@@ -43,95 +43,107 @@ const Contact = () => {
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
     };
 
+    const handleSelectChange = (value: string) => {
+        setFormData({
+            ...formData,
+            source: value
+        });
+    };
+
     return (
-        <div className="pt-20">
+        <Box pt="9" className="bg-transparent">
             {/* Hero Section */}
-            <section className="relative py-20 bg-gradient-to-br from-green-800 to-green-600 overflow-hidden">
-                <div className="container mx-auto px-4 relative z-10">
+            <Section size="3" className="bg-[var(--grass-12)]">
+                <Container size="3">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="text-center text-white max-w-3xl mx-auto"
                     >
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6 font-novecento-sans">Get In Touch</h1>
-                        <p className="text-xl text-green-50">
-                            Ready to transform your outdoor space? Let's discuss your project and provide a free consultation
-                        </p>
+                        <Flex direction="column" align="center" className="text-center text-white max-w-3xl mx-auto">
+                            <Heading size="8" mb="6" className="font-novecento-sans">Get In Touch</Heading>
+                            <Text size="5" className="text-green-50 block">
+                                Ready to transform your outdoor space? Let's discuss your project and provide a free consultation
+                            </Text>
+                        </Flex>
                     </motion.div>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0">
-
-                </div>
-            </section>
+                </Container>
+            </Section>
 
             {/* Contact Section */}
-            <section className="py-20 bg-stone-50 relative overflow-hidden">
-                <div className="container mx-auto px-4 max-w-6xl relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <Section size="3" className="bg-[var(--gray-2)]">
+                <Container size="4" px="4">
+                    <Grid columns={{ initial: '1', lg: '2' }} gap="9">
                         {/* Contact Information */}
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
-                            className="space-y-8"
                         >
-                            <div>
-                                <h2 className="text-3xl font-bold text-stone-900 mb-6 font-novecento-sans">Contact Information</h2>
-                                <p className="text-stone-600 mb-8">
-                                    Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
-                                </p>
-                            </div>
+                            <Flex direction="column" gap="8">
+                                <Box>
+                                    <Heading size="6" className="text-[var(--gray-12)] mb-6 font-novecento-sans">Contact Information</Heading>
+                                    <Text className="text-[var(--gray-11)] mb-8 block">
+                                        Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+                                    </Text>
+                                </Box>
 
-                            <div className="space-y-6">
-                                <div className="flex items-start gap-4 bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                                    <div className="bg-green-100 p-3 rounded-full">
-                                        <Phone className="w-6 h-6 text-green-600" />
-                                    </div>
-                                    <div>
-                                        <h3 className="font-semibold text-stone-900 mb-1 font-novecento-sans">Phone</h3>
-                                        <p className="text-stone-600">(253) 304-7250</p>
-                                        <p className="text-sm text-stone-500 mt-1">Mon-Fri 8am-6pm, Sat 9am-4pm</p>
-                                    </div>
-                                </div>
+                                <Flex direction="column" gap="6">
+                                    <Card size="3">
+                                        <Flex gap="4" align="start">
+                                            <Flex justify="center" align="center" className="bg-[var(--grass-3)] p-3 rounded-full shrink-0">
+                                                <Phone className="w-6 h-6 text-[var(--grass-9)]" />
+                                            </Flex>
+                                            <Box>
+                                                <Text weight="bold" className="text-[var(--gray-12)] mb-1 block font-novecento-sans">Phone</Text>
+                                                <Text className="text-[var(--gray-11)] block">(253) 304-7250</Text>
+                                                <Text size="1" className="text-[var(--gray-10)] mt-1 block">Mon-Fri 8am-6pm, Sat 9am-4pm</Text>
+                                            </Box>
+                                        </Flex>
+                                    </Card>
 
-                                <div className="flex items-start gap-4 bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                                    <div className="bg-green-100 p-3 rounded-full">
-                                        <Mail className="w-6 h-6 text-green-600" />
-                                    </div>
-                                    <div>
-                                        <h3 className="font-semibold text-stone-900 mb-1 font-novecento-sans">Email</h3>
-                                        <p className="text-stone-600">ggenerationlandscaping@gmail.com</p>
-                                        <p className="text-sm text-stone-500 mt-1">We'll respond within 24 hours</p>
-                                    </div>
-                                </div>
+                                    <Card size="3">
+                                        <Flex gap="4" align="start">
+                                            <Flex justify="center" align="center" className="bg-[var(--grass-3)] p-3 rounded-full shrink-0">
+                                                <Mail className="w-6 h-6 text-[var(--grass-9)]" />
+                                            </Flex>
+                                            <Box>
+                                                <Text weight="bold" className="text-[var(--gray-12)] mb-1 block font-novecento-sans">Email</Text>
+                                                <Text className="text-[var(--gray-11)] block">ggenerationlandscaping@gmail.com</Text>
+                                                <Text size="1" className="text-[var(--gray-10)] mt-1 block">We'll respond within 24 hours</Text>
+                                            </Box>
+                                        </Flex>
+                                    </Card>
 
-                                <div className="flex items-start gap-4 bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                                    <div className="bg-green-100 p-3 rounded-full">
-                                        <MapPin className="w-6 h-6 text-green-600" />
-                                    </div>
-                                    <div>
-                                        <h3 className="font-semibold text-stone-900 mb-1 font-novecento-sans">Service Area</h3>
-                                        <p className="text-stone-600">Greater Seattle Area</p>
-                                        <p className="text-stone-600">Washington State</p>
-                                    </div>
-                                </div>
-                            </div>
+                                    <Card size="3">
+                                        <Flex gap="4" align="start">
+                                            <Flex justify="center" align="center" className="bg-[var(--grass-3)] p-3 rounded-full shrink-0">
+                                                <MapPin className="w-6 h-6 text-[var(--grass-9)]" />
+                                            </Flex>
+                                            <Box>
+                                                <Text weight="bold" className="text-[var(--gray-12)] mb-1 block font-novecento-sans">Service Area</Text>
+                                                <Text className="text-[var(--gray-11)] block">Greater Seattle Area</Text>
+                                                <Text className="text-[var(--gray-11)] block">Washington State</Text>
+                                            </Box>
+                                        </Flex>
+                                    </Card>
+                                </Flex>
 
-                            <div className="bg-green-700 text-white p-6 rounded-xl">
-                                <h3 className="text-xl font-bold mb-3 font-novecento-sans">Free Consultation</h3>
-                                <p className="text-green-50 mb-4">
-                                    Schedule a free on-site consultation to discuss your project and receive a detailed estimate.
-                                </p>
-                                <p className="text-green-100 font-semibold">No obligation • Expert advice • Custom solutions</p>
-                            </div>
+                                <Box className="bg-[var(--grass-11)] text-white p-6 rounded-xl">
+                                    <Heading size="4" mb="3" className="font-novecento-sans">Free Consultation</Heading>
+                                    <Text className="text-[var(--grass-1)] mb-4 block">
+                                        Schedule a free on-site consultation to discuss your project and receive a detailed estimate.
+                                    </Text>
+                                    <Text weight="bold" className="text-[var(--grass-1)] block">No obligation • Expert advice • Custom solutions</Text>
+                                </Box>
+                            </Flex>
                         </motion.div>
 
                         {/* Contact Form */}
@@ -139,126 +151,117 @@ const Contact = () => {
                             initial={{ opacity: 0, x: 30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
-                            className="bg-white rounded-2xl p-8 shadow-xl"
                         >
-                            <h2 className="text-3xl font-bold text-stone-900 mb-6 font-novecento-sans">Send Us a Message</h2>
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <div>
-                                    <label htmlFor="email" className="block text-sm font-semibold text-stone-700 mb-2">
-                                        Email Address <span className="text-red-500">*</span>
-                                    </label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-stone-900"
-                                        placeholder="your@email.com"
-                                    />
-                                </div>
+                            <Card size="4" className="shadow-xl">
+                                <Heading size="6" className="text-[var(--gray-12)] mb-6 font-novecento-sans">Send Us a Message</Heading>
+                                <form onSubmit={handleSubmit}>
+                                    <Flex direction="column" gap="4">
+                                        <Box>
+                                            <Text as="label" size="2" weight="bold" className="text-[var(--gray-12)] mb-2 block">
+                                                Email Address <span className="text-red-500">*</span>
+                                            </Text>
+                                            <TextField.Root
+                                                type="email"
+                                                name="email"
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                                required
+                                                placeholder="your@email.com"
+                                                size="3"
+                                            />
+                                        </Box>
 
-                                <div>
-                                    <label htmlFor="phone" className="block text-sm font-semibold text-stone-700 mb-2">
-                                        Phone Number <span className="text-red-500">*</span>
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        id="phone"
-                                        name="phone"
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-stone-900"
-                                        placeholder="(555) 123-4567"
-                                    />
-                                </div>
+                                        <Box>
+                                            <Text as="label" size="2" weight="bold" className="text-[var(--gray-12)] mb-2 block">
+                                                Phone Number <span className="text-red-500">*</span>
+                                            </Text>
+                                            <TextField.Root
+                                                type="tel"
+                                                name="phone"
+                                                value={formData.phone}
+                                                onChange={handleChange}
+                                                required
+                                                placeholder="(555) 123-4567"
+                                                size="3"
+                                            />
+                                        </Box>
 
-                                <div>
-                                    <label htmlFor="location" className="block text-sm font-semibold text-stone-700 mb-2">
-                                        Property Location <span className="text-red-500">*</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="location"
-                                        name="location"
-                                        value={formData.location}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-stone-900"
-                                        placeholder="City, State or Full Address"
-                                    />
-                                </div>
+                                        <Box>
+                                            <Text as="label" size="2" weight="bold" className="text-[var(--gray-12)] mb-2 block">
+                                                Property Location <span className="text-red-500">*</span>
+                                            </Text>
+                                            <TextField.Root
+                                                type="text"
+                                                name="location"
+                                                value={formData.location}
+                                                onChange={handleChange}
+                                                required
+                                                placeholder="City, State or Full Address"
+                                                size="3"
+                                            />
+                                        </Box>
 
-                                <div>
-                                    <label htmlFor="details" className="block text-sm font-semibold text-stone-700 mb-2">
-                                        Project Details <span className="text-red-500">*</span>
-                                    </label>
-                                    <textarea
-                                        id="details"
-                                        name="details"
-                                        value={formData.details}
-                                        onChange={handleChange}
-                                        required
-                                        rows={4}
-                                        className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none text-stone-900"
-                                        placeholder="Tell us about your project - what services are you interested in, timeline, budget range, etc."
-                                    />
-                                </div>
+                                        <Box>
+                                            <Text as="label" size="2" weight="bold" className="text-[var(--gray-12)] mb-2 block">
+                                                Project Details <span className="text-red-500">*</span>
+                                            </Text>
+                                            <TextArea
+                                                name="details"
+                                                value={formData.details}
+                                                onChange={handleChange}
+                                                required
+                                                placeholder="Tell us about your project - what services are you interested in, timeline, budget range, etc."
+                                                size="3"
+                                                rows={4}
+                                            />
+                                        </Box>
 
-                                <div>
-                                    <label htmlFor="source" className="block text-sm font-semibold text-stone-700 mb-2">
-                                        How did you hear about us? <span className="text-stone-400">(Optional)</span>
-                                    </label>
-                                    <select
-                                        id="source"
-                                        name="source"
-                                        value={formData.source}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-stone-900"
-                                    >
-                                        <option value="">Select an option</option>
-                                        <option value="google">Google Search</option>
-                                        <option value="social">Social Media</option>
-                                        <option value="referral">Friend/Family Referral</option>
-                                        <option value="nextdoor">Nextdoor</option>
-                                        <option value="advertisement">Advertisement</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
+                                        <Box>
+                                            <Text as="label" size="2" weight="bold" className="text-[var(--gray-12)] mb-2 block">
+                                                How did you hear about us? <span className="text-[var(--gray-10)]">(Optional)</span>
+                                            </Text>
+                                            <Select.Root value={formData.source} onValueChange={handleSelectChange} size="3">
+                                                <Select.Trigger placeholder="Select an option" className="w-full" />
+                                                <Select.Content>
+                                                    <Select.Group>
+                                                        <Select.Item value="google">Google Search</Select.Item>
+                                                        <Select.Item value="social">Social Media</Select.Item>
+                                                        <Select.Item value="referral">Friend/Family Referral</Select.Item>
+                                                        <Select.Item value="nextdoor">Nextdoor</Select.Item>
+                                                        <Select.Item value="advertisement">Advertisement</Select.Item>
+                                                        <Select.Item value="other">Other</Select.Item>
+                                                    </Select.Group>
+                                                </Select.Content>
+                                            </Select.Root>
+                                        </Box>
 
-                                <div className="w-full">
-                                    <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 text-lg h-auto">
-                                        Send Message
-                                        <Send className="ml-2 w-5 h-5" />
-                                    </Button>
-                                </div>
+                                        <Button type="submit" size="4" className="w-full bg-green-600 hover:bg-green-700 cursor-pointer" highContrast color="green">
+                                            Send Message
+                                            <Send className="ml-2 w-5 h-5" />
+                                        </Button>
 
-                                <p className="text-sm text-stone-500 text-center">
-                                    <span className="text-red-500">*</span> Required fields
-                                </p>
-                            </form>
+                                        <Text size="2" align="center" className="text-[var(--gray-10)]">
+                                            <span className="text-red-500">*</span> Required fields
+                                        </Text>
+                                    </Flex>
+                                </form>
+                            </Card>
                         </motion.div>
-                    </div>
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0">
-
-                </div>
-            </section>
+                    </Grid>
+                </Container>
+            </Section>
 
             {/* Map Section */}
-            <section className="relative h-96 bg-stone-200">
-                <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                        <MapPin className="w-16 h-16 text-green-600 mx-auto mb-4" />
-                        <p className="text-xl font-semibold text-stone-700 font-novecento-sans">Service Area</p>
-                        <p className="text-stone-600">Greater Seattle Area</p>
-                    </div>
-                </div>
-            </section>
-        </div>
+            <Box className="relative h-96 bg-[var(--gray-3)]">
+                <Flex align="center" justify="center" className="absolute inset-0">
+                    <Box className="text-center">
+                        <MapPin className="w-16 h-16 text-[var(--grass-9)] mx-auto mb-4" />
+                        <Heading size="5" className="text-[var(--gray-12)] font-novecento-sans">Service Area</Heading>
+                        <Text className="text-[var(--gray-11)]">Greater Seattle Area</Text>
+                    </Box>
+                </Flex>
+            </Box>
+        </Box>
     );
 };
 

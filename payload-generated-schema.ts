@@ -6,7 +6,7 @@
  * and re-run `payload generate:db-schema` to regenerate this file.
  */
 
-import type {} from "@payloadcms/db-postgres";
+import type { } from "@payloadcms/db-postgres";
 import {
   pgTable,
   index,
@@ -21,8 +21,8 @@ import {
 } from "@payloadcms/db-postgres/drizzle/pg-core";
 import { sql, relations } from "@payloadcms/db-postgres/drizzle";
 
-export const services_feature_list = pgTable(
-  "services_feature_list",
+export const services_featureList = pgTable(
+  "services_featureList",
   {
     _order: integer("_order").notNull(),
     _parentID: integer("_parent_id").notNull(),
@@ -30,12 +30,12 @@ export const services_feature_list = pgTable(
     feature: varchar("feature").notNull(),
   },
   (columns) => [
-    index("services_feature_list_order_idx").on(columns._order),
-    index("services_feature_list_parent_id_idx").on(columns._parentID),
+    index("services_featureList_order_idx").on(columns._order),
+    index("services_featureList_parent_id_idx").on(columns._parentID),
     foreignKey({
       columns: [columns["_parentID"]],
       foreignColumns: [services.id],
-      name: "services_feature_list_parent_id_fk",
+      name: "services_featureList_parent_id_fk",
     }).onDelete("cascade"),
   ],
 );
@@ -79,8 +79,8 @@ export const services_process_list = pgTable(
   ],
 );
 
-export const services_image_gallery = pgTable(
-  "services_image_gallery",
+export const services_imageGallery = pgTable(
+  "services_imageGallery",
   {
     _order: integer("_order").notNull(),
     _parentID: integer("_parent_id").notNull(),
@@ -92,13 +92,13 @@ export const services_image_gallery = pgTable(
       }),
   },
   (columns) => [
-    index("services_image_gallery_order_idx").on(columns._order),
-    index("services_image_gallery_parent_id_idx").on(columns._parentID),
-    index("services_image_gallery_image_idx").on(columns.image),
+    index("services_imageGallery_order_idx").on(columns._order),
+    index("services_imageGallery_parent_id_idx").on(columns._parentID),
+    index("services_imageGallery_image_idx").on(columns.image),
     foreignKey({
       columns: [columns["_parentID"]],
       foreignColumns: [services.id],
-      name: "services_image_gallery_parent_id_fk",
+      name: "services_imageGallery_parent_id_fk",
     }).onDelete("cascade"),
   ],
 );
@@ -116,7 +116,7 @@ export const services = pgTable(
     detailedDescription: jsonb("detailed_description").notNull(),
     pricing: varchar("pricing").notNull(),
     timeline: varchar("timeline").notNull(),
-    bannerImage: integer("banner_image_id")
+    bannerImage: integer("bannerImage_id")
       .notNull()
       .references(() => media.id, {
         onDelete: "set null",
@@ -138,7 +138,7 @@ export const services = pgTable(
   },
   (columns) => [
     index("services_icon_idx").on(columns.icon),
-    index("services_banner_image_idx").on(columns.bannerImage),
+    index("services_bannerImage_idx").on(columns.bannerImage),
     index("services_updated_at_idx").on(columns.updatedAt),
     index("services_created_at_idx").on(columns.createdAt),
   ],
@@ -238,8 +238,8 @@ export const tags = pgTable(
   ],
 );
 
-export const portfolio_projects_feature_list = pgTable(
-  "portfolio_projects_feature_list",
+export const portfolio_projects_featureList = pgTable(
+  "portfolio_projects_featureList",
   {
     _order: integer("_order").notNull(),
     _parentID: integer("_parent_id").notNull(),
@@ -247,20 +247,20 @@ export const portfolio_projects_feature_list = pgTable(
     feature: varchar("feature").notNull(),
   },
   (columns) => [
-    index("portfolio_projects_feature_list_order_idx").on(columns._order),
-    index("portfolio_projects_feature_list_parent_id_idx").on(
+    index("portfolio_projects_featureList_order_idx").on(columns._order),
+    index("portfolio_projects_featureList_parent_id_idx").on(
       columns._parentID,
     ),
     foreignKey({
       columns: [columns["_parentID"]],
       foreignColumns: [portfolio_projects.id],
-      name: "portfolio_projects_feature_list_parent_id_fk",
+      name: "portfolio_projects_featureList_parent_id_fk",
     }).onDelete("cascade"),
   ],
 );
 
-export const portfolio_projects_image_gallery = pgTable(
-  "portfolio_projects_image_gallery",
+export const portfolio_projects_imageGallery = pgTable(
+  "portfolio_projects_imageGallery",
   {
     _order: integer("_order").notNull(),
     _parentID: integer("_parent_id").notNull(),
@@ -273,15 +273,15 @@ export const portfolio_projects_image_gallery = pgTable(
     caption: varchar("caption").notNull(),
   },
   (columns) => [
-    index("portfolio_projects_image_gallery_order_idx").on(columns._order),
-    index("portfolio_projects_image_gallery_parent_id_idx").on(
+    index("portfolio_projects_imageGallery_order_idx").on(columns._order),
+    index("portfolio_projects_imageGallery_parent_id_idx").on(
       columns._parentID,
     ),
-    index("portfolio_projects_image_gallery_image_idx").on(columns.image),
+    index("portfolio_projects_imageGallery_image_idx").on(columns.image),
     foreignKey({
       columns: [columns["_parentID"]],
       foreignColumns: [portfolio_projects.id],
-      name: "portfolio_projects_image_gallery_parent_id_fk",
+      name: "portfolio_projects_imageGallery_parent_id_fk",
     }).onDelete("cascade"),
   ],
 );
@@ -303,7 +303,7 @@ export const portfolio_projects = pgTable(
     detailed_description: jsonb("detailed_description").notNull(),
     challenge: varchar("challenge").notNull(),
     solution: varchar("solution").notNull(),
-    banner_image: integer("banner_image_id")
+    bannerImage: integer("bannerImage_id")
       .notNull()
       .references(() => media.id, {
         onDelete: "set null",
@@ -324,7 +324,7 @@ export const portfolio_projects = pgTable(
       .notNull(),
   },
   (columns) => [
-    index("portfolio_projects_banner_image_idx").on(columns.banner_image),
+    index("portfolio_projects_bannerImage_idx").on(columns.bannerImage),
     index("portfolio_projects_updated_at_idx").on(columns.updatedAt),
     index("portfolio_projects_created_at_idx").on(columns.createdAt),
   ],
@@ -604,11 +604,11 @@ export const payload_migrations = pgTable(
   ],
 );
 
-export const relations_services_feature_list = relations(
-  services_feature_list,
+export const relations_services_featureList = relations(
+  services_featureList,
   ({ one }) => ({
     _parentID: one(services, {
-      fields: [services_feature_list._parentID],
+      fields: [services_featureList._parentID],
       references: [services.id],
       relationName: "featureList",
     }),
@@ -634,16 +634,16 @@ export const relations_services_process_list = relations(
     }),
   }),
 );
-export const relations_services_image_gallery = relations(
-  services_image_gallery,
+export const relations_services_imageGallery = relations(
+  services_imageGallery,
   ({ one }) => ({
     _parentID: one(services, {
-      fields: [services_image_gallery._parentID],
+      fields: [services_imageGallery._parentID],
       references: [services.id],
       relationName: "imageGallery",
     }),
     image: one(media, {
-      fields: [services_image_gallery.image],
+      fields: [services_imageGallery.image],
       references: [media.id],
       relationName: "image",
     }),
@@ -655,7 +655,7 @@ export const relations_services = relations(services, ({ one, many }) => ({
     references: [media.id],
     relationName: "icon",
   }),
-  featureList: many(services_feature_list, {
+  featureList: many(services_featureList, {
     relationName: "featureList",
   }),
   benefitList: many(services_benefit_list, {
@@ -669,32 +669,32 @@ export const relations_services = relations(services, ({ one, many }) => ({
     references: [media.id],
     relationName: "bannerImage",
   }),
-  imageGallery: many(services_image_gallery, {
+  imageGallery: many(services_imageGallery, {
     relationName: "imageGallery",
   }),
 }));
 export const relations_media = relations(media, () => ({}));
 export const relations_tags = relations(tags, () => ({}));
-export const relations_portfolio_projects_feature_list = relations(
-  portfolio_projects_feature_list,
+export const relations_portfolio_projects_featureList = relations(
+  portfolio_projects_featureList,
   ({ one }) => ({
     _parentID: one(portfolio_projects, {
-      fields: [portfolio_projects_feature_list._parentID],
+      fields: [portfolio_projects_featureList._parentID],
       references: [portfolio_projects.id],
-      relationName: "feature_list",
+      relationName: "featureList",
     }),
   }),
 );
-export const relations_portfolio_projects_image_gallery = relations(
-  portfolio_projects_image_gallery,
+export const relations_portfolio_projects_imageGallery = relations(
+  portfolio_projects_imageGallery,
   ({ one }) => ({
     _parentID: one(portfolio_projects, {
-      fields: [portfolio_projects_image_gallery._parentID],
+      fields: [portfolio_projects_imageGallery._parentID],
       references: [portfolio_projects.id],
-      relationName: "image_gallery",
+      relationName: "imageGallery",
     }),
     image: one(media, {
-      fields: [portfolio_projects_image_gallery.image],
+      fields: [portfolio_projects_imageGallery.image],
       references: [media.id],
       relationName: "image",
     }),
@@ -718,16 +718,16 @@ export const relations_portfolio_projects_rels = relations(
 export const relations_portfolio_projects = relations(
   portfolio_projects,
   ({ one, many }) => ({
-    feature_list: many(portfolio_projects_feature_list, {
-      relationName: "feature_list",
+    featureList: many(portfolio_projects_featureList, {
+      relationName: "featureList",
     }),
-    banner_image: one(media, {
-      fields: [portfolio_projects.banner_image],
+    bannerImage: one(media, {
+      fields: [portfolio_projects.bannerImage],
       references: [media.id],
-      relationName: "banner_image",
+      relationName: "bannerImage",
     }),
-    image_gallery: many(portfolio_projects_image_gallery, {
-      relationName: "image_gallery",
+    imageGallery: many(portfolio_projects_imageGallery, {
+      relationName: "imageGallery",
     }),
     _rels: many(portfolio_projects_rels, {
       relationName: "_rels",
@@ -822,15 +822,15 @@ export const relations_payload_migrations = relations(
 );
 
 type DatabaseSchema = {
-  services_feature_list: typeof services_feature_list;
+  services_featureList: typeof services_featureList;
   services_benefit_list: typeof services_benefit_list;
   services_process_list: typeof services_process_list;
-  services_image_gallery: typeof services_image_gallery;
+  services_imageGallery: typeof services_imageGallery;
   services: typeof services;
   media: typeof media;
   tags: typeof tags;
-  portfolio_projects_feature_list: typeof portfolio_projects_feature_list;
-  portfolio_projects_image_gallery: typeof portfolio_projects_image_gallery;
+  portfolio_projects_featureList: typeof portfolio_projects_featureList;
+  portfolio_projects_imageGallery: typeof portfolio_projects_imageGallery;
   portfolio_projects: typeof portfolio_projects;
   portfolio_projects_rels: typeof portfolio_projects_rels;
   payload_kv: typeof payload_kv;
@@ -841,15 +841,15 @@ type DatabaseSchema = {
   payload_preferences: typeof payload_preferences;
   payload_preferences_rels: typeof payload_preferences_rels;
   payload_migrations: typeof payload_migrations;
-  relations_services_feature_list: typeof relations_services_feature_list;
+  relations_services_featureList: typeof relations_services_featureList;
   relations_services_benefit_list: typeof relations_services_benefit_list;
   relations_services_process_list: typeof relations_services_process_list;
-  relations_services_image_gallery: typeof relations_services_image_gallery;
+  relations_services_imageGallery: typeof relations_services_imageGallery;
   relations_services: typeof relations_services;
   relations_media: typeof relations_media;
   relations_tags: typeof relations_tags;
-  relations_portfolio_projects_feature_list: typeof relations_portfolio_projects_feature_list;
-  relations_portfolio_projects_image_gallery: typeof relations_portfolio_projects_image_gallery;
+  relations_portfolio_projects_featureList: typeof relations_portfolio_projects_featureList;
+  relations_portfolio_projects_imageGallery: typeof relations_portfolio_projects_imageGallery;
   relations_portfolio_projects_rels: typeof relations_portfolio_projects_rels;
   relations_portfolio_projects: typeof relations_portfolio_projects;
   relations_payload_kv: typeof relations_payload_kv;

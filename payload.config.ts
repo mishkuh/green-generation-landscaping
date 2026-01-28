@@ -1,4 +1,5 @@
 import sharp from 'sharp'
+import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { buildConfig } from 'payload'
@@ -6,7 +7,7 @@ import Services from './collections/Services'
 import Media from './collections/Media'
 import Tags from './collections/Tags'
 import PortfolioProjects from './collections/PortfolioProjects'
-import { s3Storage } from '@payloadcms/storage-s3'
+import Users from './collections/Users'
 
 const isVercelEnv = process.env.VERCEL_ENV === 'production' || process.env.VERCEL_ENV === "preview";
 const dbCert = process.env.DB_CERT_BASE64
@@ -23,6 +24,7 @@ export default buildConfig({
         Media,
         Tags,
         PortfolioProjects,
+        Users,
     ],
 
     // Your Payload secret - should be a complex and secure string, unguessable

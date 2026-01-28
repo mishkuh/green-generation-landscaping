@@ -1,104 +1,93 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import * as motion from 'motion/react-client'
+import Link from 'next/link';
+import { Flex } from '@radix-ui/themes';
 import Image from 'next/image';
-import logo from '@/public/logo.png';
-import { Button } from '@radix-ui/themes';
 
-const Header = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const pathname = usePathname();
+export default function Header() {
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    const navLinks = [
-        { path: '/', label: 'Home' },
-        { path: '/portfolio', label: 'Portfolio' },
-        { path: '/services', label: 'Services' },
-        { path: '/about', label: 'About' },
-        { path: '/contact', label: 'Contact' }
+    const navigation = [
+        { href: '/', name: 'Home' },
+        { href: '/portfolio', name: 'Portfolio' },
+        { href: '/services', name: 'Services' },
+        { href: '/about', name: 'About' },
+        { href: '/contact', name: 'Contact' }
     ];
 
     return (
-        <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-white/95 backdrop-blur-sm'
-                }`}
-        >
-            <nav className="container mx-auto px-4 py-4">
-                <div className="flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-2 group">
-                        <div className="p-2 rounded-full bg-white transition-transform group-hover:scale-110 shrink-0">
-                            <Image src={logo} alt="Logo" fill className="object-contain" />
-                        </div>
-                        <span className="text-2xl font-bold text-green-800 font-novecento-sans">Green Generation Landscaping</span>
-                    </Link>
-
-                    <div className="hidden md:flex items-center gap-8">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.path}
-                                href={link.path}
-                                className={`font-medium transition-colors relative group ${pathname === link.path
-                                    ? 'text-green-600'
-                                    : 'text-stone-700 hover:text-green-600'
-                                    }`}
-                            >
-                                {link.label}
-                                <span
-                                    className={`absolute -bottom-1 left-0 h-0.5 bg-green-600 transition-all ${pathname === link.path ? 'w-full' : 'w-0 group-hover:w-full'
-                                        }`}
-                                />
+        <header className="sticky top-0 w-full bg-white/80 backdrop-blur-md shadow-sm z-50">
+            <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="flex h-24 items-center justify-between">
+                    {/* Logo */}
+                    <div>
+                        <Flex align="center" asChild direction="column" gap="2">
+                            <Link href="/">
+                                <Image src="/logo.png" alt="Green Generation Landscaping Logo" width={54} height={45} />
+                                <Image src="/logo_title.png" alt="Green Generation Landscaping Logo Title" width={225} height={41} />
                             </Link>
-                        ))}
+                        </Flex>
                     </div>
 
-                    <Button
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className="md:hidden p-2 text-stone-700 hover:text-green-600 transition-colors"
-                        aria-label="Toggle menu"
-                    >
-                        {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-                    </Button>
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex md:items-center md:gap-1 lg:gap-3">
+                        {navigation.map((item) => (
+                            <a
+                                key={item.name}
+                                href={item.href}
+                                className="px-4 py-2 text-gray-600 hover:text-[var(--grass-8)] hover:bg-[var(--grass-2)] rounded-lg transition-all duration-200 font-medium text-sm"
+                            >
+                                {item.name}
+                            </a>
+                        ))}
+                        <Link
+                            href="/contact"
+                            className="ml-2 px-6 py-2.5 bg-gradient-to-b from-[var(--grass-8)] to-[var(--grass-10)] text-white rounded-lg hover:shadow-lg hover:shadow-[var(--grass-2)] transform hover:-translate-y-0.5 transition-all duration-200 font-medium text-sm"
+                        >
+                            Get Started
+                        </Link>
+                    </div>
+
+                    {/* Mobile menu button */}
+                    <div className="md:hidden">
+                        <button
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            className="text-gray-700 hover:text-[var(--grass-8)] transition-colors"
+                        >
+                            {mobileMenuOpen ? (
+                                <X className="h-6 w-6" />
+                            ) : (
+                                <Menu className="h-6 w-6" />
+                            )}
+                        </button>
+                    </div>
                 </div>
-            </nav>
 
-            {isMobileMenuOpen && (
-                <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="md:hidden bg-white border-t border-stone-200"
-                >
-                    <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.path}
-                                href={link.path}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className={`font-medium py-2 px-4 rounded-lg transition-colors ${pathname === link.path
-                                    ? 'bg-green-50 text-green-600'
-                                    : 'text-stone-700 hover:bg-stone-50'
-                                    }`}
+                {/* Mobile Navigation */}
+                {mobileMenuOpen && (
+                    <div className="md:hidden py-4 border-t border-gray-200">
+                        <div className="space-y-1">
+                            {navigation.map((item) => (
+                                <a
+                                    key={item.name}
+                                    href={item.href}
+                                    className="block px-4 py-2 text-gray-700 hover:bg-[var(--grass-9)] hover:text-[var(--grass-8)] transition-colors font-medium"
+                                >
+                                    {item.name}
+                                </a>
+                            ))}
+                            <a
+                                href="#get-started"
+                                className="block mx-4 mt-4 px-6 py-2 bg-gradient-to-b from-[var(--grass-8)] to-[var(--grass-10)] text-white rounded-full text-center font-medium"
                             >
-                                {link.label}
-                            </Link>
-                        ))}
+                                Get Started
+                            </a>
+                        </div>
                     </div>
-                </motion.div>
-            )}
+                )}
+            </nav>
         </header>
     );
-};
-
-export default Header;
+}

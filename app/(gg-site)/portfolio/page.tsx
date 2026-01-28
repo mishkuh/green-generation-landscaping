@@ -1,14 +1,13 @@
 export const dynamic = 'force-dynamic';
 
-import React from 'react';
 import Link from 'next/link';
 import * as motion from 'motion/react-client'
-import { ArrowRight } from 'lucide-react';
-import { fetchPortfolioDetails } from '@/app/(gg-site)/lib/data';
-import { Button } from '@radix-ui/themes';
-import Image from 'next/image';
+import { Button, Box, Section, Container, Heading, Text, Flex } from '@radix-ui/themes';
 import { getPayload } from 'payload'
 import config from '@/payload.config'
+import AnimatedGrid from '@/app/(gg-site)/ui/components/AnimatedGrid';
+import ProjectCard from '@/app/(gg-site)/ui/components/ProjectCard';
+import { Media } from '@/payload-types';
 
 const Portfolio = async () => {
     const payload = await getPayload({ config })
@@ -17,95 +16,69 @@ const Portfolio = async () => {
         collection: 'portfolio-projects'
     })
 
+    const projects = data.docs.map((project) => ({
+        ...project,
+        link: `/portfolio/${project.id}`,
+        image: project.bannerImage ? (project.bannerImage as Media)?.url : ""
+    }));
+
     return (
-        <div className="pt-20">
+        <Box>
             {/* Hero Section */}
-            <section className="relative py-20 bg-gradient-to-br from-green-800 to-green-600 overflow-hidden">
-                <div className="container mx-auto px-4 relative z-10">
+            <Section size="3" className="bg-[var(--grass-12)]">
+                <Container size="3">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="text-center text-white max-w-3xl mx-auto"
                     >
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6 font-novecento-sans">Our Portfolio</h1>
-                        <p className="text-xl text-green-50">
-                            Explore our completed projects and see how we transform outdoor spaces into beautiful landscapes
-                        </p>
+                        <Flex direction="column" align="center" className="text-center text-white max-w-3xl mx-auto">
+                            <Heading size="8" mb="6" className="font-novecento-sans text-white">Our Portfolio</Heading>
+                            <Text size="5" className="text-green-50 block">
+                                Explore our completed projects and see how we transform outdoor spaces into beautiful landscapes
+                            </Text>
+                        </Flex>
                     </motion.div>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0">
-
-                </div>
-            </section>
+                </Container>
+            </Section>
 
             {/* Projects Grid */}
-            <section className="py-20 bg-stone-50 relative overflow-hidden">
-                <div className="container mx-auto px-4 relative z-10">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {data.docs.map((project, index) => (
-                            <motion.div
-                                key={project.id}
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6, delay: index * 0.1 }}
-                                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group"
-                            >
-                                <Link href={`/portfolio/${project.id}`} className="flex flex-col h-full">
-                                    <div className="relative h-64 overflow-hidden">
-                                        <Image
-                                            alt={project.title}
-                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                                            src="https://xsccfbkilvspngsihxwg.supabase.co/storage/v1/object/public/green-generation-landscaping/images/hero-bg.jpg"
-                                            width={200}
-                                            height={300} />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent" />
-                                    </div>
-                                    <div className="p-6 flex-grow">
-                                        <h3 className="text-2xl font-bold text-stone-900 mb-2 font-novecento-sans">{project.title}</h3>
-                                        <p className="text-stone-600 mb-2">{project.location}</p>
-                                        <p className="text-stone-700 mb-4">{project.description}</p>
-                                    </div>
-                                    <div className="p-6 pt-0 content-center">
-                                        <Button>
-                                            View Project →
-                                        </Button>
-                                    </div>
-                                </Link>
-                            </motion.div>
+            <Section size="4">
+                <Container size="4" px="4">
+                    <AnimatedGrid>
+                        {projects.map((project) => (
+                            <ProjectCard key={project.id} {...project} />
                         ))}
-                    </div>
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0">
-
-                </div>
-            </section>
+                    </AnimatedGrid>
+                </Container>
+            </Section>
 
             {/* CTA Section */}
-            <section className="relative py-20 bg-green-700 overflow-hidden">
-                <div className="container mx-auto px-4 text-center relative z-10">
+            <Section position="relative" size="3" className="bg-[var(--grass-12)]">
+                <Container size="4" className="text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-novecento-sans">
-                            Ready to Start Your Project?
-                        </h2>
-                        <p className="text-xl text-green-50 mb-8 max-w-2xl mx-auto">
-                            Let's create something beautiful together
-                        </p>
-                        <Link href="/contact">
-                            <Button className="bg-white text-green-800 hover:bg-green-50 font-semibold px-8 py-3 rounded-lg transition-colors">
-                                Get Free Consultation
+                        <Flex direction="column" align="center" gap="4">
+                            <Heading size="8" className="text-[var(--grass-1)] font-novecento-sans">
+                                Ready to Start Your Project?
+                            </Heading>
+                            <Text size="5" className="text-[var(--grass-1)]  mb-8 max-w-2xl mx-auto block">
+                                Let's create something beautiful together
+                            </Text>
+                            <Button asChild size="4" className="text-[var(--grass-1)]">
+                                <Link href="/contact">
+                                    Get Free Consultation
+                                </Link>
                             </Button>
-                        </Link>
+                        </Flex>
                     </motion.div>
-                </div>
-            </section>
-        </div>
+                </Container>
+            </Section>
+        </Box>
     );
 };
 

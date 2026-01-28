@@ -2,26 +2,8 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   DROP TABLE IF EXISTS "services_feature_list" CASCADE;
-   DROP TABLE IF EXISTS "services_benefit_list" CASCADE;
-   DROP TABLE IF EXISTS "services_process_list" CASCADE;
-   DROP TABLE IF EXISTS "services_image_gallery" CASCADE;
-   DROP TABLE IF EXISTS "services" CASCADE;
-   DROP TABLE IF EXISTS "media" CASCADE;
-   DROP TABLE IF EXISTS "tags" CASCADE;
-   DROP TABLE IF EXISTS "portfolio_projects_feature_list" CASCADE;
-   DROP TABLE IF EXISTS "portfolio_projects_image_gallery" CASCADE;
-   DROP TABLE IF EXISTS "portfolio_projects" CASCADE;
-   DROP TABLE IF EXISTS "portfolio_projects_rels" CASCADE;
-   DROP TABLE IF EXISTS "payload_kv" CASCADE;
-   DROP TABLE IF EXISTS "users_sessions" CASCADE;
-   DROP TABLE IF EXISTS "users" CASCADE;
-   DROP TABLE IF EXISTS "payload_locked_documents" CASCADE;
-   DROP TABLE IF EXISTS "payload_locked_documents_rels" CASCADE;
-   DROP TABLE IF EXISTS "payload_preferences" CASCADE;
-   DROP TABLE IF EXISTS "payload_preferences_rels" CASCADE;
-   DROP TABLE IF EXISTS "payload_migrations" CASCADE;
-   CREATE TABLE "services_feature_list" (
+   CREATE TYPE "public"."enum_users_roles" AS ENUM('super-admin', 'editor');
+  CREATE TABLE "services_feature_list" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
@@ -67,6 +49,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE "media" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"alt" varchar NOT NULL,
+  	"prefix" varchar DEFAULT 'media',
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"url" varchar,
@@ -144,10 +127,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"tags_id" integer
   );
   
-  CREATE TABLE "payload_kv" (
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"key" varchar NOT NULL,
-  	"data" jsonb NOT NULL
+  CREATE TABLE "users_roles" (
+  	"order" integer NOT NULL,
+  	"parent_id" integer NOT NULL,
+  	"value" "enum_users_roles",
+  	"id" serial PRIMARY KEY NOT NULL
   );
   
   CREATE TABLE "users_sessions" (
@@ -169,6 +153,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"hash" varchar,
   	"login_attempts" numeric DEFAULT 0,
   	"lock_until" timestamp(3) with time zone
+  );
+  
+  CREATE TABLE "payload_kv" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"key" varchar NOT NULL,
+  	"data" jsonb NOT NULL
   );
   
   CREATE TABLE "payload_locked_documents" (
@@ -227,6 +217,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "portfolio_projects" ADD CONSTRAINT "portfolio_projects_banner_image_id_media_id_fk" FOREIGN KEY ("banner_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "portfolio_projects_rels" ADD CONSTRAINT "portfolio_projects_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."portfolio_projects"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "portfolio_projects_rels" ADD CONSTRAINT "portfolio_projects_rels_tags_fk" FOREIGN KEY ("tags_id") REFERENCES "public"."tags"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "users_roles" ADD CONSTRAINT "users_roles_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "users_sessions" ADD CONSTRAINT "users_sessions_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_locked_documents"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_services_fk" FOREIGN KEY ("services_id") REFERENCES "public"."services"("id") ON DELETE cascade ON UPDATE no action;
@@ -270,12 +261,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "portfolio_projects_rels_parent_idx" ON "portfolio_projects_rels" USING btree ("parent_id");
   CREATE INDEX "portfolio_projects_rels_path_idx" ON "portfolio_projects_rels" USING btree ("path");
   CREATE INDEX "portfolio_projects_rels_tags_id_idx" ON "portfolio_projects_rels" USING btree ("tags_id");
-  CREATE UNIQUE INDEX "payload_kv_key_idx" ON "payload_kv" USING btree ("key");
+  CREATE INDEX "users_roles_order_idx" ON "users_roles" USING btree ("order");
+  CREATE INDEX "users_roles_parent_idx" ON "users_roles" USING btree ("parent_id");
   CREATE INDEX "users_sessions_order_idx" ON "users_sessions" USING btree ("_order");
   CREATE INDEX "users_sessions_parent_id_idx" ON "users_sessions" USING btree ("_parent_id");
   CREATE INDEX "users_updated_at_idx" ON "users" USING btree ("updated_at");
   CREATE INDEX "users_created_at_idx" ON "users" USING btree ("created_at");
   CREATE UNIQUE INDEX "users_email_idx" ON "users" USING btree ("email");
+  CREATE UNIQUE INDEX "payload_kv_key_idx" ON "payload_kv" USING btree ("key");
   CREATE INDEX "payload_locked_documents_global_slug_idx" ON "payload_locked_documents" USING btree ("global_slug");
   CREATE INDEX "payload_locked_documents_updated_at_idx" ON "payload_locked_documents" USING btree ("updated_at");
   CREATE INDEX "payload_locked_documents_created_at_idx" ON "payload_locked_documents" USING btree ("created_at");
@@ -311,12 +304,14 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "portfolio_projects_image_gallery" CASCADE;
   DROP TABLE "portfolio_projects" CASCADE;
   DROP TABLE "portfolio_projects_rels" CASCADE;
-  DROP TABLE "payload_kv" CASCADE;
+  DROP TABLE "users_roles" CASCADE;
   DROP TABLE "users_sessions" CASCADE;
   DROP TABLE "users" CASCADE;
+  DROP TABLE "payload_kv" CASCADE;
   DROP TABLE "payload_locked_documents" CASCADE;
   DROP TABLE "payload_locked_documents_rels" CASCADE;
   DROP TABLE "payload_preferences" CASCADE;
   DROP TABLE "payload_preferences_rels" CASCADE;
-  DROP TABLE "payload_migrations" CASCADE;`)
+  DROP TABLE "payload_migrations" CASCADE;
+  DROP TYPE "public"."enum_users_roles";`)
 }

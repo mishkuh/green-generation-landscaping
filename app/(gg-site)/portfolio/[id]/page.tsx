@@ -3,13 +3,14 @@ export const dynamic = 'force-dynamic'
 import React from 'react';
 import Link from 'next/link';
 import * as motion from 'motion/react-client'
-import { ArrowLeft, Calendar, MapPin, Tag } from 'lucide-react';
-import { Button } from '@radix-ui/themes';
+import { ArrowLeft, Calendar, MapPin } from 'lucide-react';
+import { Button, Box, Section, Container, Grid, Flex, Heading, Text, Card, Separator } from '@radix-ui/themes';
 import Image from 'next/image';
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { notFound } from 'next/navigation';
 import { Media } from '@/payload-types';
+import SectionWithBackground from '@/app/(gg-site)/ui/components/SectionWithBackground';
 
 const ProjectDetail = async (
     { params }: { params: Promise<{ id: string }> }
@@ -29,136 +30,124 @@ const ProjectDetail = async (
     const projectDetails = result.docs[0]
     if (!projectDetails) return notFound()
 
-    if (!projectDetails) {
-        return (
-            <div className="pt-32 text-center pb-20">
-                <h1 className="text-3xl font-bold mb-4">Project Not Found</h1>
-                <Link href="/portfolio" className="text-green-600 hover:underline">Back to Portfolio</Link>
-            </div>
-        );
-    }
-
     return (
-        <div className="pt-20">
+        <Box>
             {/* Hero Section */}
-            <section className="relative h-[400px]">
-                <div className="absolute inset-0">
-                    <Image
-                        alt={(projectDetails.banner_image as Media).alt}
-                        className="w-full h-full object-cover"
-                        src={(projectDetails.banner_image as Media).url || ''}
-                        fill
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent" />
-                </div>
-                <div className="container mx-auto px-4 h-full flex items-end pb-12 relative z-10">
-                    <div>
-                        <Link href="/portfolio" className="inline-flex items-center text-white mb-4 hover:text-green-300 transition-colors">
-                            <ArrowLeft className="w-5 h-5 mr-2" />
-                            Back to Portfolio
-                        </Link>
-                        <motion.h1
+            <SectionWithBackground height="60vh" image={(projectDetails.bannerImage as Media).url || ''}>
+                {/* Project Title */}
+                <Box position="absolute" bottom="6" left="6" px="6" py="3" className='backdrop-blur-md bg-gradient-to-b from-[var(--gray-1)]/10 to-[var(--gray-10)]/10 rounded-xl shadow-xl border-[1px] border-[var(--gray-10)]/70'>
+                    <Flex direction="column" align="start">
+                        <Button asChild variant="ghost" highContrast>
+                            <Link href="/portfolio">
+                                <ArrowLeft className="w-5 h-5 mr-2" />
+                                Back to Portfolio
+                            </Link>
+                        </Button>
+                        <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
-                            className="text-4xl md:text-5xl font-bold text-white font-novecento-sans"
                         >
-                            {projectDetails.title}
-                        </motion.h1>
-                    </div>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0">
+                            <Heading
+                                size="8"
+                                className="text-[var(--grass-1)] font-novecento-sans pt-2"
+                            >
+                                {projectDetails.title}
+                            </Heading>
+                        </motion.div>
+                    </Flex>
+                </Box>
+            </SectionWithBackground>
 
-                </div>
-            </section>
-
-            {/* Project Info */}
-            <section className="py-8 bg-stone-50">
-                <div className="container mx-auto px-4">
-                    <div className="flex flex-wrap gap-6 justify-center">
-                        <div className="flex items-center gap-2">
-                            <MapPin className="w-5 h-5 text-green-600" />
-                            <span className="text-stone-700">{projectDetails.location}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <Calendar className="w-5 h-5 text-green-600" />
-                            <span className="text-stone-700">
-                                {projectDetails?.date}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            {/* Location and Date */}
+            <Section size="1">
+                <Container size="4" px="4">
+                    <Flex wrap="wrap" gap="6" justify="center">
+                        <Flex align="center" gap="2">
+                            <MapPin className="w-5 h-5 text-[var(--grass-9)]" />
+                            <Text className="text-[var(--gray-12)]">{projectDetails.location}</Text>
+                        </Flex>
+                        <Flex align="center" gap="2">
+                            <Calendar className="w-5 h-5 text-[var(--grass-9)]" />
+                            <Text className="text-[var(--gray-12)]">
+                                {new Date(projectDetails?.date).toLocaleDateString('en-US', {
+                                    month: '2-digit',
+                                    year: 'numeric'
+                                })}
+                            </Text>
+                        </Flex>
+                    </Flex>
+                </Container>
+            </Section>
 
             {/* Project Details */}
-            <section className="py-20 bg-stone-50">
-                <div className="container mx-auto px-4 max-w-5xl">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                        <div className="lg:col-span-2 space-y-8">
-                            <div>
-                                <h2 className="text-3xl font-bold text-stone-900 mb-4 font-novecento-sans">Project Overview</h2>
-                                <p className="text-lg text-stone-700 leading-relaxed">{projectDetails.description}</p>
-                            </div>
+            <Section size="3">
+                <Container size="4" px="4">
+                    <Grid columns={{ initial: '1', md: '3' }} gap="9">
+                        <Flex direction="column" gap="8" className="lg:col-span-2">
+                            <Flex direction="column" gap="2">
+                                <Heading size="6" className="text-[var(--grass-11)] font-novecento-sans">Project Overview</Heading>
+                                <Text size="4" className="text-[var(--gray-12)]">{projectDetails.description}</Text>
+                            </Flex>
 
-                            <div>
-                                <h3 className="text-2xl font-bold text-stone-900 mb-3 font-novecento-sans">The Challenge</h3>
-                                <p className="text-stone-700 leading-relaxed">{projectDetails.challenge}</p>
-                            </div>
+                            <Flex direction="column" gap="2">
+                                <Heading size="5" className="text-[var(--grass-11)] font-novecento-sans">The Challenge</Heading>
+                                <Text className="text-[var(--gray-12)]">{projectDetails.challenge}</Text>
+                            </Flex>
 
-                            <div>
-                                <h3 className="text-2xl font-bold text-stone-900 mb-3 font-novecento-sans">Our Solution</h3>
-                                <p className="text-stone-700 leading-relaxed">{projectDetails.solution}</p>
-                            </div>
+                            <Flex direction="column" gap="2">
+                                <Heading size="5" className="text-[var(--grass-11)] font-novecento-sans">Our Solution</Heading>
+                                <Text className="text-[var(--gray-12)]">{projectDetails.solution}</Text>
+                            </Flex>
 
-                            <div>
-                                <h3 className="text-2xl font-bold text-stone-900 mb-4 font-novecento-sans">Project Gallery</h3>
-                                {projectDetails.image_gallery?.length > 0 ? (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        {projectDetails.image_gallery?.map((image) => (
-                                            <div key={image.id} className="relative h-64 rounded-lg overflow-hidden group">
+                            <Flex direction="column" gap="2">
+                                <Heading size="5" className="text-[var(--grass-11)] mb-4 font-novecento-sans">Project Gallery</Heading>
+                                {projectDetails.imageGallery?.length > 0 ? (
+                                    <Grid columns={{ initial: '1', md: '2' }} gap="4">
+                                        {projectDetails.imageGallery?.map((image) => (
+                                            <Box key={image.id} className="relative h-64 rounded-lg overflow-hidden group">
                                                 <Image
                                                     src={(image.image as Media).url || ''}
                                                     alt={(image.image as Media).alt || projectDetails.title}
                                                     fill
                                                     className="object-cover transition-transform duration-300 group-hover:scale-110"
                                                 />
-                                            </div>
+                                            </Box>
                                         ))}
-                                    </div>
+                                    </Grid>
                                 ) : (
-                                    <p className="text-stone-500 italic">No images available for this project.</p>
+                                    <Text className="text-[var(--gray-2)]0 italic">No images available for this project.</Text>
                                 )}
-                            </div>
-                        </div>
+                            </Flex>
+                        </Flex>
 
-                        <div className="lg:col-span-1">
-                            <div className="bg-white rounded-2xl p-6 shadow-lg sticky top-24">
-                                <h3 className="text-xl font-bold text-stone-900 mb-4 font-novecento-sans">Key Features</h3>
-                                <ul className="space-y-3">
-                                    {projectDetails.feature_list?.map((feature, index) => (
-                                        <li key={index} className="flex items-start gap-2">
-                                            <div className="w-2 h-2 bg-green-600 rounded-full mt-2 shrink-0" />
-                                            <span className="text-stone-700">{feature.feature}</span>
-                                        </li>
-                                    ))}
-                                </ul>
+                        <Flex p="6" direction="column" className="relative rounded-lg sticky top-40 self-start shadow-lg lg:col-span-1 bg-[var(--gray-1)]">
+                            <Heading size="4" mb="4" className="text-[var(--grass-11)] font-novecento-sans">Key Features</Heading>
+                            <Flex direction="column" gap="3">
+                                {projectDetails.featureList?.map((feature, index) => (
+                                    <Flex direction="row" key={index} gap="2" align="center">
+                                        <Box className="w-1.5 h-1.5 bg-[var(--grass-9)] rounded-full shrink-0" />
+                                        <Text className="text-[var(--gray-12)]">{feature.feature}</Text>
+                                    </Flex>
+                                ))}
+                            </Flex>
 
-                                <div className="mt-8 pt-6 border-t border-stone-200">
-                                    <p className="text-sm text-stone-600 mb-4">
-                                        Interested in a similar project?
-                                    </p>
+                            <Flex direction="column" align="center" gap="3">
+                                <Separator size="4" my="5" />
+                                <Text size="2" className="text-[var(--gray-12)] whitespace-nowrap">
+                                    Interested in a similar project?
+                                </Text>
+                                <Button asChild size="3" variant="solid" color="green">
                                     <Link href="/contact">
-                                        <Button className="w-full bg-green-600 hover:bg-green-700">
-                                            Get Started
-                                        </Button>
+                                        Get Started
                                     </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+                                </Button>
+                            </Flex>
+                        </Flex>
+                    </Grid>
+                </Container>
+            </Section>
+        </Box >
     );
 };
 

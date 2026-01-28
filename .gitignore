@@ -31,6 +31,7 @@ pids
 .env
 .env.test
 .env.local
+.env.preview
 
 # Build artifacts
 .cache
@@ -52,3 +53,6 @@ coverage
 .nyc_output
 .vercel
 .env*.local
+
+# Hidden files
+.hidden/

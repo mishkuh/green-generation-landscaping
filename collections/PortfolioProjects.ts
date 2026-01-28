@@ -1,10 +1,22 @@
 import { CollectionConfig } from 'payload';
+import { isAdminOrEditor, isAdmin } from './access/permissions';
 
 const PortfolioProjects: CollectionConfig = {
     slug: 'portfolio-projects',
     admin: {
         useAsTitle: 'title',
         defaultColumns: ['title', 'client', 'date'],
+    },
+    access: {
+        read: () => true, // Public access for frontend
+        // Both can create new posts
+        create: isAdminOrEditor,
+
+        // Both can edit existing posts
+        update: isAdminOrEditor,
+
+        // ONLY the super-admin can delete posts
+        delete: isAdmin,
     },
     fields: [
         {
@@ -61,7 +73,7 @@ const PortfolioProjects: CollectionConfig = {
                             required: true,
                         },
                         {
-                            name: 'detailed_description',
+                            name: 'detailedDescription',
                             type: 'richText',
                             label: 'Detailed Description',
                             required: true,
@@ -84,7 +96,7 @@ const PortfolioProjects: CollectionConfig = {
                             required: true,
                         },
                         {
-                            name: 'feature_list',
+                            name: 'featureList',
                             type: 'array',
                             label: 'Key Deliverables / Features',
                             labels: {
@@ -106,14 +118,14 @@ const PortfolioProjects: CollectionConfig = {
                     label: 'Media',
                     fields: [
                         {
-                            name: 'banner_image',
+                            name: 'bannerImage',
                             type: 'upload',
                             relationTo: 'media',
                             required: true,
                             label: 'Banner Image',
                         },
                         {
-                            name: 'image_gallery',
+                            name: 'imageGallery',
                             type: 'array',
                             required: true,
                             label: 'Image Gallery',

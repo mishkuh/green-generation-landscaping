@@ -71,8 +71,8 @@ export interface Config {
     media: Media;
     tags: Tag;
     'portfolio-projects': PortfolioProject;
-    'payload-kv': PayloadKv;
     users: User;
+    'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -83,8 +83,8 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     'portfolio-projects': PortfolioProjectsSelect<false> | PortfolioProjectsSelect<true>;
-    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -177,6 +177,7 @@ export interface Service {
 export interface Media {
   id: number;
   alt: string;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -238,7 +239,7 @@ export interface PortfolioProject {
   date: string;
   tags?: (number | Tag)[] | null;
   description: string;
-  detailed_description: {
+  detailedDescription: {
     root: {
       type: string;
       children: {
@@ -255,14 +256,14 @@ export interface PortfolioProject {
   };
   challenge: string;
   solution: string;
-  feature_list?:
+  featureList?:
     | {
         feature: string;
         id?: string | null;
       }[]
     | null;
-  banner_image: number | Media;
-  image_gallery: {
+  bannerImage: number | Media;
+  imageGallery: {
     image: number | Media;
     caption: string;
     id?: string | null;
@@ -272,27 +273,11 @@ export interface PortfolioProject {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-kv".
- */
-export interface PayloadKv {
-  id: number;
-  key: string;
-  data:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
   id: number;
+  roles: ('super-admin' | 'editor')[];
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -310,6 +295,23 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv".
+ */
+export interface PayloadKv {
+  id: number;
+  key: string;
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -427,6 +429,7 @@ export interface ServicesSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -494,17 +497,17 @@ export interface PortfolioProjectsSelect<T extends boolean = true> {
   date?: T;
   tags?: T;
   description?: T;
-  detailed_description?: T;
+  detailedDescription?: T;
   challenge?: T;
   solution?: T;
-  feature_list?:
+  featureList?:
     | T
     | {
         feature?: T;
         id?: T;
       };
-  banner_image?: T;
-  image_gallery?:
+  bannerImage?: T;
+  imageGallery?:
     | T
     | {
         image?: T;
@@ -516,17 +519,10 @@ export interface PortfolioProjectsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-kv_select".
- */
-export interface PayloadKvSelect<T extends boolean = true> {
-  key?: T;
-  data?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  roles?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -543,6 +539,14 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv_select".
+ */
+export interface PayloadKvSelect<T extends boolean = true> {
+  key?: T;
+  data?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -1,10 +1,10 @@
 import { db } from '@vercel/postgres';
-import { ServiceDetails, PortfolioProject } from './definitions';
+import { Service, PortfolioProject } from '@/payload-types';
 
 export async function fetchServiceDetails() {
     try {
         const client = await db.connect(); // Explicitly connect to Supabase
-        const data = await client.sql<ServiceDetails>`SELECT * FROM "services-details"`;
+        const data = await client.sql<Service>`SELECT * FROM "services-details"`;
         client.release(); // Important: release the client back to the pool
         return data.rows;
     } catch (error) {
@@ -16,7 +16,7 @@ export async function fetchServiceDetails() {
 export async function fetchServiceDetailsByRoute(route: string) {
     try {
         const client = await db.connect(); // Explicitly connect to Supabase
-        const data = await client.sql<ServiceDetails>`SELECT * FROM "services-details" WHERE route = ${route}`;
+        const data = await client.sql<Service>`SELECT * FROM "services-details" WHERE route = ${route}`;
         client.release(); // Important: release the client back to the pool
 
         console.log(data.rows);

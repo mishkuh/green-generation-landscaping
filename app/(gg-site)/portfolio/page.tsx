@@ -1,10 +1,8 @@
 export const dynamic = 'force-dynamic';
 
-import React from 'react';
-import { Suspense } from 'react';
 import Link from 'next/link';
 import * as motion from 'motion/react-client'
-import { Button, Box, Section, Container, Heading, Text, Flex, Skeleton } from '@radix-ui/themes';
+import { Button, Box, Section, Container, Heading, Text, Flex } from '@radix-ui/themes';
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import AnimatedGrid from '@/app/(gg-site)/ui/components/AnimatedGrid';
@@ -21,7 +19,7 @@ const Portfolio = async () => {
     const projects = data.docs.map((project) => ({
         ...project,
         link: `/portfolio/${project.id}`,
-        image: project.banner_image ? (project.banner_image as Media)?.url : ""
+        image: project.bannerImage ? (project.bannerImage as Media)?.url : ""
     }));
 
     return (

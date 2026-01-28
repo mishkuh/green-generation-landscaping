@@ -33,7 +33,7 @@ const ProjectDetail = async (
     return (
         <Box>
             {/* Hero Section */}
-            <SectionWithBackground height="60vh" image={(projectDetails.banner_image as Media).url || ''}>
+            <SectionWithBackground height="60vh" image={(projectDetails.bannerImage as Media).url || ''}>
                 {/* Project Title */}
                 <Box position="absolute" bottom="6" left="6" px="6" py="3" className='backdrop-blur-md bg-gradient-to-b from-[var(--gray-1)]/10 to-[var(--gray-10)]/10 rounded-xl shadow-xl border-[1px] border-[var(--gray-10)]/70'>
                     <Flex direction="column" align="start">
@@ -102,9 +102,9 @@ const ProjectDetail = async (
 
                             <Flex direction="column" gap="2">
                                 <Heading size="5" className="text-[var(--grass-11)] mb-4 font-novecento-sans">Project Gallery</Heading>
-                                {projectDetails.image_gallery?.length > 0 ? (
+                                {projectDetails.imageGallery?.length > 0 ? (
                                     <Grid columns={{ initial: '1', md: '2' }} gap="4">
-                                        {projectDetails.image_gallery?.map((image) => (
+                                        {projectDetails.imageGallery?.map((image) => (
                                             <Box key={image.id} className="relative h-64 rounded-lg overflow-hidden group">
                                                 <Image
                                                     src={(image.image as Media).url || ''}
@@ -124,7 +124,7 @@ const ProjectDetail = async (
                         <Flex p="6" direction="column" className="relative rounded-lg sticky top-40 self-start shadow-lg lg:col-span-1 bg-[var(--gray-1)]">
                             <Heading size="4" mb="4" className="text-[var(--grass-11)] font-novecento-sans">Key Features</Heading>
                             <Flex direction="column" gap="3">
-                                {projectDetails.feature_list?.map((feature, index) => (
+                                {projectDetails.featureList?.map((feature, index) => (
                                     <Flex direction="row" key={index} gap="2" align="center">
                                         <Box className="w-1.5 h-1.5 bg-[var(--grass-9)] rounded-full shrink-0" />
                                         <Text className="text-[var(--gray-12)]">{feature.feature}</Text>

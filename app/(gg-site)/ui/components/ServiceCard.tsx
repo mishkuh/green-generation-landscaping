@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Box, Button, Flex, Heading, Inset, Text } from '@radix-ui/themes';
+import { Box, Button, Flex, Heading, Text } from '@radix-ui/themes';
 import Link from 'next/link';
 import { Media, Service } from '@/payload-types';
 import * as motion from 'motion/react-client'

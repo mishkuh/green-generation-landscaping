@@ -1,9 +1,7 @@
 export const dynamic = 'force-dynamic';
 
-import React from 'react';
 import Link from 'next/link';
 import { Button, Box, Section, Container, Grid, Heading, Text, Card, Flex, Inset } from '@radix-ui/themes';
-import Image from 'next/image';
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import ServiceCard from '@/app/(gg-site)/ui/components/ServiceCard';

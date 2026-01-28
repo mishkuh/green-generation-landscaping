@@ -1,5 +1,5 @@
 import * as motion from 'motion/react-client'
-import { Box, Grid } from '@radix-ui/themes';
+import { Grid } from '@radix-ui/themes';
 
 export default function AnimatedGrid({ children }: { children: React.ReactNode[] }) {
     return (

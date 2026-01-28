@@ -74,7 +74,7 @@ const ServiceDetail = async (
 
             {/* Service Overview */}
             <Section size="3" className="bg-[var(--gray-2)]">
-                <Container size="3" px="4">
+                <Container size="4" px="4">
                     <Grid columns={{ initial: '1', lg: '3' }} gap="9">
                         <Flex direction="column" gap="9" className="lg:col-span-2">
                             <Flex direction="column" gap="2">
@@ -156,7 +156,7 @@ const ServiceDetail = async (
                                 <Text size="2" className="text-[var(--gray-12)]">
                                     Ready to get started?
                                 </Text>
-                                <Button asChild size="3" variant="solid" color="green">
+                                <Button asChild size="4" variant="solid" color="green">
                                     <Link href="/contact">
                                         Request a Quote
                                     </Link>

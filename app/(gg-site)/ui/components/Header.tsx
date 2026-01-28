@@ -18,17 +18,17 @@ export default function Header() {
     ];
 
     return (
-        <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md shadow-sm z-50">
+        <header className="sticky top-0 w-full bg-white/80 backdrop-blur-md shadow-sm z-50">
             <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="flex h-16 items-center justify-between">
+                <div className="flex h-24 items-center justify-between">
                     {/* Logo */}
                     <div>
-                        <Link href="/">
-                            <Flex>
-                                <Image src="/logo.png" alt="Green Generation Landscaping Logo" width={32} height={32} />
-                                <Image src="/logo_title.png" alt="Green Generation Landscaping Logo Title" width={128} height={32} />
-                            </Flex>
-                        </Link>
+                        <Flex align="center" asChild direction="column" gap="2">
+                            <Link href="/">
+                                <Image src="/logo.png" alt="Green Generation Landscaping Logo" width={54} height={45} />
+                                <Image src="/logo_title.png" alt="Green Generation Landscaping Logo Title" width={225} height={41} />
+                            </Link>
+                        </Flex>
                     </div>
 
                     {/* Desktop Navigation */}

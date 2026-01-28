@@ -10,6 +10,7 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { notFound } from 'next/navigation';
 import { Media } from '@/payload-types';
+import SectionWithBackground from '@/app/(gg-site)/ui/components/SectionWithBackground';
 
 const ProjectDetail = async (
     { params }: { params: Promise<{ id: string }> }
@@ -32,48 +33,34 @@ const ProjectDetail = async (
     return (
         <Box>
             {/* Hero Section */}
-            <Section p="0" className="relative h-[50vh] overflow-hidden">
-                <Flex className="relative h-full w-full">
-                    {/* Banner Image */}
-                    <Image
-                        alt={(projectDetails.banner_image as Media).alt || projectDetails.title}
-                        src={(projectDetails.banner_image as Media).url || ''}
-                        objectFit='cover'
-                        fill
-                    />
-                    {/* Background overlay */}
-                    <Box className='absolute inset-0 bg-gradient-to-t from-[var(--gray-12)]/60 via-[var(--gray-12)]/0 to-[var(--gray-12)]/0' />
+            <SectionWithBackground height="60vh" image={(projectDetails.banner_image as Media).url || ''}>
+                {/* Project Title */}
+                <Box position="absolute" bottom="6" left="6" px="6" py="3" className='backdrop-blur-md bg-gradient-to-b from-[var(--gray-1)]/10 to-[var(--gray-10)]/10 rounded-xl shadow-xl border-[1px] border-[var(--gray-10)]/70'>
+                    <Flex direction="column" align="start">
+                        <Button asChild variant="ghost" highContrast>
+                            <Link href="/portfolio">
+                                <ArrowLeft className="w-5 h-5 mr-2" />
+                                Back to Portfolio
+                            </Link>
+                        </Button>
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                        >
+                            <Heading
+                                size="8"
+                                className="text-[var(--grass-1)] font-novecento-sans pt-2"
+                            >
+                                {projectDetails.title}
+                            </Heading>
+                        </motion.div>
+                    </Flex>
+                </Box>
+            </SectionWithBackground>
 
-                    {/* Project Title */}
-                    <Container size="2" className="h-full relative">
-                        <Box px="6" py="3" className='absolute bottom-6 left-6 z-20 backdrop-blur-md bg-gradient-to-b from-[var(--gray-1)]/10 to-[var(--gray-10)]/10 rounded-xl shadow-xl border-[1px] border-[var(--gray-10)]/70'>
-                            <Flex direction="column" align="start">
-                                <Button asChild variant="ghost" highContrast>
-                                    <Link href="/portfolio">
-                                        <ArrowLeft className="w-5 h-5 mr-2" />
-                                        Back to Portfolio
-                                    </Link>
-                                </Button>
-                                <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.6 }}
-                                >
-                                    <Heading
-                                        size="8"
-                                        className="text-[var(--grass-1)] font-novecento-sans pt-2"
-                                    >
-                                        {projectDetails.title}
-                                    </Heading>
-                                </motion.div>
-                            </Flex>
-                        </Box>
-                    </Container>
-                </Flex>
-            </Section>
-
-            {/* Project Info */}
-            <Section size="1" className="bg-[var(--gray-2)]">
+            {/* Location and Date */}
+            <Section size="1">
                 <Container size="4" px="4">
                     <Flex wrap="wrap" gap="6" justify="center">
                         <Flex align="center" gap="2">
@@ -94,8 +81,8 @@ const ProjectDetail = async (
             </Section>
 
             {/* Project Details */}
-            <Section size="3" className="bg-[var(--gray-2)]">
-                <Container size="3" px="4">
+            <Section size="3">
+                <Container size="4" px="4">
                     <Grid columns={{ initial: '1', md: '3' }} gap="9">
                         <Flex direction="column" gap="8" className="lg:col-span-2">
                             <Flex direction="column" gap="2">
@@ -160,7 +147,7 @@ const ProjectDetail = async (
                     </Grid>
                 </Container>
             </Section>
-        </Box>
+        </Box >
     );
 };
 

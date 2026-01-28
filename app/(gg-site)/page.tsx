@@ -2,8 +2,9 @@ import Link from 'next/link';
 import * as motion from 'motion/react-client'
 import { ArrowRight, CheckCircle, Star } from 'lucide-react';
 import { Button, Flex, Box, Heading, Text, Grid, Container, Section, Em, Card } from '@radix-ui/themes';
-import Image from 'next/image';
-import ShowCardGrid from './ui/components/ShowCardGrid';
+import AnimatedGrid from '@/app/(gg-site)/ui/components/AnimatedGrid';
+import SectionWithBackground from '@/app/(gg-site)/ui/components/SectionWithBackground';
+import FeaturedServiceCard from '@/app/(gg-site)/ui/components/FeaturedServiceCard';
 
 const Home = async () => {
     const featuredServices = [
@@ -45,84 +46,62 @@ const Home = async () => {
     return (
         <Box>
             {/* Hero Section with Animated Background */}
-            <Section className='min-h-screen relative pt-[9em]'>
-                <Container size="2" className='h-[calc(100vh-9rem)]'>
-                    <Flex
-                        align="center"
-                        justify="center"
-                        className='h-[calc(100vh-9rem)]'
-                    >
-                        {/* Background Image */}
-                        <Image
-                            alt="Lush green landscape with beautiful garden"
-                            src="/hero-bg.jpg"
-                            objectFit='cover'
-                            fill
-                        />
-
-                        {/* Background overlay */}
-                        <Box className='absolute inset-0 bg-[var(--grass-12)] opacity-80' />
-
-                        <Box p="8" className='z-20 backdrop-blur-md bg-gradient-to-b from-[var(--gray-1)]/10 to-[var(--gray-10)]/10 rounded-xl shadow-xl border-[1px] border-[var(--gray-10)]/70'>
-                            {/* Hero Content */}
-                            <Flex
-                                align="center"
-                                justify="center"
+            <SectionWithBackground image='/hero-bg.jpg'>
+                <Flex position="relative" align={{ initial: "end", sm: "center" }} justify="center" width="100%" height="100%">
+                    {/* Hero Content */}
+                    <Flex position="absolute" m="8px" maxWidth="800px" p="8" gap="4" direction="column" justify="center" className='backdrop-blur-md bg-gradient-to-b from-[var(--gray-1)]/10 to-[var(--gray-10)]/10 rounded-xl shadow-xl border-[1px] border-[var(--gray-10)]/70'>
+                        <Heading
+                            asChild
+                            size="9"
+                            style={{ color: 'var(--gray-2)' }}
+                        >
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6 }}
                             >
-                                <Flex gap="4" direction="column" justify="center">
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 30 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.6 }}
-                                    >
-                                        <Heading
-                                            size="9"
-                                            style={{ color: 'var(--gray-2)' }}
-                                        >
-                                            Transform Your Outdoor Space Into Paradise
-                                        </Heading>
-                                    </motion.div>
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 30 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.6, delay: 0.2 }}
-                                    >
-                                        <Text
-                                            size="6"
-                                            style={{ color: 'var(--gray-2)' }}
-                                        >
-                                            Professional landscaping services that bring your vision to life
-                                        </Text>
-                                    </motion.div>
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 30 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.6, delay: 0.4 }}
-                                    >
-                                        <Flex gap="4" direction={{ initial: 'column', sm: 'row' }}>
-                                            <Button asChild size="4" variant="solid">
-                                                <Link href="/contact">
-                                                    Get Free Consultation
-                                                    <ArrowRight />
-                                                </Link>
-                                            </Button>
-                                            <Button asChild size="4" variant="outline">
-                                                <Link href="/portfolio">
-                                                    View Our Work
-                                                </Link>
-                                            </Button>
-                                        </Flex>
-                                    </motion.div>
-                                </Flex>
-                            </Flex>
-                        </Box>
+                                Transform Your Outdoor Space Into Paradise
+                            </motion.div>
+                        </Heading>
+                        <Text
+                            asChild
+                            size="6"
+                            style={{ color: 'var(--gray-2)' }}
+                        >
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.2 }}
+                            >
+                                Professional landscaping services that bring your vision to life
+                            </motion.div>
+                        </Text>
+                        <Flex asChild gap="4" direction={{ initial: 'column', sm: 'row' }}>
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.4 }}
+                            >
+                                <Button asChild size="4" variant="solid">
+                                    <Link href="/contact">
+                                        Get Free Consultation
+                                        <ArrowRight />
+                                    </Link>
+                                </Button>
+                                <Button asChild size="4" variant="outline">
+                                    <Link href="/portfolio">
+                                        View Our Work
+                                    </Link>
+                                </Button>
+                            </motion.div>
+                        </Flex>
                     </Flex>
-                </Container>
-            </Section>
+                </Flex>
+            </SectionWithBackground>
 
             {/* Services Section */}
             <Section size="3">
-                <Container size="3" px="4" mb="6">
+                <Container asChild size="3" px="4" mb="6">
                     {/* Heading and text */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -140,7 +119,11 @@ const Home = async () => {
 
                 {/* Grid of services */}
                 <Container size="4" px="6">
-                    <ShowCardGrid showCards={featuredServices} />
+                    <AnimatedGrid>
+                        {featuredServices.map((service, index) => (
+                            <FeaturedServiceCard key={index} {...service} />
+                        ))}
+                    </AnimatedGrid>
                 </Container>
             </Section>
 
@@ -164,37 +147,39 @@ const Home = async () => {
                 <Container p="3" size="3">
                     <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="4">
                         {benefitsList.map((benefit, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.4, delay: index * 0.1 }}
-                                viewport={{ once: true }}
-                            >
-                                <Flex justify="center" className="bg-[var(--grass-1)]/90 h-[100%] p-2 rounded-lg">
+                            <Flex asChild justify="center" key={index} className="bg-[var(--grass-1)]/90 h-[100%] p-2 rounded-[var(--radius-3)]">
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                                    viewport={{ once: true }}
+                                >
                                     <Flex direction="row" align="center" gap="2">
                                         <CheckCircle className='text-[var(--grass-10)]' />
                                         <Text>{benefit}</Text>
                                     </Flex>
-                                </Flex>
-                            </motion.div>
+                                </motion.div>
+                            </Flex>
                         ))}
                     </Grid>
                 </Container>
             </Section >
+            {/* <WavySeparator waveColor="var(--grass-12)" className='white' /> */}
 
             {/* Testimonials Section */}
             < Section size="3" >
                 <Container size="3" px="4">
                     <Flex gap="4" direction="column" justify="center" align="center">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            viewport={{ once: true }}
-                        >
-                            <Heading size="8">What Our Clients Say</Heading>
-                        </motion.div>
+                        <Heading asChild size="8">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6 }}
+                                viewport={{ once: true }}
+                            >
+                                What Our Clients Say
+                            </motion.div>
+                        </Heading>
 
                         <Grid columns={{ initial: '1', sm: '3', md: '3' }} gap="6">
                             {[
@@ -214,14 +199,13 @@ const Home = async () => {
                                     rating: 5
                                 }
                             ].map((testimonial, index) => (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                                    viewport={{ once: true }}
-                                >
-                                    <Card size="3" variant="surface">
+                                <Card asChild size="3" variant="surface" key={index}>
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 30 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.6, delay: index * 0.1 }}
+                                        viewport={{ once: true }}
+                                    >
                                         <Flex direction="column" gap="4">
                                             <Flex gap="1">
                                                 {[...Array(testimonial.rating)].map((_, i) => (
@@ -231,8 +215,8 @@ const Home = async () => {
                                             <Text as="p" mb="4"><Em>"{testimonial.text}"</Em></Text>
                                             <Text weight="bold">{testimonial.name}</Text>
                                         </Flex>
-                                    </Card>
-                                </motion.div>
+                                    </motion.div>
+                                </Card>
                             ))}
                         </Grid>
                     </Flex>
@@ -242,13 +226,13 @@ const Home = async () => {
             {/* CTA Section */}
             < Section size="3" style={{ backgroundColor: 'var(--grass-12)' }}>
                 <Container size="3" px="4">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
-                    >
-                        <Flex direction="column" gap="4" justify="center" align="center">
+                    <Flex asChild direction="column" gap="4" justify="center" align="center">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                            viewport={{ once: true }}
+                        >
                             <Heading size="8" style={{ color: 'var(--gray-1)' }}>
                                 Ready to Transform Your Landscape?
                             </Heading>
@@ -261,8 +245,8 @@ const Home = async () => {
                                     <ArrowRight />
                                 </Link>
                             </Button>
-                        </Flex>
-                    </motion.div>
+                        </motion.div>
+                    </Flex>
                 </Container>
             </Section >
         </Box >

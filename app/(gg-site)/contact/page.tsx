@@ -58,7 +58,7 @@ const Contact = () => {
     };
 
     return (
-        <Box pt="9" className="bg-transparent">
+        <Box>
             {/* Hero Section */}
             <Section size="3" className="bg-[var(--grass-12)]">
                 <Container size="3">

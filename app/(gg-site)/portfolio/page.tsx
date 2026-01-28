@@ -1,12 +1,14 @@
 export const dynamic = 'force-dynamic';
 
 import React from 'react';
+import { Suspense } from 'react';
 import Link from 'next/link';
 import * as motion from 'motion/react-client'
-import { Button, Box, Section, Container, Heading, Text, Flex } from '@radix-ui/themes';
+import { Button, Box, Section, Container, Heading, Text, Flex, Skeleton } from '@radix-ui/themes';
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import ShowCardGrid from '@/app/(gg-site)/ui/components/ShowCardGrid';
+import AnimatedGrid from '@/app/(gg-site)/ui/components/AnimatedGrid';
+import ProjectCard from '@/app/(gg-site)/ui/components/ProjectCard';
 import { Media } from '@/payload-types';
 
 const Portfolio = async () => {
@@ -23,7 +25,7 @@ const Portfolio = async () => {
     }));
 
     return (
-        <Box pt="9" className="bg-transparent">
+        <Box>
             {/* Hero Section */}
             <Section size="3" className="bg-[var(--grass-12)]">
                 <Container size="3">
@@ -45,12 +47,16 @@ const Portfolio = async () => {
             {/* Projects Grid */}
             <Section size="4">
                 <Container size="4" px="4">
-                    <ShowCardGrid showCards={projects} />
+                    <AnimatedGrid>
+                        {projects.map((project) => (
+                            <ProjectCard key={project.id} {...project} />
+                        ))}
+                    </AnimatedGrid>
                 </Container>
             </Section>
 
             {/* CTA Section */}
-            <Section size="3" className="bg-[var(--grass-12)] mb-0">
+            <Section position="relative" size="3" className="bg-[var(--grass-12)]">
                 <Container size="4" className="text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}

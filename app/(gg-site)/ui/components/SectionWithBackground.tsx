@@ -15,6 +15,7 @@ const SectionWithBackground = ({ children, className, image, height }: { childre
                     src={image || "/hero-bg.jpg"}
                     objectFit='cover'
                     fill
+                    priority
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--gray-12)] via-transparent to-transparent opacity-60" />

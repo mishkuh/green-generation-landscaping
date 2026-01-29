@@ -52,7 +52,7 @@ const Home = async () => {
                     <Flex position="absolute" m="8px" maxWidth="800px" p="8" gap="4" direction="column" justify="center" className='backdrop-blur-md bg-gradient-to-b from-[var(--gray-1)]/10 to-[var(--gray-10)]/10 rounded-xl shadow-xl border-[1px] border-[var(--gray-10)]/70'>
                         <Heading
                             asChild
-                            size="9"
+                            size={{ initial: "8", sm: "9" }}
                             style={{ color: 'var(--gray-2)' }}
                         >
                             <motion.div
@@ -65,7 +65,7 @@ const Home = async () => {
                         </Heading>
                         <Text
                             asChild
-                            size="6"
+                            size={{ initial: "5", sm: "6" }}
                             style={{ color: 'var(--gray-2)' }}
                         >
                             <motion.div
@@ -82,13 +82,13 @@ const Home = async () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: 0.4 }}
                             >
-                                <Button asChild size="4" variant="solid">
+                                <Button asChild size={{ initial: "3", sm: "4" }} variant="solid">
                                     <Link href="/contact">
                                         Get Free Consultation
                                         <ArrowRight />
                                     </Link>
                                 </Button>
-                                <Button asChild size="4" variant="outline">
+                                <Button asChild size={{ initial: "3", sm: "4" }} variant="outline">
                                     <Link href="/portfolio">
                                         View Our Work
                                     </Link>

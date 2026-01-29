@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import * as motion from 'motion/react-client'
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
-import { Button, Box, Section, Container, Grid, Flex, Heading, Text, Card, TextField, TextArea, Select } from '@radix-ui/themes';
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Button, Box, Section, Container, Grid, Flex, Heading, Text, Card, TextField, TextArea, Select, Spinner, Callout } from '@radix-ui/themes';
 import { sendEmail } from '@/app/(gg-site)/actions/sendEmail';
 
 const Contact = () => {
@@ -15,8 +15,12 @@ const Contact = () => {
         source: ''
     });
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setStatus('idle');
 
         const { email, phone, location, details } = formData;
 
@@ -24,13 +28,19 @@ const Contact = () => {
             return;
         }
 
+        setIsSubmitting(true);
+
         try {
+            console.log('Sending email...');
+
             const result = await sendEmail(formData);
 
             if (!result.success) {
+                setStatus('error');
                 return;
             }
 
+            setStatus('success');
             setFormData({
                 email: '',
                 phone: '',
@@ -40,6 +50,9 @@ const Contact = () => {
             });
         } catch (error) {
             console.error('Error sending email:', error);
+            setStatus('error');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -156,6 +169,26 @@ const Contact = () => {
                                 <Heading size="6" className="text-[var(--gray-12)] mb-6 font-novecento-sans">Send Us a Message</Heading>
                                 <form onSubmit={handleSubmit}>
                                     <Flex direction="column" gap="4">
+                                        {status === 'success' && (
+                                            <Callout.Root color="green">
+                                                <Callout.Icon>
+                                                    <CheckCircle className="w-4 h-4" />
+                                                </Callout.Icon>
+                                                <Callout.Text>
+                                                    Message sent successfully! We'll get back to you shortly.
+                                                </Callout.Text>
+                                            </Callout.Root>
+                                        )}
+                                        {status === 'error' && (
+                                            <Callout.Root color="red">
+                                                <Callout.Icon>
+                                                    <AlertCircle className="w-4 h-4" />
+                                                </Callout.Icon>
+                                                <Callout.Text>
+                                                    Failed to send message. Please try again later.
+                                                </Callout.Text>
+                                            </Callout.Root>
+                                        )}
                                         <Box>
                                             <Text as="label" size="2" weight="bold" className="text-[var(--gray-12)] mb-2 block">
                                                 Email Address <span className="text-red-500">*</span>
@@ -235,9 +268,9 @@ const Contact = () => {
                                             </Select.Root>
                                         </Box>
 
-                                        <Button type="submit" size="4" className="w-full bg-green-600 hover:bg-green-700 cursor-pointer" highContrast color="green">
-                                            Send Message
-                                            <Send className="ml-2 w-5 h-5" />
+                                        <Button disabled={isSubmitting} type="submit" size="4" className="w-full bg-green-600 hover:bg-green-700 cursor-pointer" highContrast color="green">
+                                            {isSubmitting ? 'Sending...' : 'Send Message'}
+                                            {isSubmitting ? <Spinner className="ml-2 w-5 h-5" /> : <Send className="ml-2 w-5 h-5" />}
                                         </Button>
 
                                         <Text size="2" align="center" className="text-[var(--gray-10)]">

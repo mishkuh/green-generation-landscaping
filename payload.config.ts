@@ -33,7 +33,7 @@ export default buildConfig({
         // Set to true if you want to push your database schema to the database. This is not recommended for production
         push: isVercelEnv ? false : true,
         pool: {
-            connectionString: process.env.POSTGRES_URL,
+            connectionString: process.env.POSTGRES_URL_PAYLOAD_CONFIG,
             ssl: dbCert ? {
                 ca: dbCert,
                 rejectUnauthorized: true,

@@ -37,14 +37,14 @@ export default function Header() {
                             <a
                                 key={item.name}
                                 href={item.href}
-                                className="px-4 py-2 text-gray-600 hover:text-[var(--grass-8)] hover:bg-[var(--grass-2)] rounded-lg transition-all duration-200 font-medium text-sm"
+                                className="px-4 py-2 text-gray-600 hover:text-[var(--lime-8)] hover:bg-[var(--lime-2)] rounded-lg transition-all duration-200 font-medium text-sm"
                             >
                                 {item.name}
                             </a>
                         ))}
                         <Link
                             href="/contact"
-                            className="ml-2 px-6 py-2.5 bg-gradient-to-b from-[var(--grass-8)] to-[var(--grass-10)] text-white rounded-lg hover:shadow-lg hover:shadow-[var(--grass-2)] transform hover:-translate-y-0.5 transition-all duration-200 font-medium text-sm"
+                            className="ml-2 px-6 py-2.5 bg-gradient-to-b from-[var(--lime-8)] to-[var(--lime-10)] text-white rounded-lg hover:shadow-lg hover:shadow-[var(--lime-2)] transform hover:-translate-y-0.5 transition-all duration-200 font-medium text-sm"
                         >
                             Get Started
                         </Link>
@@ -54,7 +54,7 @@ export default function Header() {
                     <div className="md:hidden">
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="text-gray-700 hover:text-[var(--grass-8)] transition-colors"
+                            className="text-gray-700 hover:text-[var(--lime-8)] transition-colors"
                         >
                             {mobileMenuOpen ? (
                                 <X className="h-6 w-6" />
@@ -73,14 +73,14 @@ export default function Header() {
                                 <a
                                     key={item.name}
                                     href={item.href}
-                                    className="block px-4 py-2 text-gray-700 hover:bg-[var(--grass-9)] hover:text-[var(--grass-8)] transition-colors font-medium"
+                                    className="block px-4 py-2 text-gray-700 hover:bg-[var(--lime-9)] hover:text-[var(--lime-8)] transition-colors font-medium"
                                 >
                                     {item.name}
                                 </a>
                             ))}
                             <a
                                 href="#get-started"
-                                className="block mx-4 mt-4 px-6 py-2 bg-gradient-to-b from-[var(--grass-8)] to-[var(--grass-10)] text-white rounded-full text-center font-medium"
+                                className="block mx-4 mt-4 px-6 py-2 bg-gradient-to-b from-[var(--lime-8)] to-[var(--lime-10)] text-white rounded-full text-center font-medium"
                             >
                                 Get Started
                             </a>

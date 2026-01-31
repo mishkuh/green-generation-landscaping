@@ -17,8 +17,8 @@ const SectionWithBackground = ({ children, className, image, height }: { childre
                     fill
                     priority
                 />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--gray-12)] via-transparent to-transparent opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--gray-12)] to-transparent opacity-50" />
+                <div className="absolute inset-0 bg-[var(--lime-11)] opacity-30"></div>
             </Inset>
             {children}
         </Section>

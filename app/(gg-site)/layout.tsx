@@ -1,8 +1,8 @@
+import "@radix-ui/themes/styles.css";
+import './globals.css'
 import type { Metadata } from 'next'
 import Header from '@/app/(gg-site)/ui/components/Header'
 import Footer from '@/app/(gg-site)/ui/components/Footer'
-import './globals.css'
-import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
 
 export const metadata: Metadata = {
@@ -20,7 +20,7 @@ export default function RootLayout({
             <body>
                 <Header />
                 <Theme
-                    accentColor="grass"
+                    accentColor="lime"
                     grayColor="gray"
                     panelBackground="solid"
                     radius="medium"

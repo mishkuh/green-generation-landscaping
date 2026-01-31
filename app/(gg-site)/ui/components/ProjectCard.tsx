@@ -52,7 +52,7 @@ const ProjectCard = (portfolioProject: PortfolioProject) => {
                                 <Flex direction="column" gap="4">
                                     {portfolioProject.featureList?.slice(0, 4).map((item, idx) => (
                                         <Flex key={idx} align="center" gap="2">
-                                            <Box className="w-1.5 h-1.5 bg-[var(--grass-9)] rounded-full shrink-0" />
+                                            <Box className="w-1.5 h-1.5 bg-[var(--lime-9)] rounded-full shrink-0" />
                                             <Text size="2" className="text-[var(--gray-12)]">{item.feature}</Text>
                                         </Flex>
                                     ))}

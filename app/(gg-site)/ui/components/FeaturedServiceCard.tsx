@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 const FeaturedServiceCard = (props: { title: string, description: string, image: string, link: string }) => {
     return (
-        <Flex asChild direction="column" height="100%" overflow="hidden" className='shadow-xl border-[1px] border-[var(--grass-5)]/50 rounded-[var(--radius-4)]'>
+        <Flex asChild direction="column" height="100%" overflow="hidden" className='shadow-xl border-[1px] border-[var(--lime-5)]/50 rounded-[var(--radius-4)]'>
             <Link href={props.link}>
                 <Box position="relative" width="100%" className="aspect-16/9">
                     <motion.div
@@ -26,7 +26,7 @@ const FeaturedServiceCard = (props: { title: string, description: string, image:
                         />
 
                         <div
-                            className="absolute inset-0 bg-gradient-to-t from-[var(--grass-12)] via-transparent to-transparent opacity-70"
+                            className="absolute inset-0 bg-gradient-to-t from-[var(--lime-12)] via-transparent to-transparent opacity-70"
                         />
                     </motion.div>
                 </Box>
@@ -39,7 +39,7 @@ const FeaturedServiceCard = (props: { title: string, description: string, image:
                             {props.description}
                         </Text>
                     </Flex>
-                    <Flex gap="1" direction="row" align="center" className="text-[var(--grass-11)] hover:text-[var(--grass-10)] transition-colors">
+                    <Flex gap="1" direction="row" align="center" className="text-[var(--lime-11)] hover:text-[var(--lime-10)] transition-colors">
                         <Text weight="bold">
                             Learn More
                         </Text>

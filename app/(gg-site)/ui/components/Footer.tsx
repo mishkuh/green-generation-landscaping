@@ -31,15 +31,15 @@ const Footer = () => {
                         <Heading className="text-[var(--gray-1)] font-novecento-sans p-1 mb-1 mr-1">
                             Quick Links
                         </Heading>
-                        <Link className="hover:text-[var(--grass-8)] transition-all duration-200 p-1" href="/">Home</Link>
+                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href="/">Home</Link>
                         <Separator size="1" orientation="vertical" />
-                        <Link className="hover:text-[var(--grass-8)] transition-all duration-200 p-1" href="/portfolio">Portfolio</Link>
+                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href="/portfolio">Portfolio</Link>
                         <Separator size="1" orientation="vertical" />
-                        <Link className="hover:text-[var(--grass-8)] transition-all duration-200 p-1" href="/services">Services</Link>
+                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href="/services">Services</Link>
                         <Separator size="1" orientation="vertical" />
-                        <Link className="hover:text-[var(--grass-8)] transition-all duration-200 p-1" href="/about">About</Link>
+                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href="/about">About</Link>
                         <Separator size="1" orientation="vertical" />
-                        <Link className="hover:text-[var(--grass-8)] transition-all duration-200 p-1" href="/contact">Contact</Link>
+                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href="/contact">Contact</Link>
                     </Flex>
 
                     {/* Services Column */}
@@ -47,13 +47,13 @@ const Footer = () => {
                         <Heading className="text-[var(--gray-1)] font-novecento-sans p-1 mb-1 mr-1">
                             Services
                         </Heading>
-                        <Link className="hover:text-[var(--grass-8)] transition-all duration-200 p-1" href="/services/landscape-maintenance">Landscape Maintenance</Link>
+                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href="/services/landscape-maintenance">Landscape Maintenance</Link>
                         <Separator size="1" orientation="vertical" />
-                        <Link className="hover:text-[var(--grass-8)] transition-all duration-200 p-1" href="/services/hardscaping">Hardscaping</Link>
+                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href="/services/hardscaping">Hardscaping</Link>
                         <Separator size="1" orientation="vertical" />
-                        <Link className="hover:text-[var(--grass-8)] transition-all duration-200 p-1" href="/services/irrigation">Irrigation Systems</Link>
+                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href="/services/irrigation">Irrigation Systems</Link>
                         <Separator size="1" orientation="vertical" />
-                        <Link className="hover:text-[var(--grass-8)] transition-all duration-200 p-1" href="/services">All Services</Link>
+                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href="/services">All Services</Link>
                     </Flex>
 
                     {/* Contact Info Column */}
@@ -62,19 +62,19 @@ const Footer = () => {
                             Contact Info
                         </Heading>
                         <Flex align="center" className="p-1">
-                            <MapPin className="text-[var(--grass-9)] mr-2" />
+                            <MapPin className="text-[var(--lime-9)] mr-2" />
                             <Text className="text-[var(--gray-9)]">
                                 Greater Seattle Area, WA
                             </Text>
                         </Flex>
                         <Flex align="center" className="p-1">
-                            <Phone className="text-[var(--grass-9)] mr-2" />
+                            <Phone className="text-[var(--lime-9)] mr-2" />
                             <Text className="text-[var(--gray-9)]">
                                 (253) 304-7250
                             </Text>
                         </Flex>
                         <Flex align="center" className="p-1">
-                            <Mail className="text-[var(--grass-9)] mr-2" />
+                            <Mail className="text-[var(--lime-9)] mr-2" />
                             <Text className="text-[var(--gray-9)]">
                                 ggenerationlandscaping@gmail.com
                             </Text>
@@ -84,8 +84,8 @@ const Footer = () => {
             </Container>
             <Container>
                 <Flex align="center" justify="center" className="w-full border-t border-[var(--gray-11)] py-2 my-2">
-                    <Text className='text-[var(--gray-10)]'>
-                        © 2025 Green Generation Landscaping. All rights reserved.
+                    <Text className='text-[var(--gray-9)]'>
+                        © {new Date().getFullYear()} Green Generation Landscaping. All rights reserved.
                     </Text>
                 </Flex>
             </Container>

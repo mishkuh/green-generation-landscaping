@@ -49,7 +49,7 @@ const About = () => {
     return (
         <Box>
             {/* Hero Section */}
-            <Section size="3" className="bg-[var(--grass-12)]">
+            <Section size="3" className="bg-[var(--lime-12)]">
                 <Container size="3">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -110,7 +110,7 @@ const About = () => {
             </Section>
 
             {/* Values Section */}
-            <Section size="3" className="bg-[var(--grass-12)]">
+            <Section size="3" className="bg-[var(--lime-12)]">
                 <Container size="4" px="4">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -138,7 +138,7 @@ const About = () => {
                                 >
                                     <Box className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center hover:bg-white/20 transition-colors h-full">
                                         <Flex justify="center" mb="4">
-                                            <Flex justify="center" align="center" className="bg-[var(--grass-9)] w-16 h-16 rounded-full">
+                                            <Flex justify="center" align="center" className="bg-[var(--lime-9)] w-16 h-16 rounded-full">
                                                 <Icon className="w-8 h-8 text-[var(--gray-1)]" />
                                             </Flex>
                                         </Flex>
@@ -183,7 +183,7 @@ const About = () => {
                                     </Flex>
                                     <Box p="4">
                                         <Heading size="5" className="text-[var(--gray-12)] mb-1 font-novecento-sans">{member.name}</Heading>
-                                        <Text size="2" weight="bold" className="text-[var(--grass-9)] mb-3 block">{member.role}</Text>
+                                        <Text size="2" weight="bold" className="text-[var(--lime-9)] mb-3 block">{member.role}</Text>
                                         <Text size="2" className="text-[var(--gray-11)] leading-relaxed block">{member.bio}</Text>
                                     </Box>
                                 </Card>
@@ -211,7 +211,7 @@ const About = () => {
                                 viewport={{ once: true }}
                                 className="text-center"
                             >
-                                <Text size="8" weight="bold" className="text-[var(--grass-9)] mb-2 block font-novecento-sans">
+                                <Text size="8" weight="bold" className="text-[var(--lime-9)] mb-2 block font-novecento-sans">
                                     {stat.number}
                                 </Text>
                                 <Text size="3" weight="medium" className="text-[var(--gray-11)] block">{stat.label}</Text>

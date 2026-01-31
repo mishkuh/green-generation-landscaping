@@ -1,11 +1,9 @@
-export const dynamic = 'force-dynamic';
-
 import Link from 'next/link';
 import { Button, Box, Section, Container, Grid, Heading, Text, Card, Flex, Inset } from '@radix-ui/themes';
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import ServiceCard from '@/app/(gg-site)/ui/components/ServiceCard';
-import { Service } from '@/payload-types';
+import { Service, Media } from '@/payload-types';
 import AnimatedGrid from '@/app/(gg-site)/ui/components/AnimatedGrid';
 import * as motion from 'motion/react-client'
 
@@ -22,7 +20,7 @@ const Services = async () => {
     return (
         <Box>
             {/* Hero Section */}
-            <Section size="3" className="bg-[var(--grass-12)]">
+            <Section size="3" className="bg-[var(--lime-12)]">
                 <Container size="3">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -43,14 +41,21 @@ const Services = async () => {
                 <Container size="4" px="4">
                     <AnimatedGrid>
                         {services.map((service) => (
-                            <ServiceCard key={service.id} {...service} />
+                            <ServiceCard key={service.id} {...{
+                                title: service.title,
+                                description: service.description,
+                                bannerImageURL: (service.bannerImage as Media).thumbnailURL!,
+                                alt: (service.bannerImage as Media).alt,
+                                featureList: service.featureList,
+                                link: `/services/${service.id}`
+                            }} />
                         ))}
                     </AnimatedGrid>
                 </Container>
             </Section>
 
             {/* CTA Section */}
-            <Section mt="3" size="3" className="bg-[var(--grass-12)]">
+            <Section mt="3" size="3" className="bg-[var(--lime-12)]">
                 <Container size="4" px="4">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -58,13 +63,13 @@ const Services = async () => {
                         transition={{ duration: 0.6 }}
                     >
                         <Flex direction="column" align="center" gap="4">
-                            <Heading size="8" className="text-[var(--grass-1)] font-novecento-sans">
+                            <Heading size="8" className="text-[var(--lime-1)] font-novecento-sans">
                                 Need Multiple Services?
                             </Heading>
-                            <Text size="5" className="text-[var(--grass-1)]">
+                            <Text size="5" className="text-[var(--lime-1)]">
                                 We offer customized packages that combine services to meet your specific needs and budget
                             </Text>
-                            <Button asChild size="4" className="text-[var(--grass-1)]">
+                            <Button asChild size="4" className="text-[var(--lime-1)]">
                                 <Link href="/contact">
                                     Request a Quote
                                 </Link>

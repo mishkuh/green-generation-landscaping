@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic'
-
 import React from 'react';
 import Link from 'next/link';
 import * as motion from 'motion/react-client'
@@ -33,16 +31,14 @@ const ProjectDetail = async (
     return (
         <Box>
             {/* Hero Section */}
-            <SectionWithBackground height="60vh" image={(projectDetails.bannerImage as Media).url || ''}>
+            <SectionWithBackground height="60vh" imageUrl={(projectDetails.bannerImage as Media).url || ''} alt={(projectDetails.bannerImage as Media).alt || projectDetails.title} blurDataURL={(projectDetails.bannerImage as Media).sizes?.thumbnail?.url!}>
                 {/* Project Title */}
                 <Box position="absolute" bottom="6" left="6" px="6" py="3" className='backdrop-blur-md bg-gradient-to-b from-[var(--gray-1)]/10 to-[var(--gray-10)]/10 rounded-xl shadow-xl border-[1px] border-[var(--gray-10)]/70'>
                     <Flex direction="column" align="start">
-                        <Button asChild variant="ghost" highContrast>
-                            <Link href="/portfolio">
-                                <ArrowLeft className="w-5 h-5 mr-2" />
-                                Back to Portfolio
-                            </Link>
-                        </Button>
+                        <Link href="/portfolio" className="flex items-center gap-2 text-[var(--lime-7)] hover:text-[var(--lime-10)] transition-colors">
+                            <ArrowLeft className="w-5 h-5 mr-2" />
+                            Back to Portfolio
+                        </Link>
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -50,7 +46,7 @@ const ProjectDetail = async (
                         >
                             <Heading
                                 size="8"
-                                className="text-[var(--grass-1)] font-novecento-sans pt-2"
+                                className="text-[var(--lime-1)] font-novecento-sans pt-2"
                             >
                                 {projectDetails.title}
                             </Heading>
@@ -64,11 +60,11 @@ const ProjectDetail = async (
                 <Container size="4" px="4">
                     <Flex wrap="wrap" gap="6" justify="center">
                         <Flex align="center" gap="2">
-                            <MapPin className="w-5 h-5 text-[var(--grass-9)]" />
+                            <MapPin className="w-5 h-5 text-[var(--lime-9)]" />
                             <Text className="text-[var(--gray-12)]">{projectDetails.location}</Text>
                         </Flex>
                         <Flex align="center" gap="2">
-                            <Calendar className="w-5 h-5 text-[var(--grass-9)]" />
+                            <Calendar className="w-5 h-5 text-[var(--lime-9)]" />
                             <Text className="text-[var(--gray-12)]">
                                 {new Date(projectDetails?.date).toLocaleDateString('en-US', {
                                     month: '2-digit',
@@ -86,22 +82,22 @@ const ProjectDetail = async (
                     <Grid columns={{ initial: '1', md: '3' }} gap="9">
                         <Flex direction="column" gap="8" className="lg:col-span-2">
                             <Flex direction="column" gap="2">
-                                <Heading size="6" className="text-[var(--grass-11)] font-novecento-sans">Project Overview</Heading>
+                                <Heading size="6" className="text-[var(--lime-11)] font-novecento-sans">Project Overview</Heading>
                                 <Text size="4" className="text-[var(--gray-12)]">{projectDetails.description}</Text>
                             </Flex>
 
                             <Flex direction="column" gap="2">
-                                <Heading size="5" className="text-[var(--grass-11)] font-novecento-sans">The Challenge</Heading>
+                                <Heading size="5" className="text-[var(--lime-11)] font-novecento-sans">The Challenge</Heading>
                                 <Text className="text-[var(--gray-12)]">{projectDetails.challenge}</Text>
                             </Flex>
 
                             <Flex direction="column" gap="2">
-                                <Heading size="5" className="text-[var(--grass-11)] font-novecento-sans">Our Solution</Heading>
+                                <Heading size="5" className="text-[var(--lime-11)] font-novecento-sans">Our Solution</Heading>
                                 <Text className="text-[var(--gray-12)]">{projectDetails.solution}</Text>
                             </Flex>
 
                             <Flex direction="column" gap="2">
-                                <Heading size="5" className="text-[var(--grass-11)] mb-4 font-novecento-sans">Project Gallery</Heading>
+                                <Heading size="5" className="text-[var(--lime-11)] mb-4 font-novecento-sans">Project Gallery</Heading>
                                 {projectDetails.imageGallery?.length > 0 ? (
                                     <Grid columns={{ initial: '1', md: '2' }} gap="4">
                                         {projectDetails.imageGallery?.map((image) => (
@@ -122,11 +118,11 @@ const ProjectDetail = async (
                         </Flex>
 
                         <Flex p="6" direction="column" className="relative rounded-lg sticky top-40 self-start shadow-lg lg:col-span-1 bg-[var(--gray-1)]">
-                            <Heading size="4" mb="4" className="text-[var(--grass-11)] font-novecento-sans">Key Features</Heading>
+                            <Heading size="4" mb="4" className="text-[var(--lime-11)] font-novecento-sans">Key Features</Heading>
                             <Flex direction="column" gap="3">
                                 {projectDetails.featureList?.map((feature, index) => (
                                     <Flex direction="row" key={index} gap="2" align="center">
-                                        <Box className="w-1.5 h-1.5 bg-[var(--grass-9)] rounded-full shrink-0" />
+                                        <Box className="w-1.5 h-1.5 bg-[var(--lime-9)] rounded-full shrink-0" />
                                         <Text className="text-[var(--gray-12)]">{feature.feature}</Text>
                                     </Flex>
                                 ))}

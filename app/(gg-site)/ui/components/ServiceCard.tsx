@@ -1,11 +1,20 @@
 import Image from 'next/image';
 import { Box, Button, Flex, Heading, Text } from '@radix-ui/themes';
 import Link from 'next/link';
-import { Media, Service } from '@/payload-types';
 import * as motion from 'motion/react-client'
 
-const ServiceCard = (service: Service) => {
-    const image = service.bannerImage as Media;
+interface ServiceCardProps {
+    title: string;
+    description: string;
+    bannerImageURL: string;
+    featureList: {
+        feature: string;
+    }[];
+    alt: string;
+    link: string;
+}
+
+const ServiceCard = ({ title, description, bannerImageURL, alt, featureList, link }: ServiceCardProps) => {
     return (
         <motion.div
             initial="rest"
@@ -31,12 +40,12 @@ const ServiceCard = (service: Service) => {
                 transition={{ duration: 0.3 }}
                 className="max-w-[800px] rounded-[var(--radius-4)]"
             >
-                <Flex asChild maxWidth="800px" direction="column" key={service.id} position="relative" overflow="hidden" className="border border-[var(--gray-3)] rounded-[var(--radius-4)]">
-                    <Link href={`/services/${service.id}`}>
+                <Flex asChild maxWidth="800px" direction="column" position="relative" overflow="hidden" className="border h-full border-[var(--gray-3)] rounded-[var(--radius-4)]">
+                    <Link href={link}>
                         <Box position="relative" width="100%" className="aspect-16/9">
                             <Image
-                                alt={image?.alt || service.title}
-                                src={image?.url || ""}
+                                alt={alt}
+                                src={bannerImageURL || ""}
                                 fill
                                 className="object-cover"
                             />
@@ -45,12 +54,12 @@ const ServiceCard = (service: Service) => {
 
                         <Flex direction="column" gap="4" p="6" pt="4">
                             <Flex direction="column" gap="2">
-                                <Heading size="5" className="text-[var(--gray-12)]">{service.title}</Heading>
-                                <Text as="p" size="2" className="text-[var(--gray-11)]">{service.description}</Text>
+                                <Heading size="5" className="text-[var(--gray-12)]">{title}</Heading>
+                                <Text as="p" size="2" className="text-[var(--gray-11)]">{description}</Text>
                                 <Flex direction="column" gap="4">
-                                    {service.featureList?.slice(0, 4).map((item, idx) => (
+                                    {featureList?.slice(0, 4).map((item, idx) => (
                                         <Flex key={idx} align="center" gap="2">
-                                            <Box className="w-1.5 h-1.5 bg-[var(--grass-9)] rounded-full shrink-0" />
+                                            <Box className="w-1.5 h-1.5 bg-[var(--lime-9)] rounded-full shrink-0" />
                                             <Text size="2" className="text-[var(--gray-12)]">{item.feature}</Text>
                                         </Flex>
                                     ))}

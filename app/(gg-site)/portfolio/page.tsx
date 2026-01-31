@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic';
-
 import Link from 'next/link';
 import * as motion from 'motion/react-client'
 import { Button, Box, Section, Container, Heading, Text, Flex } from '@radix-ui/themes';
@@ -25,7 +23,7 @@ const Portfolio = async () => {
     return (
         <Box>
             {/* Hero Section */}
-            <Section size="3" className="bg-[var(--grass-12)]">
+            <Section size="3" className="bg-[var(--lime-12)]">
                 <Container size="3">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -54,7 +52,7 @@ const Portfolio = async () => {
             </Section>
 
             {/* CTA Section */}
-            <Section position="relative" size="3" className="bg-[var(--grass-12)]">
+            <Section position="relative" size="3" className="bg-[var(--lime-12)]">
                 <Container size="4" className="text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -63,13 +61,13 @@ const Portfolio = async () => {
                         viewport={{ once: true }}
                     >
                         <Flex direction="column" align="center" gap="4">
-                            <Heading size="8" className="text-[var(--grass-1)] font-novecento-sans">
+                            <Heading size="8" className="text-[var(--lime-1)] font-novecento-sans">
                                 Ready to Start Your Project?
                             </Heading>
-                            <Text size="5" className="text-[var(--grass-1)]  mb-8 max-w-2xl mx-auto block">
+                            <Text size="5" className="text-[var(--lime-1)]  mb-8 max-w-2xl mx-auto block">
                                 Let's create something beautiful together
                             </Text>
-                            <Button asChild size="4" className="text-[var(--grass-1)]">
+                            <Button asChild size="4" className="text-[var(--lime-1)]">
                                 <Link href="/contact">
                                     Get Free Consultation
                                 </Link>

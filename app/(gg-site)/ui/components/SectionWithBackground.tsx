@@ -2,7 +2,17 @@ import { Section, Box, Inset } from "@radix-ui/themes";
 import clsx from "clsx";
 import Image from "next/image";
 
-const SectionWithBackground = ({ children, className, image, height }: { children: React.ReactNode, className?: string, image?: string, height?: string }) => {
+interface SectionWithBackgroundProps {
+    children: React.ReactNode;
+    imageUrl: string;
+    alt: string;
+    className?: string;
+    height?: string;
+    blurDataURL?: string;
+}
+
+const SectionWithBackground = (props: SectionWithBackgroundProps) => {
+    const { children, className, imageUrl, alt, height, blurDataURL } = props;
     return (
         <Section position="relative" size="4" width="100%" height={height ? height : "calc(100vh - 95px)"} className={clsx(
             "overflow-hidden",
@@ -11,14 +21,16 @@ const SectionWithBackground = ({ children, className, image, height }: { childre
             <Inset>
                 {/* Background Image */}
                 <Image
-                    alt={image ? "" : "Lush green landscape with beautiful garden"}
-                    src={image || "/hero-bg.jpg"}
+                    alt={alt}
+                    src={imageUrl}
                     objectFit='cover'
                     fill
-                    priority
+                    priority={true}
+                    placeholder="blur"
+                    blurDataURL={blurDataURL}
                 />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--gray-12)] via-transparent to-transparent opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--gray-12)] to-transparent opacity-50" />
+                <div className="absolute inset-0 bg-[var(--lime-11)] opacity-30"></div>
             </Inset>
             {children}
         </Section>

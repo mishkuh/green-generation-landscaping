@@ -4,35 +4,36 @@ import { ArrowRight, CheckCircle, Star } from 'lucide-react';
 import { Button, Flex, Box, Heading, Text, Grid, Container, Section, Em, Card } from '@radix-ui/themes';
 import AnimatedGrid from '@/app/(gg-site)/ui/components/AnimatedGrid';
 import SectionWithBackground from '@/app/(gg-site)/ui/components/SectionWithBackground';
-import FeaturedServiceCard from '@/app/(gg-site)/ui/components/FeaturedServiceCard';
+import { getPayload } from 'payload'
+import config from '@/payload.config'
+import { Service, Media } from '@/payload-types';
+import blurBg from '@/public/hero-bg.png';
+import ServiceCard from '@/app/(gg-site)/ui/components/ServiceCard';
 
 const Home = async () => {
-    const featuredServices = [
-        {
-            title: 'Landscape Maintenance',
-            description: 'Keep your landscaping healthy and pristine year-round',
-            image: '/overhead.jpg',
-            link: '/services/landscape-maintenance'
-        },
-        {
-            title: 'Hardscaping',
-            description: 'Patios, walkways, and outdoor living spaces',
-            image: '/hardscaping.jpg',
-            link: '/services/hardscaping'
-        },
-        {
-            title: 'Irrigation Systems',
-            description: 'Efficient watering solutions for a thriving landscape',
-            image: '/irrigation.jpg',
-            link: '/services/irrigation'
-        },
-        {
-            title: 'View All Services',
-            description: 'View all our services',
-            image: '/trimming_bush.jpg',
-            link: '/services'
+    const payload = await getPayload({ config })
+    
+    const heroImageData = await payload.find({
+        collection: 'media',
+        where: {
+            id: {
+                equals: '1'
+            }
         }
-    ];
+    })
+    
+    const servicesData = await payload.find({
+        collection: 'services',
+        where: {
+            id: {
+                in: ['4', '5', '6']
+            }
+        }
+    })
+
+
+    const heroImage = heroImageData.docs[0] as Media;
+    const featuredServices = servicesData.docs as Service[];
 
     const benefitsList = [
         'Licensed & Insured',
@@ -46,22 +47,22 @@ const Home = async () => {
     return (
         <Box>
             {/* Hero Section with Animated Background */}
-            <SectionWithBackground image='/hero-bg.jpg'>
+            <SectionWithBackground imageUrl={heroImage.url!} alt={heroImage.alt} blurDataURL={blurBg.blurDataURL}>
                 <Flex position="relative" align={{ initial: "end", sm: "center" }} justify="center" width="100%" height="100%">
                     {/* Hero Content */}
-                    <Flex position="absolute" m="8px" maxWidth="800px" p="8" gap="4" direction="column" justify="center" className='backdrop-blur-md bg-gradient-to-b from-[var(--gray-1)]/10 to-[var(--gray-10)]/10 rounded-xl shadow-xl border-[1px] border-[var(--gray-10)]/70'>
+                    <Flex position="absolute" m="8px" maxWidth="800px" p="8" gap="4" direction="column" justify="center" className='backdrop-blur-md bg-[var(--gray-12)]/20 rounded-xl shadow-xl border-[1px] border-[var(--gray-10)]/70'>
                         <Heading
                             asChild
                             size={{ initial: "8", sm: "9" }}
                             style={{ color: 'var(--gray-2)' }}
                         >
-                            <motion.div
+                            <motion.header
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6 }}
                             >
                                 Transform Your Outdoor Space Into Paradise
-                            </motion.div>
+                            </motion.header>
                         </Heading>
                         <Text
                             asChild
@@ -88,7 +89,7 @@ const Home = async () => {
                                         <ArrowRight />
                                     </Link>
                                 </Button>
-                                <Button asChild size={{ initial: "3", sm: "4" }} variant="outline">
+                                <Button asChild size={{ initial: "3", sm: "4" }} variant="outline" className='extra-vision'>
                                     <Link href="/portfolio">
                                         View Our Work
                                     </Link>
@@ -108,7 +109,7 @@ const Home = async () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="text-[var(--grass-12)]"
+                        className="text-[var(--lime-12)]"
                     >
                         <Heading size="8">Featured Services</Heading>
                         <Text size="5">
@@ -121,14 +122,31 @@ const Home = async () => {
                 <Container size="4" px="6">
                     <AnimatedGrid>
                         {featuredServices.map((service, index) => (
-                            <FeaturedServiceCard key={index} {...service} />
-                        ))}
+                            <ServiceCard key={index} {...{
+                                title: service.title,
+                                description: service.description,
+                                bannerImageURL: (service.bannerImage as Media).thumbnailURL!,
+                                alt: (service.bannerImage as Media).alt,
+                                featureList: service.featureList,
+                                link: `/services/${service.id}`
+                            }} />
+                        )).concat(
+                            // Add a card to view all services
+                            <ServiceCard key={featuredServices.length} {...{
+                            title: 'View All Services',
+                            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
+                            bannerImageURL: '/trimming_bush_thumb.jpg',
+                            alt: 'man caring for a bush',
+                            featureList: [],
+                            link: '/services/'
+                        }} />
+                        )}
                     </AnimatedGrid>
                 </Container>
             </Section>
 
             {/* Why Choose Us Section */}
-            <Section size="3" className="bg-[var(--grass-12)]">
+            <Section size="3" className="bg-[var(--lime-12)]">
                 <Container px="4" size="3" mb="6">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -137,8 +155,8 @@ const Home = async () => {
                         viewport={{ once: true }}
                     >
                         <Flex gap="4" direction="column">
-                            <Heading size="8" className='text-[var(--grass-1)]'>Why Choose Green Generation Landscaping?</Heading>
-                            <Text size="5" className='text-[var(--grass-2)]'>
+                            <Heading size="8" className='text-[var(--lime-1)]'>Why Choose Green Generation Landscaping?</Heading>
+                            <Text size="5" className='text-[var(--lime-2)]'>
                                 We're committed to excellence in every project we undertake
                             </Text>
                         </Flex>
@@ -147,7 +165,7 @@ const Home = async () => {
                 <Container p="3" size="3">
                     <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="4">
                         {benefitsList.map((benefit, index) => (
-                            <Flex asChild justify="center" key={index} className="bg-[var(--grass-1)]/90 h-[100%] p-2 rounded-[var(--radius-3)]">
+                            <Flex asChild justify="center" key={index} className="bg-[var(--lime-1)]/90 h-[100%] p-2 rounded-[var(--radius-3)]">
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.9 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
@@ -155,7 +173,7 @@ const Home = async () => {
                                     viewport={{ once: true }}
                                 >
                                     <Flex direction="row" align="center" gap="2">
-                                        <CheckCircle className='text-[var(--grass-10)]' />
+                                        <CheckCircle className='text-[var(--lime-10)]' />
                                         <Text>{benefit}</Text>
                                     </Flex>
                                 </motion.div>
@@ -164,7 +182,7 @@ const Home = async () => {
                     </Grid>
                 </Container>
             </Section >
-            {/* <WavySeparator waveColor="var(--grass-12)" className='white' /> */}
+            {/* <WavySeparator waveColor="var(--lime-12)" className='white' /> */}
 
             {/* Testimonials Section */}
             < Section size="3" >
@@ -224,7 +242,7 @@ const Home = async () => {
             </Section >
 
             {/* CTA Section */}
-            < Section size="3" style={{ backgroundColor: 'var(--grass-12)' }}>
+            < Section size="3" style={{ backgroundColor: 'var(--lime-12)' }}>
                 <Container size="3" px="4">
                     <Flex asChild direction="column" gap="4" justify="center" align="center">
                         <motion.div

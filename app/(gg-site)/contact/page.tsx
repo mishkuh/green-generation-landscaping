@@ -73,7 +73,7 @@ const Contact = () => {
     return (
         <Box>
             {/* Hero Section */}
-            <Section size="3" className="bg-[var(--grass-12)]">
+            <Section size="3" className="bg-[var(--lime-12)]">
                 <Container size="3">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -111,8 +111,8 @@ const Contact = () => {
                                 <Flex direction="column" gap="6">
                                     <Card size="3">
                                         <Flex gap="4" align="start">
-                                            <Flex justify="center" align="center" className="bg-[var(--grass-3)] p-3 rounded-full shrink-0">
-                                                <Phone className="w-6 h-6 text-[var(--grass-9)]" />
+                                            <Flex justify="center" align="center" className="bg-[var(--lime-3)] p-3 rounded-full shrink-0">
+                                                <Phone className="w-6 h-6 text-[var(--lime-9)]" />
                                             </Flex>
                                             <Box>
                                                 <Text weight="bold" className="text-[var(--gray-12)] mb-1 block font-novecento-sans">Phone</Text>
@@ -124,8 +124,8 @@ const Contact = () => {
 
                                     <Card size="3">
                                         <Flex gap="4" align="start">
-                                            <Flex justify="center" align="center" className="bg-[var(--grass-3)] p-3 rounded-full shrink-0">
-                                                <Mail className="w-6 h-6 text-[var(--grass-9)]" />
+                                            <Flex justify="center" align="center" className="bg-[var(--lime-3)] p-3 rounded-full shrink-0">
+                                                <Mail className="w-6 h-6 text-[var(--lime-9)]" />
                                             </Flex>
                                             <Box>
                                                 <Text weight="bold" className="text-[var(--gray-12)] mb-1 block font-novecento-sans">Email</Text>
@@ -137,8 +137,8 @@ const Contact = () => {
 
                                     <Card size="3">
                                         <Flex gap="4" align="start">
-                                            <Flex justify="center" align="center" className="bg-[var(--grass-3)] p-3 rounded-full shrink-0">
-                                                <MapPin className="w-6 h-6 text-[var(--grass-9)]" />
+                                            <Flex justify="center" align="center" className="bg-[var(--lime-3)] p-3 rounded-full shrink-0">
+                                                <MapPin className="w-6 h-6 text-[var(--lime-9)]" />
                                             </Flex>
                                             <Box>
                                                 <Text weight="bold" className="text-[var(--gray-12)] mb-1 block font-novecento-sans">Service Area</Text>
@@ -149,12 +149,12 @@ const Contact = () => {
                                     </Card>
                                 </Flex>
 
-                                <Box className="bg-[var(--grass-11)] text-white p-6 rounded-xl">
+                                <Box className="bg-[var(--lime-11)] text-white p-6 rounded-xl">
                                     <Heading size="4" mb="3" className="font-novecento-sans">Free Consultation</Heading>
-                                    <Text className="text-[var(--grass-1)] mb-4 block">
+                                    <Text className="text-[var(--lime-1)] mb-4 block">
                                         Schedule a free on-site consultation to discuss your project and receive a detailed estimate.
                                     </Text>
-                                    <Text weight="bold" className="text-[var(--grass-1)] block">No obligation • Expert advice • Custom solutions</Text>
+                                    <Text weight="bold" className="text-[var(--lime-1)] block">No obligation • Expert advice • Custom solutions</Text>
                                 </Box>
                             </Flex>
                         </motion.div>
@@ -288,7 +288,7 @@ const Contact = () => {
             <Box className="relative h-96 bg-[var(--gray-3)]">
                 <Flex align="center" justify="center" className="absolute inset-0">
                     <Box className="text-center">
-                        <MapPin className="w-16 h-16 text-[var(--grass-9)] mx-auto mb-4" />
+                        <MapPin className="w-16 h-16 text-[var(--lime-9)] mx-auto mb-4" />
                         <Heading size="5" className="text-[var(--gray-12)] font-novecento-sans">Service Area</Heading>
                         <Text className="text-[var(--gray-11)]">Greater Seattle Area</Text>
                     </Box>

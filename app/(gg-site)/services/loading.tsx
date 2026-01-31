@@ -4,7 +4,7 @@ const LoadingPage = () => {
     return (
         <Box>
             {/* Hero Section */}
-            <Section size="3" className="bg-[var(--grass-12)]">
+            <Section size="3" className="bg-[var(--lime-12)]">
                 <Container size="3">
                     <Flex direction="column" align="center" className="text-center text-white max-w-3xl mx-auto">
                         <Spinner size="3" />

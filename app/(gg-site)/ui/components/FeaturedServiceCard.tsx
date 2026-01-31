@@ -4,7 +4,14 @@ import { Flex, Heading, Text, Box } from '@radix-ui/themes';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const FeaturedServiceCard = (props: { title: string, description: string, image: string, link: string }) => {
+interface FeaturedServiceProps {
+    title: string,
+    description: string,
+    bannerImageUrl: string,
+    link: string
+}
+
+const FeaturedServiceCard = (props: FeaturedServiceProps) => {
     return (
         <Flex asChild direction="column" height="100%" overflow="hidden" className='shadow-xl border-[1px] border-[var(--lime-5)]/50 rounded-[var(--radius-4)]'>
             <Link href={props.link}>
@@ -19,8 +26,10 @@ const FeaturedServiceCard = (props: { title: string, description: string, image:
                     >
                         <Image
                             alt={props.title}
-                            src={props.image}
+                            src={props.bannerImageUrl}
                             fill
+                            placeholder='blur'
+                            blurDataURL={'/hero-bg.png'}
                             className='object-cover'
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />

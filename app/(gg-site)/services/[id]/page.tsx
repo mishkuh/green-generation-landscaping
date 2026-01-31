@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic';
-
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Check, Clock, DollarSign } from 'lucide-react';
@@ -9,6 +7,7 @@ import config from '@/payload.config'
 import { notFound } from 'next/navigation';
 import { getPayload } from 'payload';
 import { Media } from '@/payload-types';
+import SectionWithBackground from '@/app/(gg-site)/ui/components/SectionWithBackground';
 
 const ServiceDetail = async (
     { params }: { params: Promise<{ id: string }> }
@@ -32,28 +31,16 @@ const ServiceDetail = async (
     return (
         <Box>
             {/* Hero Section */}
-            <Section p="0" className="relative h-[50vh] overflow-hidden">
+            <SectionWithBackground height="60vh" imageUrl={(service.bannerImage as Media).url || ''} alt={(service.bannerImage as Media).alt || service.title} blurDataURL={(service.bannerImage as Media).sizes?.thumbnail?.url || ''}>
                 <Flex className="relative h-full w-full">
-                    {/* Banner Image */}
-                    <Image
-                        alt={service.title}
-                        src={(service.bannerImage as Media).url || ''}
-                        objectFit='cover'
-                        fill
-                    />
-                    {/* Background overlay */}
-                    <Box className='absolute inset-0 bg-gradient-to-t from-[var(--gray-12)]/60 via-[var(--gray-12)]/0 to-[var(--gray-12)]/0' />
-
                     {/* Service Title */}
                     <Container size="2" className="h-full relative">
                         <Box px="6" py="3" mr="4" className='absolute bottom-6 left-6 z-20 backdrop-blur-md bg-[var(--gray-12)]/20 rounded-xl shadow-xl border-[1px] border-[var(--gray-10)]/70'>
                             <Flex direction="column" align="start">
-                                <Button asChild variant="ghost" highContrast>
-                                    <Link href="/services">
-                                        <ArrowLeft className="w-5 h-5 mr-2" />
-                                        Back to Services
-                                    </Link>
-                                </Button>
+                                <Link href="/services" className="flex items-center gap-2 text-[var(--lime-7)] hover:text-[var(--lime-10)] transition-colors">
+                                    <ArrowLeft className="w-5 h-5" />
+                                    Back to Services
+                                </Link>
                                 <Heading
                                     size="8"
                                     className="text-[var(--lime-1)] font-novecento-sans pt-2"
@@ -70,7 +57,7 @@ const ServiceDetail = async (
                         </Box>
                     </Container>
                 </Flex>
-            </Section>
+            </SectionWithBackground>
 
             {/* Service Overview */}
             <Section size="3" className="bg-[var(--gray-2)]">
@@ -108,7 +95,7 @@ const ServiceDetail = async (
                                         {service.imageGallery?.map((imageData) => (
                                             <Box key={imageData.id} className="relative h-64 rounded-lg overflow-hidden group">
                                                 <Image
-                                                    src={(imageData.image as Media).url || ''}
+                                                    src={(imageData.image as Media).sizes?.tablet?.url || ''}
                                                     alt={(imageData.image as Media).alt || 'Gallery Image'}
                                                     fill
                                                     className="object-cover transition-transform duration-300 group-hover:scale-110"

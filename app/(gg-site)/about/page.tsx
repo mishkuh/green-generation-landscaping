@@ -100,7 +100,7 @@ const About = () => {
                                 <Image
                                     alt="Green Generation Landscaping team working on landscape project"
                                     className="object-cover"
-                                    src="/hero-bg.jpg"
+                                    src="/trimming_bush_thumb.jpg"
                                     fill
                                 />
                             </Box>

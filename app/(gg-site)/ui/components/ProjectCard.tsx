@@ -36,7 +36,7 @@ const ProjectCard = (portfolioProject: PortfolioProject) => {
                         <Box position="relative" width="100%" className="aspect-16/9">
                             <Image
                                 alt={image?.alt || portfolioProject.title}
-                                src={image?.url || ""}
+                                src={image?.thumbnailURL || ""}
                                 fill
                                 className='object-cover'
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

@@ -54,8 +54,5 @@ coverage
 .vercel
 .env*.local
 
-# Supabase
-supabase/
-
 # Hidden files
 .hidden/

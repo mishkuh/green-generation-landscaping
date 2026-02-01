@@ -1,7 +1,7 @@
 import sharp from 'sharp'
-import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 import { buildConfig } from 'payload'
 import Services from './collections/Services'
 import Media from './collections/Media'
@@ -29,35 +29,21 @@ export default buildConfig({
 
     // Your Payload secret - should be a complex and secure string, unguessable
     secret: process.env.PAYLOAD_SECRET || '',
-    db: postgresAdapter({
-        // Set to true if you want to push your database schema to the database. This is not recommended for production
-        push: isVercelEnv ? false : true,
+    db: vercelPostgresAdapter({
+        push: false,
         pool: {
-            connectionString: process.env.POSTGRES_URL_PAYLOAD_CONFIG,
-            ssl: dbCert ? {
-                ca: dbCert,
-                rejectUnauthorized: true,
-            } : false,
-        },
+            connectionString: process.env.DATABASE_URL
+        }
     }),
 
     plugins: [
-        s3Storage({
+        vercelBlobStorage({
+            // Specify which collections should use Vercel Blob
             collections: {
-                media: {
-                    prefix: 'media',
-                }
+                media: true
             },
-            bucket: process.env.S3_BUCKET!,
-            config: {
-                region: process.env.AWS_REGION || "us-east-1",
-                forcePathStyle: true,
-                credentials: {
-                    accessKeyId: process.env.S3_ACCESS_KEY_ID!,
-                    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
-                },
-                endpoint: process.env.S3_ENDPOINT,
-            }
+            // Token provided by Vercel once Blob storage is added to your Vercel project
+            token: process.env.BLOB_READ_WRITE_TOKEN,
         }),
     ],
 

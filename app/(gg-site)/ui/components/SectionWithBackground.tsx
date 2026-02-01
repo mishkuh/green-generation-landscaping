@@ -1,4 +1,4 @@
-import { Section, Box, Inset } from "@radix-ui/themes";
+import { Section, Inset } from "@radix-ui/themes";
 import clsx from "clsx";
 import Image from "next/image";
 
@@ -23,11 +23,11 @@ const SectionWithBackground = (props: SectionWithBackgroundProps) => {
                 <Image
                     alt={alt}
                     src={imageUrl}
-                    objectFit='cover'
                     fill
                     priority={true}
                     placeholder="blur"
                     blurDataURL={blurDataURL}
+                    style={{ objectFit: 'cover' }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--gray-12)] to-transparent opacity-50" />
                 <div className="absolute inset-0 bg-[var(--lime-11)] opacity-30"></div>

@@ -26,7 +26,7 @@ const Home = async () => {
         collection: 'services',
         where: {
             id: {
-                in: ['4', '5', '6']
+                in: ['7', '2', '1']
             }
         }
     })
@@ -134,7 +134,7 @@ const Home = async () => {
                             // Add a card to view all services
                             <ServiceCard key={featuredServices.length} {...{
                             title: 'View All Services',
-                            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
+                            description: 'From custom hardscaping to full-scale lawn care, our team provides expert landscaping solutions. We specialize in creating functional, beautiful environments tailored to your home, ensuring every outdoor space becomes a lasting, high-quality sanctuary.',
                             bannerImageURL: '/trimming_bush_thumb.jpg',
                             alt: 'man caring for a bush',
                             featureList: [],

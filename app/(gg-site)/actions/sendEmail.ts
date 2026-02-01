@@ -1,6 +1,6 @@
 "use server"
 
-import EmailTemplate, { InquiryEmailProps } from '@/app/(gg-site)/ui/components/email-template';
+import InquiryTemplate, { InquiryEmailProps } from '@/app/(gg-site)/lib/email/InquiryTemplate';
 import resend from '@/app/(gg-site)/lib/resend';
 
 export async function sendEmail(inquiryProps: InquiryEmailProps) {
@@ -9,7 +9,7 @@ export async function sendEmail(inquiryProps: InquiryEmailProps) {
             from: 'Green Generation Landscaping <contact@ggenerationlandscaping.com>',
             to: ['mishkkuh@gmail.com'],
             subject: 'New Project Inquiry',
-            react: EmailTemplate(inquiryProps),
+            react: InquiryTemplate(inquiryProps),
         });
 
         if (response.error) {

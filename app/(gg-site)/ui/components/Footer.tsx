@@ -1,10 +1,26 @@
 import Link from 'next/link';
-import { Mail, Phone, MapPin } from 'lucide-react';
-import logo from '@/public/logo.png';
 import Image from 'next/image';
+import { getPayload } from 'payload';
+import { Mail, Phone, MapPin } from 'lucide-react';
+import config from '@/payload.config';
+import { Service } from '@/payload-types';
+import logo from '@/public/logo.png';
 import { Box, Flex, Heading, Text, AspectRatio, Container, Section, Separator } from '@radix-ui/themes';
 
-const Footer = () => {
+const Footer = async () => {
+    const payload = await getPayload({ config })
+
+    const servicesData = await payload.find({
+        collection: 'services',
+        where: {
+            id: {
+                in: ['7', '2', '1']
+            }
+        }
+    })
+
+    const featuredServices = servicesData.docs as Service[];
+
     return (
         <Section className="bg-[var(--gray-12)] text-[var(--gray-9)] px-2">
             <Container className="pt-10">
@@ -47,11 +63,11 @@ const Footer = () => {
                         <Heading className="text-[var(--gray-1)] font-novecento-sans p-1 mb-1 mr-1">
                             Services
                         </Heading>
-                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href="/services/landscape-maintenance">Landscape Maintenance</Link>
+                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href={`/services/${featuredServices[0].id}`}>{featuredServices[0].title}</Link>
                         <Separator size="1" orientation="vertical" />
-                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href="/services/hardscaping">Hardscaping</Link>
+                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href={`/services/${featuredServices[1].id}`}>{featuredServices[1].title}</Link>
                         <Separator size="1" orientation="vertical" />
-                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href="/services/irrigation">Irrigation Systems</Link>
+                        <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href={`/services/${featuredServices[2].id}`}>{featuredServices[2].title}</Link>
                         <Separator size="1" orientation="vertical" />
                         <Link className="hover:text-[var(--lime-8)] transition-all duration-200 p-1" href="/services">All Services</Link>
                     </Flex>

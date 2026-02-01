@@ -6,7 +6,7 @@
  * and re-run `payload generate:db-schema` to regenerate this file.
  */
 
-import type { } from "@payloadcms/db-postgres";
+import type {} from "@payloadcms/db-vercel-postgres";
 import {
   pgTable,
   index,
@@ -18,11 +18,16 @@ import {
   jsonb,
   timestamp,
   numeric,
-} from "@payloadcms/db-postgres/drizzle/pg-core";
-import { sql, relations } from "@payloadcms/db-postgres/drizzle";
+  pgEnum,
+} from "@payloadcms/db-vercel-postgres/drizzle/pg-core";
+import { sql, relations } from "@payloadcms/db-vercel-postgres/drizzle";
+export const enum_users_roles = pgEnum("enum_users_roles", [
+  "super-admin",
+  "editor",
+]);
 
-export const services_featureList = pgTable(
-  "services_featureList",
+export const services_feature_list = pgTable(
+  "services_feature_list",
   {
     _order: integer("_order").notNull(),
     _parentID: integer("_parent_id").notNull(),
@@ -30,12 +35,12 @@ export const services_featureList = pgTable(
     feature: varchar("feature").notNull(),
   },
   (columns) => [
-    index("services_featureList_order_idx").on(columns._order),
-    index("services_featureList_parent_id_idx").on(columns._parentID),
+    index("services_feature_list_order_idx").on(columns._order),
+    index("services_feature_list_parent_id_idx").on(columns._parentID),
     foreignKey({
       columns: [columns["_parentID"]],
       foreignColumns: [services.id],
-      name: "services_featureList_parent_id_fk",
+      name: "services_feature_list_parent_id_fk",
     }).onDelete("cascade"),
   ],
 );
@@ -79,8 +84,8 @@ export const services_process_list = pgTable(
   ],
 );
 
-export const services_imageGallery = pgTable(
-  "services_imageGallery",
+export const services_image_gallery = pgTable(
+  "services_image_gallery",
   {
     _order: integer("_order").notNull(),
     _parentID: integer("_parent_id").notNull(),
@@ -92,13 +97,13 @@ export const services_imageGallery = pgTable(
       }),
   },
   (columns) => [
-    index("services_imageGallery_order_idx").on(columns._order),
-    index("services_imageGallery_parent_id_idx").on(columns._parentID),
-    index("services_imageGallery_image_idx").on(columns.image),
+    index("services_image_gallery_order_idx").on(columns._order),
+    index("services_image_gallery_parent_id_idx").on(columns._parentID),
+    index("services_image_gallery_image_idx").on(columns.image),
     foreignKey({
       columns: [columns["_parentID"]],
       foreignColumns: [services.id],
-      name: "services_imageGallery_parent_id_fk",
+      name: "services_image_gallery_parent_id_fk",
     }).onDelete("cascade"),
   ],
 );
@@ -116,7 +121,7 @@ export const services = pgTable(
     detailedDescription: jsonb("detailed_description").notNull(),
     pricing: varchar("pricing").notNull(),
     timeline: varchar("timeline").notNull(),
-    bannerImage: integer("bannerImage_id")
+    bannerImage: integer("banner_image_id")
       .notNull()
       .references(() => media.id, {
         onDelete: "set null",
@@ -138,7 +143,7 @@ export const services = pgTable(
   },
   (columns) => [
     index("services_icon_idx").on(columns.icon),
-    index("services_bannerImage_idx").on(columns.bannerImage),
+    index("services_banner_image_idx").on(columns.bannerImage),
     index("services_updated_at_idx").on(columns.updatedAt),
     index("services_created_at_idx").on(columns.createdAt),
   ],
@@ -238,8 +243,8 @@ export const tags = pgTable(
   ],
 );
 
-export const portfolio_projects_featureList = pgTable(
-  "portfolio_projects_featureList",
+export const portfolio_projects_feature_list = pgTable(
+  "portfolio_projects_feature_list",
   {
     _order: integer("_order").notNull(),
     _parentID: integer("_parent_id").notNull(),
@@ -247,20 +252,20 @@ export const portfolio_projects_featureList = pgTable(
     feature: varchar("feature").notNull(),
   },
   (columns) => [
-    index("portfolio_projects_featureList_order_idx").on(columns._order),
-    index("portfolio_projects_featureList_parent_id_idx").on(
+    index("portfolio_projects_feature_list_order_idx").on(columns._order),
+    index("portfolio_projects_feature_list_parent_id_idx").on(
       columns._parentID,
     ),
     foreignKey({
       columns: [columns["_parentID"]],
       foreignColumns: [portfolio_projects.id],
-      name: "portfolio_projects_featureList_parent_id_fk",
+      name: "portfolio_projects_feature_list_parent_id_fk",
     }).onDelete("cascade"),
   ],
 );
 
-export const portfolio_projects_imageGallery = pgTable(
-  "portfolio_projects_imageGallery",
+export const portfolio_projects_image_gallery = pgTable(
+  "portfolio_projects_image_gallery",
   {
     _order: integer("_order").notNull(),
     _parentID: integer("_parent_id").notNull(),
@@ -273,15 +278,15 @@ export const portfolio_projects_imageGallery = pgTable(
     caption: varchar("caption").notNull(),
   },
   (columns) => [
-    index("portfolio_projects_imageGallery_order_idx").on(columns._order),
-    index("portfolio_projects_imageGallery_parent_id_idx").on(
+    index("portfolio_projects_image_gallery_order_idx").on(columns._order),
+    index("portfolio_projects_image_gallery_parent_id_idx").on(
       columns._parentID,
     ),
-    index("portfolio_projects_imageGallery_image_idx").on(columns.image),
+    index("portfolio_projects_image_gallery_image_idx").on(columns.image),
     foreignKey({
       columns: [columns["_parentID"]],
       foreignColumns: [portfolio_projects.id],
-      name: "portfolio_projects_imageGallery_parent_id_fk",
+      name: "portfolio_projects_image_gallery_parent_id_fk",
     }).onDelete("cascade"),
   ],
 );
@@ -300,10 +305,10 @@ export const portfolio_projects = pgTable(
       precision: 3,
     }).notNull(),
     description: varchar("description").notNull(),
-    detailed_description: jsonb("detailed_description").notNull(),
+    detailedDescription: jsonb("detailed_description").notNull(),
     challenge: varchar("challenge").notNull(),
     solution: varchar("solution").notNull(),
-    bannerImage: integer("bannerImage_id")
+    bannerImage: integer("banner_image_id")
       .notNull()
       .references(() => media.id, {
         onDelete: "set null",
@@ -324,7 +329,7 @@ export const portfolio_projects = pgTable(
       .notNull(),
   },
   (columns) => [
-    index("portfolio_projects_bannerImage_idx").on(columns.bannerImage),
+    index("portfolio_projects_banner_image_idx").on(columns.bannerImage),
     index("portfolio_projects_updated_at_idx").on(columns.updatedAt),
     index("portfolio_projects_created_at_idx").on(columns.createdAt),
   ],
@@ -357,14 +362,23 @@ export const portfolio_projects_rels = pgTable(
   ],
 );
 
-export const payload_kv = pgTable(
-  "payload_kv",
+export const users_roles = pgTable(
+  "users_roles",
   {
+    order: integer("order").notNull(),
+    parent: integer("parent_id").notNull(),
+    value: enum_users_roles("value"),
     id: serial("id").primaryKey(),
-    key: varchar("key").notNull(),
-    data: jsonb("data").notNull(),
   },
-  (columns) => [uniqueIndex("payload_kv_key_idx").on(columns.key)],
+  (columns) => [
+    index("users_roles_order_idx").on(columns.order),
+    index("users_roles_parent_idx").on(columns.parent),
+    foreignKey({
+      columns: [columns["parent"]],
+      foreignColumns: [users.id],
+      name: "users_roles_parent_fk",
+    }).onDelete("cascade"),
+  ],
 );
 
 export const users_sessions = pgTable(
@@ -434,6 +448,16 @@ export const users = pgTable(
     index("users_created_at_idx").on(columns.createdAt),
     uniqueIndex("users_email_idx").on(columns.email),
   ],
+);
+
+export const payload_kv = pgTable(
+  "payload_kv",
+  {
+    id: serial("id").primaryKey(),
+    key: varchar("key").notNull(),
+    data: jsonb("data").notNull(),
+  },
+  (columns) => [uniqueIndex("payload_kv_key_idx").on(columns.key)],
 );
 
 export const payload_locked_documents = pgTable(
@@ -604,11 +628,11 @@ export const payload_migrations = pgTable(
   ],
 );
 
-export const relations_services_featureList = relations(
-  services_featureList,
+export const relations_services_feature_list = relations(
+  services_feature_list,
   ({ one }) => ({
     _parentID: one(services, {
-      fields: [services_featureList._parentID],
+      fields: [services_feature_list._parentID],
       references: [services.id],
       relationName: "featureList",
     }),
@@ -634,16 +658,16 @@ export const relations_services_process_list = relations(
     }),
   }),
 );
-export const relations_services_imageGallery = relations(
-  services_imageGallery,
+export const relations_services_image_gallery = relations(
+  services_image_gallery,
   ({ one }) => ({
     _parentID: one(services, {
-      fields: [services_imageGallery._parentID],
+      fields: [services_image_gallery._parentID],
       references: [services.id],
       relationName: "imageGallery",
     }),
     image: one(media, {
-      fields: [services_imageGallery.image],
+      fields: [services_image_gallery.image],
       references: [media.id],
       relationName: "image",
     }),
@@ -655,7 +679,7 @@ export const relations_services = relations(services, ({ one, many }) => ({
     references: [media.id],
     relationName: "icon",
   }),
-  featureList: many(services_featureList, {
+  featureList: many(services_feature_list, {
     relationName: "featureList",
   }),
   benefitList: many(services_benefit_list, {
@@ -669,32 +693,32 @@ export const relations_services = relations(services, ({ one, many }) => ({
     references: [media.id],
     relationName: "bannerImage",
   }),
-  imageGallery: many(services_imageGallery, {
+  imageGallery: many(services_image_gallery, {
     relationName: "imageGallery",
   }),
 }));
 export const relations_media = relations(media, () => ({}));
 export const relations_tags = relations(tags, () => ({}));
-export const relations_portfolio_projects_featureList = relations(
-  portfolio_projects_featureList,
+export const relations_portfolio_projects_feature_list = relations(
+  portfolio_projects_feature_list,
   ({ one }) => ({
     _parentID: one(portfolio_projects, {
-      fields: [portfolio_projects_featureList._parentID],
+      fields: [portfolio_projects_feature_list._parentID],
       references: [portfolio_projects.id],
       relationName: "featureList",
     }),
   }),
 );
-export const relations_portfolio_projects_imageGallery = relations(
-  portfolio_projects_imageGallery,
+export const relations_portfolio_projects_image_gallery = relations(
+  portfolio_projects_image_gallery,
   ({ one }) => ({
     _parentID: one(portfolio_projects, {
-      fields: [portfolio_projects_imageGallery._parentID],
+      fields: [portfolio_projects_image_gallery._parentID],
       references: [portfolio_projects.id],
       relationName: "imageGallery",
     }),
     image: one(media, {
-      fields: [portfolio_projects_imageGallery.image],
+      fields: [portfolio_projects_image_gallery.image],
       references: [media.id],
       relationName: "image",
     }),
@@ -718,7 +742,7 @@ export const relations_portfolio_projects_rels = relations(
 export const relations_portfolio_projects = relations(
   portfolio_projects,
   ({ one, many }) => ({
-    featureList: many(portfolio_projects_featureList, {
+    featureList: many(portfolio_projects_feature_list, {
       relationName: "featureList",
     }),
     bannerImage: one(media, {
@@ -726,7 +750,7 @@ export const relations_portfolio_projects = relations(
       references: [media.id],
       relationName: "bannerImage",
     }),
-    imageGallery: many(portfolio_projects_imageGallery, {
+    imageGallery: many(portfolio_projects_image_gallery, {
       relationName: "imageGallery",
     }),
     _rels: many(portfolio_projects_rels, {
@@ -734,7 +758,13 @@ export const relations_portfolio_projects = relations(
     }),
   }),
 );
-export const relations_payload_kv = relations(payload_kv, () => ({}));
+export const relations_users_roles = relations(users_roles, ({ one }) => ({
+  parent: one(users, {
+    fields: [users_roles.parent],
+    references: [users.id],
+    relationName: "roles",
+  }),
+}));
 export const relations_users_sessions = relations(
   users_sessions,
   ({ one }) => ({
@@ -746,10 +776,14 @@ export const relations_users_sessions = relations(
   }),
 );
 export const relations_users = relations(users, ({ many }) => ({
+  roles: many(users_roles, {
+    relationName: "roles",
+  }),
   sessions: many(users_sessions, {
     relationName: "sessions",
   }),
 }));
+export const relations_payload_kv = relations(payload_kv, () => ({}));
 export const relations_payload_locked_documents_rels = relations(
   payload_locked_documents_rels,
   ({ one }) => ({
@@ -822,39 +856,42 @@ export const relations_payload_migrations = relations(
 );
 
 type DatabaseSchema = {
-  services_featureList: typeof services_featureList;
+  enum_users_roles: typeof enum_users_roles;
+  services_feature_list: typeof services_feature_list;
   services_benefit_list: typeof services_benefit_list;
   services_process_list: typeof services_process_list;
-  services_imageGallery: typeof services_imageGallery;
+  services_image_gallery: typeof services_image_gallery;
   services: typeof services;
   media: typeof media;
   tags: typeof tags;
-  portfolio_projects_featureList: typeof portfolio_projects_featureList;
-  portfolio_projects_imageGallery: typeof portfolio_projects_imageGallery;
+  portfolio_projects_feature_list: typeof portfolio_projects_feature_list;
+  portfolio_projects_image_gallery: typeof portfolio_projects_image_gallery;
   portfolio_projects: typeof portfolio_projects;
   portfolio_projects_rels: typeof portfolio_projects_rels;
-  payload_kv: typeof payload_kv;
+  users_roles: typeof users_roles;
   users_sessions: typeof users_sessions;
   users: typeof users;
+  payload_kv: typeof payload_kv;
   payload_locked_documents: typeof payload_locked_documents;
   payload_locked_documents_rels: typeof payload_locked_documents_rels;
   payload_preferences: typeof payload_preferences;
   payload_preferences_rels: typeof payload_preferences_rels;
   payload_migrations: typeof payload_migrations;
-  relations_services_featureList: typeof relations_services_featureList;
+  relations_services_feature_list: typeof relations_services_feature_list;
   relations_services_benefit_list: typeof relations_services_benefit_list;
   relations_services_process_list: typeof relations_services_process_list;
-  relations_services_imageGallery: typeof relations_services_imageGallery;
+  relations_services_image_gallery: typeof relations_services_image_gallery;
   relations_services: typeof relations_services;
   relations_media: typeof relations_media;
   relations_tags: typeof relations_tags;
-  relations_portfolio_projects_featureList: typeof relations_portfolio_projects_featureList;
-  relations_portfolio_projects_imageGallery: typeof relations_portfolio_projects_imageGallery;
+  relations_portfolio_projects_feature_list: typeof relations_portfolio_projects_feature_list;
+  relations_portfolio_projects_image_gallery: typeof relations_portfolio_projects_image_gallery;
   relations_portfolio_projects_rels: typeof relations_portfolio_projects_rels;
   relations_portfolio_projects: typeof relations_portfolio_projects;
-  relations_payload_kv: typeof relations_payload_kv;
+  relations_users_roles: typeof relations_users_roles;
   relations_users_sessions: typeof relations_users_sessions;
   relations_users: typeof relations_users;
+  relations_payload_kv: typeof relations_payload_kv;
   relations_payload_locked_documents_rels: typeof relations_payload_locked_documents_rels;
   relations_payload_locked_documents: typeof relations_payload_locked_documents;
   relations_payload_preferences_rels: typeof relations_payload_preferences_rels;
@@ -862,7 +899,7 @@ type DatabaseSchema = {
   relations_payload_migrations: typeof relations_payload_migrations;
 };
 
-declare module "@payloadcms/db-postgres" {
+declare module "@payloadcms/db-vercel-postgres" {
   export interface GeneratedDatabaseSchema {
     schema: DatabaseSchema;
   }

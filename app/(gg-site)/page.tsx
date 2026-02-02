@@ -17,7 +17,7 @@ const Home = async () => {
         collection: 'media',
         where: {
             id: {
-                equals: '1'
+                equals: '8'
             }
         }
     })
@@ -26,7 +26,7 @@ const Home = async () => {
         collection: 'services',
         where: {
             id: {
-                in: ['7', '2', '1']
+                in: ['1', '2', '3']
             }
         }
     })

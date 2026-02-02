@@ -14,7 +14,7 @@ const Footer = async () => {
         collection: 'services',
         where: {
             id: {
-                in: ['7', '2', '1']
+                in: ['1', '2', '3']
             }
         }
     })

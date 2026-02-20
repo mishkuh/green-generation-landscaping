@@ -83,17 +83,21 @@ const Footer = async () => {
                                 Greater Seattle Area, WA
                             </Text>
                         </Flex>
-                        <Flex align="center" className="p-1">
-                            <Phone className="text-[var(--lime-9)] mr-2" />
-                            <Text className="text-[var(--gray-9)]">
-                                (253) 304-7250
-                            </Text>
+                        <Flex asChild align="center" className="p-1">
+                            <Link href="tel:2533047250">
+                                <Phone className="text-[var(--lime-9)] mr-2" />
+                                <Text className="text-[var(--gray-9)]">
+                                    (253) 304-7250
+                                </Text>
+                            </Link>
                         </Flex>
-                        <Flex align="center" className="p-1">
-                            <Mail className="text-[var(--lime-9)] mr-2" />
-                            <Text className="text-[var(--gray-9)]">
-                                ggenerationlandscaping@gmail.com
-                            </Text>
+                        <Flex asChild align="center" className="p-1">
+                            <Link href="mailto:ggenerationlandscaping@gmail.com">
+                                <Mail className="text-[var(--lime-9)] mr-2" />
+                                <Text className="text-[var(--gray-9)]">
+                                    ggenerationlandscaping@gmail.com
+                                </Text>
+                            </Link>
                         </Flex>
                     </Flex>
                 </Flex>

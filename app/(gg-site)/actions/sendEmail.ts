@@ -7,7 +7,7 @@ export async function sendEmail(inquiryProps: InquiryEmailProps) {
     try {
         const response = await resend.emails.send({
             from: 'Green Generation Landscaping <contact@ggenerationlandscaping.com>',
-            to: ['mishkkuh@gmail.com'],
+            to: ['ggenerationlandscaping@gmail.com'],
             subject: 'New Project Inquiry',
             react: InquiryTemplate(inquiryProps),
         });

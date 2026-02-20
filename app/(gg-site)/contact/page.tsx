@@ -5,6 +5,7 @@ import * as motion from 'motion/react-client'
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button, Box, Section, Container, Grid, Flex, Heading, Text, Card, TextField, TextArea, Select, Spinner, Callout } from '@radix-ui/themes';
 import { sendEmail } from '@/app/(gg-site)/actions/sendEmail';
+import Link from 'next/link';
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -109,30 +110,34 @@ const Contact = () => {
                                 </Box>
 
                                 <Flex direction="column" gap="6">
-                                    <Card size="3">
-                                        <Flex gap="4" align="start">
-                                            <Flex justify="center" align="center" className="bg-[var(--lime-3)] p-3 rounded-full shrink-0">
-                                                <Phone className="w-6 h-6 text-[var(--lime-9)]" />
+                                    <Card asChild size="3">
+                                        <Link href="tel:2533047250">
+                                            <Flex gap="4" align="start">
+                                                <Flex justify="center" align="center" className="bg-[var(--lime-3)] p-3 rounded-full shrink-0">
+                                                    <Phone className="w-6 h-6 text-[var(--lime-9)]" />
+                                                </Flex>
+                                                <Box>
+                                                    <Text weight="bold" className="text-[var(--gray-12)] mb-1 block font-novecento-sans">Phone</Text>
+                                                    <Text className="text-[var(--gray-11)] block">(253) 304-7250</Text>
+                                                    <Text size="1" className="text-[var(--gray-10)] mt-1 block">Mon-Fri 8am-6pm, Sat 9am-4pm</Text>
+                                                </Box>
                                             </Flex>
-                                            <Box>
-                                                <Text weight="bold" className="text-[var(--gray-12)] mb-1 block font-novecento-sans">Phone</Text>
-                                                <Text className="text-[var(--gray-11)] block">(253) 304-7250</Text>
-                                                <Text size="1" className="text-[var(--gray-10)] mt-1 block">Mon-Fri 8am-6pm, Sat 9am-4pm</Text>
-                                            </Box>
-                                        </Flex>
+                                        </Link>
                                     </Card>
 
-                                    <Card size="3">
-                                        <Flex gap="4" align="start">
-                                            <Flex justify="center" align="center" className="bg-[var(--lime-3)] p-3 rounded-full shrink-0">
-                                                <Mail className="w-6 h-6 text-[var(--lime-9)]" />
+                                    <Card asChild size="3">
+                                        <Link href="mailto:ggenerationlandscaping@gmail.com">
+                                            <Flex gap="4" align="start">
+                                                <Flex justify="center" align="center" className="bg-[var(--lime-3)] p-3 rounded-full shrink-0">
+                                                    <Mail className="w-6 h-6 text-[var(--lime-9)]" />
+                                                </Flex>
+                                                <Box>
+                                                    <Text weight="bold" className="text-[var(--gray-12)] mb-1 block font-novecento-sans">Email</Text>
+                                                    <Text className="text-[var(--gray-11)] block">ggenerationlandscaping@gmail.com</Text>
+                                                    <Text size="1" className="text-[var(--gray-10)] mt-1 block">We'll respond within 24 hours</Text>
+                                                </Box>
                                             </Flex>
-                                            <Box>
-                                                <Text weight="bold" className="text-[var(--gray-12)] mb-1 block font-novecento-sans">Email</Text>
-                                                <Text className="text-[var(--gray-11)] block">ggenerationlandscaping@gmail.com</Text>
-                                                <Text size="1" className="text-[var(--gray-10)] mt-1 block">We'll respond within 24 hours</Text>
-                                            </Box>
-                                        </Flex>
+                                        </Link>
                                     </Card>
 
                                     <Card size="3">

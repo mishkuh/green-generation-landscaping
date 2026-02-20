@@ -2,7 +2,7 @@ import React from 'react';
 import * as motion from 'motion/react-client'
 import { Award, Users, User, Leaf, Heart } from 'lucide-react';
 import Image from 'next/image';
-import { Box, Container, Section, Grid, Flex, Heading, Text, Card, Avatar } from '@radix-ui/themes';
+import { Box, Container, Section, Grid, Flex, Heading, Text, Card, Avatar, AspectRatio } from '@radix-ui/themes';
 
 const About = () => {
     const values = [
@@ -25,24 +25,6 @@ const About = () => {
             icon: Leaf,
             title: 'Attention to Detail',
             description: 'We pay close attention to detail to deliver clean, beautiful work every time.'
-        }
-    ];
-
-    const team = [
-        {
-            name: 'Pedro Morales',
-            role: 'Founder & Lead',
-            bio: 'With over 20 years of experience in landscape design, Pedro founded Green Generation Landscaping to bring sustainable, beautiful landscapes to the Greater Seattle Area.'
-        },
-        {
-            name: 'Team Member 1',
-            role: 'Operations Manager',
-            bio: '______ ensures every project runs smoothly from consultation to completion, maintaining our high standards of quality.'
-        },
-        {
-            name: 'Team Member 2',
-            role: 'Master Horticulturist',
-            bio: '_____ expertise in plant health and sustainable practices ensures our landscapes thrive for years to come.'
         }
     ];
 
@@ -153,8 +135,8 @@ const About = () => {
             </Section>
 
             {/* Team Section */}
-            <Section size="3" className="bg-[var(--gray-2)]">
-                <Container size="4" px="4">
+            <Section size="2" className="bg-[var(--gray-2)]">
+                <Container size="1" px="4">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -162,34 +144,23 @@ const About = () => {
                         viewport={{ once: true }}
                         className="text-center mb-16"
                     >
-                        <Heading size="8" className="text-[var(--gray-12)] mb-4 font-novecento-sans">Meet Our Team</Heading>
-                        <Text size="5" className="text-[var(--gray-11)] max-w-2xl mx-auto">
-                            The experienced professionals behind every beautiful landscape
-                        </Text>
+                        <Heading size="8" className="text-[var(--gray-12)] mb-4 font-novecento-sans">Meet the Founder</Heading>
                     </motion.div>
 
-                    <Grid columns={{ initial: '1', md: '3' }} gap="8" className="max-w-5xl mx-auto">
-                        {team.map((member, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6, delay: index * 0.1 }}
-                                viewport={{ once: true }}
-                            >
-                                <Card className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow h-full" size="2">
-                                    <Flex justify="center" align="center" className="h-64 bg-[var(--gray-3)]">
-                                        <User className="w-24 h-24 text-[var(--gray-8)]" />
-                                    </Flex>
-                                    <Box p="4">
-                                        <Heading size="5" className="text-[var(--gray-12)] mb-1 font-novecento-sans">{member.name}</Heading>
-                                        <Text size="2" weight="bold" className="text-[var(--lime-9)] mb-3 block">{member.role}</Text>
-                                        <Text size="2" className="text-[var(--gray-11)] leading-relaxed block">{member.bio}</Text>
-                                    </Box>
-                                </Card>
-                            </motion.div>
-                        ))}
-                    </Grid>
+                    <Card asChild className="shadow-lg hover:shadow-2xl transition-shadow" size="2">
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                            viewport={{ once: true }}
+                        >
+                            <Flex maxWidth="500px" gap="4" p="6" direction="column" justify="center">
+                                <Heading size="6" className="text-[var(--gray-12)]">Pedro Morales</Heading>
+                                <Text size="2" weight="bold" className="text-[var(--lime-9)]">Founder and Lead Landscaper</Text>
+                                <Text size="2" className="text-[var(--gray-11)]">Pedro is a passionate landscaper with over 20 years of experience in the industry. He founded Green Generation Landscaping with the goal of providing high-quality landscaping services to the community.</Text>
+                            </Flex>
+                        </motion.div>
+                    </Card>
                 </Container>
             </Section>
 

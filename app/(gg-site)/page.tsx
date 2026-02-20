@@ -12,7 +12,7 @@ import ServiceCard from '@/app/(gg-site)/ui/components/ServiceCard';
 
 const Home = async () => {
     const payload = await getPayload({ config })
-    
+
     const heroImageData = await payload.find({
         collection: 'media',
         where: {
@@ -21,7 +21,7 @@ const Home = async () => {
             }
         }
     })
-    
+
     const servicesData = await payload.find({
         collection: 'services',
         where: {
@@ -133,13 +133,13 @@ const Home = async () => {
                         )).concat(
                             // Add a card to view all services
                             <ServiceCard key={featuredServices.length} {...{
-                            title: 'View All Services',
-                            description: 'From custom hardscaping to full-scale lawn care, our team provides expert landscaping solutions. We specialize in creating functional, beautiful environments tailored to your home, ensuring every outdoor space becomes a lasting, high-quality sanctuary.',
-                            bannerImageURL: '/trimming_bush_thumb.jpg',
-                            alt: 'man caring for a bush',
-                            featureList: [],
-                            link: '/services/'
-                        }} />
+                                title: 'View All Services',
+                                description: 'From custom hardscaping to full-scale lawn care, our team provides expert landscaping solutions. We specialize in creating functional, beautiful environments tailored to your home, ensuring every outdoor space becomes a lasting, high-quality sanctuary.',
+                                bannerImageURL: '/trimming_bush_thumb.jpg',
+                                alt: 'man caring for a bush',
+                                featureList: [],
+                                link: '/services/'
+                            }} />
                         )}
                     </AnimatedGrid>
                 </Container>
@@ -212,7 +212,7 @@ const Home = async () => {
                                     rating: 5
                                 },
                                 {
-                                    name: 'John Doe',
+                                    name: 'Jen Preston',
                                     text: 'Best landscaping company we\'ve worked with. They maintain our property beautifully and are always responsive.',
                                     rating: 5
                                 }

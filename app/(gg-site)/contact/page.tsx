@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import * as motion from 'motion/react-client'
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button, Box, Section, Container, Grid, Flex, Heading, Text, Card, TextField, TextArea, Select, Spinner, Callout } from '@radix-ui/themes';
-import { sendEmail } from '@/app/(gg-site)/actions/sendEmail';
 import Link from 'next/link';
 
 const Contact = () => {
@@ -32,11 +31,20 @@ const Contact = () => {
         setIsSubmitting(true);
 
         try {
-            console.log('Sending email...');
+            console.log('Submitting form...');
 
-            const result = await sendEmail(formData);
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({
+                    access_key: process.env.WEB3FORMS_ACCESS_KEY,
+                    ...formData,
+                }),
+            });
 
-            if (!result.success) {
+            const data = await response.json();
+
+            if (!data.success) {
                 setStatus('error');
                 return;
             }
@@ -50,7 +58,7 @@ const Contact = () => {
                 source: '',
             });
         } catch (error) {
-            console.error('Error sending email:', error);
+            console.error('Error submitting form:', error);
             setStatus('error');
         } finally {
             setIsSubmitting(false);

@@ -43,5 +43,5 @@ A modern web application for Green Generation Landscaping, built with Next.js, P
 
 - **Responsive Design:** Optimized for all devices using Tailwind CSS.
 - **Dynamic Content:** Managed via Payload CMS.
-- **Contact Form:** Integrated with Resend for email notifications.
+- **Contact Form:** Integrated with Web3Forms for email notifications.
 - **Modern UI:** Uses Radix UI and custom components for a premium feel.

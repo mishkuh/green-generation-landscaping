@@ -5,6 +5,7 @@ import * as motion from 'motion/react-client'
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button, Box, Section, Container, Grid, Flex, Heading, Text, Card, TextField, TextArea, Select, Spinner, Callout } from '@radix-ui/themes';
 import Link from 'next/link';
+import { sendEmail } from '@/app/(gg-site)/actions/sendEmail';
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -33,18 +34,21 @@ const Contact = () => {
         try {
             console.log('Submitting form...');
 
-            const response = await fetch("https://api.web3forms.com/submit", {
+            // Send email to Green Generation Landscaping
+            const emailResult = await sendEmail(formData);
+
+            // Submit form to Web3Forms
+            const web3formsResult = await fetch("https://api.web3forms.com/submit", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                 body: JSON.stringify({
-                    access_key: process.env.WEB3FORMS_ACCESS_KEY,
+                    access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
                     ...formData,
                 }),
             });
+            console.log('Web3Forms result:', web3formsResult);
 
-            const data = await response.json();
-
-            if (!data.success) {
+            if (!emailResult.success) {
                 setStatus('error');
                 return;
             }

@@ -33,12 +33,11 @@ const Contact = () => {
         try {
             console.log('Submitting form...');
 
-
             const response = await fetch("https://api.web3forms.com/submit", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                 body: JSON.stringify({
-                    access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
+                    access_key: process.env.WEB3FORMS_ACCESS_KEY,
                     ...formData,
                 }),
             });
